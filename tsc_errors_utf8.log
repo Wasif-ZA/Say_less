@@ -1,0 +1,4 @@
+﻿index.ts(3,17): error TS1261: Already included file name 'C:/Users/wasif/OneDrive/Desktop/teehee/projects/Say_less/App/index.tsx' differs from file name 'C:/Users/wasif/OneDrive/Desktop/teehee/projects/Say_less/app/index.tsx' only in casing.
+  The file is in the program because:
+    Imported via './App' from file 'C:/Users/wasif/OneDrive/Desktop/teehee/projects/Say_less/index.ts'
+    Matched by default include pattern '**/*'
