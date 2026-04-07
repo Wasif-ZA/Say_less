@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState, useCallback, useMemo } from "react";
 import { useGame } from "@/hooks/useGame";
 import { getCategoryById, getHintForWord } from "@/lib/wordbanks";
 
@@ -14,6 +14,7 @@ export function RoleRevealScreen() {
   const [phase, setPhase] = useState<RevealPhase>("hidden");
   const [dragY, setDragY] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
+  const [showFirstPlayer, setShowFirstPlayer] = useState(false);
   const startYRef = useRef(0);
   const lockedRef = useRef(false);
 
@@ -24,12 +25,18 @@ export function RoleRevealScreen() {
   const coverColor = COVER_COLORS[state.currentRevealIndex % COVER_COLORS.length];
   const coverIcon = ICONS[state.currentRevealIndex % ICONS.length];
 
+  // Randomly pick who goes first (stable for the round)
+  const firstPlayer = useMemo(() => {
+    const idx = Math.floor(Math.random() * state.players.length);
+    return state.players[idx];
+  }, [state.players]);
+
   // Navigate to discussion when all players have revealed
   useEffect(() => {
-    if (state.currentRevealIndex >= state.players.length) {
-      dispatch({ type: "SET_PHASE", phase: "discussion" });
+    if (state.currentRevealIndex >= state.players.length && !showFirstPlayer) {
+      setShowFirstPlayer(true);
     }
-  }, [state.currentRevealIndex, state.players.length, dispatch]);
+  }, [state.currentRevealIndex, state.players.length, showFirstPlayer]);
 
   // Advance to next player
   const advance = useCallback(() => {
@@ -78,6 +85,32 @@ export function RoleRevealScreen() {
     setIsDragging(false);
     // Snap back if not past threshold
     setDragY(0);
+  }
+
+  // "Who goes first" announcement after all reveals
+  if (showFirstPlayer) {
+    return (
+      <div className="fixed inset-0 overflow-hidden bg-black text-white flex flex-col items-center justify-center p-6 text-center">
+        <div className="animate-bounceIn flex flex-col items-center gap-6">
+          <div className="text-[80px] drop-shadow-2xl">👆</div>
+          <p className="font-display font-bold text-white/40 tracking-widest uppercase text-lg">
+            Goes First
+          </p>
+          <h2 className="font-display text-[48px] font-bold text-white leading-tight drop-shadow-md">
+            {firstPlayer?.name}
+          </h2>
+          <p className="font-body text-white/40 text-base mt-2 max-w-[280px]">
+            Start describing the word — without saying it!
+          </p>
+        </div>
+        <button
+          onClick={() => dispatch({ type: "SET_PHASE", phase: "discussion" })}
+          className="absolute bottom-0 left-0 right-0 p-5 bg-gradient-to-t from-[#ff1b6b] to-transparent flex justify-center"
+        >
+          <span className="btn-big btn-white text-2xl max-w-lg w-full">START DISCUSSION</span>
+        </button>
+      </div>
+    );
   }
 
   if (!player) return null;
