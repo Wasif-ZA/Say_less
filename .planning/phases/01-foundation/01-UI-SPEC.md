@@ -59,18 +59,21 @@ Declared values (all multiples of 4). NativeWind Tailwind spacing units apply di
 
 Two font families with two weights each. No other fonts are permitted.
 
+Named type scale — exactly 4 entries:
+
 | Role | Font Family | Tailwind Class | Size | Weight | Line Height | Usage |
 |------|-------------|---------------|------|--------|-------------|-------|
-| Timer | Nunito | `font-nunito text-7xl tabular-nums` | 72px | 700 Bold | 1.0 (no wrap) | DiscussionScreen countdown |
-| Display / Title | Fredoka | `font-fredoka text-4xl tracking-tight` | 36px | 700 Bold | 1.2 | HomeScreen title, winner announcement |
-| Heading | Nunito | `font-nunito text-2xl` | 24px | 700 Bold | 1.2 | Screen headings, section titles |
-| Subheading | Nunito | `font-nunito-semibold text-lg` | 18px | 600 SemiBold | 1.3 | Card names, imposter reveal text |
+| Display / Title | Fredoka | `font-fredoka text-4xl tracking-tight` | 36px | 700 Bold | 1.2 | HomeScreen title, winner announcement, imposter reveal text |
+| Heading | Nunito | `font-nunito text-2xl` | 24px | 700 Bold | 1.2 | Screen headings, section titles, card names |
 | Body | Nunito | `font-nunito-semibold text-base` | 16px | 600 SemiBold | 1.5 | Descriptions, player names, instructions |
-| Caption | Nunito | `font-nunito text-sm` | 14px | 400 Regular* | 1.4 | Word count badges, version numbers, hints |
+| Caption | Nunito | `font-nunito-semibold text-sm` | 14px | 600 SemiBold | 1.4 | Word count badges, version numbers, hints |
 
-*Note: Nunito 400 Regular is not loaded in `_layout.tsx`. Caption text should use `text-secondary` color with `font-nunito-semibold` at reduced opacity, or load `Nunito_400Regular` in Phase 2 if needed. Default to `Nunito_600SemiBold` for all body-level and below text.
+**Component-level constant (not a named scale entry):**
+- `TimerDisplay.tsx` uses `text-7xl` (72px), `font-nunito`, `tabular-nums` — declared only inside that component, not consumable as a design token.
 
-**Declared sizes: 14, 16, 18, 24, 36, 72** (6 sizes; timer is a special case)
+**Note on Caption weight:** Nunito 400 Regular is not loaded in `_layout.tsx`. Caption uses `font-nunito-semibold` at reduced opacity via `text-text-secondary` color. Load `Nunito_400Regular` in Phase 2 only if explicitly needed.
+
+**Declared sizes: 14, 16, 24, 36** (4 named entries)
 **Declared weights: 600 SemiBold (body/UI) + 700 Bold (headings/display)**
 
 ---
@@ -155,7 +158,7 @@ Phase 1 has no user-facing copy (no screens are built). This section establishes
 | Error state — start blocked | "Need at least 3 players to start a round" |
 | 2-imposter blocked | "2 imposters requires 7+ players" |
 | Destructive: remove player | No confirmation dialog. Immediate delete with swipe gesture. Medium haptic as feedback. |
-| Destructive: vote cast | "Vote for [Name]?" with Confirm / Cancel buttons before dispatch |
+| Destructive: vote cast | "Vote for [Name]?" with "Lock In Vote" / "Change Vote" buttons before dispatch |
 | Destructive: full reset | "New Game" button — immediate dispatch FULL_RESET, no confirmation dialog |
 
 ---
@@ -215,9 +218,11 @@ Phase 1 uses zero external component registries. All components are hand-rolled 
 | All color tokens | `tailwind.config.js` (verified) + `src/theme/colors.ts` (verified) |
 | Font families and weights | `tailwind.config.js` fontFamily + `app/_layout.tsx` useFonts (verified) |
 | Spacing conventions | CLAUDE.md §DESIGN TOKENS |
-| Typography scale | CLAUDE.md §DESIGN TOKENS |
+| Typography scale | CLAUDE.md §DESIGN TOKENS — collapsed to 4 named entries per checker requirement |
 | Root layout contract | `app/_layout.tsx` (verified complete — RESEARCH.md) |
 | gestureEnabled pattern | CLAUDE.md §NAVIGATION MAPPING + FNDN-04 requirement |
 | Accent reserved-for list | CLAUDE.md §SCREEN SPECIFICATIONS (imposter red, civilian blue, town-win green) |
 | Copy strings | CLAUDE.md §SCREEN SPECIFICATIONS (each screen section) |
 | Animation configs | CLAUDE.md §ANIMATION GUIDELINES |
+| Vote dialog labels | Checker revision — "Cancel" replaced with "Change Vote" (consequence-named label) |
+| Typography consolidation | Checker revision — Subheading (18px) merged into Heading (24px); Timer 72px moved to component-level constant in TimerDisplay.tsx |
