@@ -38,7 +38,7 @@ export function CategorySelectScreen() {
       </div>
 
       {/* Category list */}
-      <div className="flex-1 overflow-y-auto pb-28 scrollbar-hide flex flex-col gap-3 animate-slideUpIn">
+      <div className="flex-1 overflow-y-auto pb-28 flex flex-col gap-3 animate-slideUpIn">
         {CATEGORIES.map((cat) => {
           const isSelected = activeCategoryId === cat.id;
           return (
