@@ -2,10 +2,16 @@ import type { Player, VoteRecord } from "./types";
 import { getCategoryById } from "../data/categories";
 import { MIN_PLAYERS_FOR_TWO_IMPOSTERS } from "../constants/game";
 
+function cryptoRandom(): number {
+  const array = new Uint32Array(1);
+  crypto.getRandomValues(array);
+  return array[0] / 4294967296;
+}
+
 export function assignRoles(
   players: Player[],
   imposterCount: 1 | 2,
-  randomFn: () => number = Math.random
+  randomFn: () => number = cryptoRandom
 ): Player[] {
   const count =
     imposterCount === 2 && players.length < MIN_PLAYERS_FOR_TWO_IMPOSTERS
@@ -29,7 +35,7 @@ export function assignRoles(
 export function pickWord(
   categoryId: string,
   usedWords: string[] = [],
-  randomFn: () => number = Math.random
+  randomFn: () => number = cryptoRandom
 ): string {
   const category = getCategoryById(categoryId);
   if (!category) return "Unknown";

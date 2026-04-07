@@ -25,9 +25,11 @@ export function RoleRevealScreen() {
   const coverColor = COVER_COLORS[state.currentRevealIndex % COVER_COLORS.length];
   const coverIcon = ICONS[state.currentRevealIndex % ICONS.length];
 
-  // Randomly pick who goes first (stable for the round)
+  // Randomly pick who goes first (stable for the round, cryptographically random)
   const firstPlayer = useMemo(() => {
-    const idx = Math.floor(Math.random() * state.players.length);
+    const array = new Uint32Array(1);
+    crypto.getRandomValues(array);
+    const idx = array[0] % state.players.length;
     return state.players[idx];
   }, [state.players]);
 
