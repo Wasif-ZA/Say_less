@@ -4,7 +4,9 @@ import { MAX_PLAYERS } from "./constants";
 
 export const initialState: GameState = {
   phase: "home",
-  players: [],
+  players: [
+    { id: "p1", name: "Player 1", role: "unassigned", isEliminated: false },
+  ],
   categoryId: null,
   secretWord: "",
   imposterCount: 1,
