@@ -1,160 +1,239 @@
-import React, { useState } from "react";
-import { View, Text, FlatList, TouchableOpacity } from "react-native";
+import React, { useMemo, useRef } from "react";
+import { Animated, FlatList, Pressable, ScrollView, Text, View } from "react-native";
 import { useRouter } from "expo-router";
-import { GridBackground } from "../src/components/GridBackground";
-import { Button } from "../src/components/ui/Button";
-import { useGame } from "../src/context/GameContext";
 import { Ionicons } from "@expo/vector-icons";
+import { GridBackground } from "../src/components/GridBackground";
+import { useGame } from "../src/context/GameContext";
+import { useHaptics } from "../src/hooks/useHaptics";
+import { tallyVotes } from "../src/game/engine";
+
+function usePressScale(pressedScale = 0.98) {
+  const scale = useRef(new Animated.Value(1)).current;
+  const onPressIn = () => {
+    Animated.spring(scale, { toValue: pressedScale, useNativeDriver: true, speed: 30, bounciness: 6 }).start();
+  };
+  const onPressOut = () => {
+    Animated.spring(scale, { toValue: 1, useNativeDriver: true, speed: 30, bounciness: 6 }).start();
+  };
+  return { style: { transform: [{ scale }] }, onPressIn, onPressOut };
+}
 
 export default function SummaryScreen() {
-    const router = useRouter();
-    const { players, resetGame } = useGame();
+  const router = useRouter();
+  const { state, dispatch } = useGame();
+  const haptics = useHaptics();
 
-    const [selectedPlayerId, setSelectedPlayerId] = useState<string | null>(null);
-    const [isRevealed, setIsRevealed] = useState(false);
+  const result = useMemo(
+    () => tallyVotes(state.votes, state.players),
+    [state.votes, state.players]
+  );
 
-    const imposter = players.find((p) => p.role === "imposter");
+  const imposters = state.players.filter((p) => p.role === "imposter");
+  const imposterNames = imposters.map((p) => p.name).join(" & ");
 
-    const handleVote = () => {
-        if (!selectedPlayerId) return;
-        setIsRevealed(true);
-    };
+  // Fire haptic on mount based on result
+  React.useEffect(() => {
+    if (result.townWins) {
+      haptics.success();
+    } else {
+      haptics.error();
+    }
+  }, []);
 
-    const handlePlayAgain = () => {
-        resetGame();
-        router.dismissAll();
-        router.replace('/');
-    };
+  const handlePlayAgain = () => {
+    haptics.light();
+    dispatch({ type: "PLAY_AGAIN" });
+    router.replace("/reveal");
+  };
 
-    const renderPlayer = ({ item }: { item: any }) => (
-        <TouchableOpacity
-            disabled={isRevealed}
-            onPress={() => setSelectedPlayerId(item.id)}
-            className={`flex-row items-center p-4 rounded-2xl mb-3 border ${
-                selectedPlayerId === item.id
-                    ? "bg-white/10 border-[#7C5CFF] shadow-sm shadow-[#7C5CFF]/30"
-                    : "bg-white/5 border-white/10"
-            }`}
+  const handleChangeCategory = () => {
+    haptics.light();
+    dispatch({ type: "SET_PHASE", phase: "category" });
+    router.replace("/category");
+  };
+
+  const handleNewGame = () => {
+    haptics.light();
+    dispatch({ type: "FULL_RESET" });
+    router.replace("/");
+  };
+
+  const playAgainPress = usePressScale(0.98);
+  const categoryPress = usePressScale(0.985);
+  const newGamePress = usePressScale(0.985);
+
+  return (
+    <GridBackground variant={result.townWins ? "cool" : "danger"}>
+      <ScrollView
+        className="flex-1"
+        contentContainerStyle={{ paddingHorizontal: 24, paddingTop: 24, paddingBottom: 40 }}
+        showsVerticalScrollIndicator={false}
+      >
+        {/* Winner Announcement */}
+        <View className="items-center mb-6">
+          {result.townWins ? (
+            <View className="items-center">
+              <Ionicons name="checkmark-circle" size={56} color="#34D399" />
+              <Text className="text-[#34D399] text-3xl font-fredoka uppercase tracking-tight mt-2">
+                Town Wins!
+              </Text>
+            </View>
+          ) : (
+            <View className="items-center">
+              <Text style={{ fontSize: 50 }}>
+                {"\u{1F575}\u{FE0F}"}
+              </Text>
+              <Text className="text-[#FF3B5C] text-3xl font-fredoka uppercase tracking-tight mt-2">
+                Imposter Wins!
+              </Text>
+            </View>
+          )}
+        </View>
+
+        {/* Imposter Reveal */}
+        <View
+          className={`mx-1 mb-4 p-5 rounded-2xl border ${
+            result.townWins
+              ? "bg-[#34D399]/10 border-[#34D399]/30"
+              : "bg-[#FF3B5C]/10 border-[#FF3B5C]/30"
+          }`}
         >
-            <View
-                className={`w-10 h-10 rounded-xl items-center justify-center mr-3 ${
-                    selectedPlayerId === item.id ? "bg-[#7C5CFF]" : "bg-white/10"
-                }`}
-            >
-                <Text className="text-white font-fredoka text-lg">
-                    {item.name.charAt(0)}
-                </Text>
-            </View>
+          <Text className="text-white/60 font-nunito text-xs uppercase tracking-widest text-center mb-1">
+            The Imposter{imposters.length > 1 ? "s were" : " was"}
+          </Text>
+          <Text className="text-white font-fredoka text-2xl text-center">
+            {imposterNames}
+          </Text>
+        </View>
 
-            <Text
-                className={`text-lg font-nunito font-semibold flex-1 ${
-                    selectedPlayerId === item.id ? "text-white" : "text-white/70"
-                }`}
-            >
-                {item.name}
+        {/* Secret Word Reveal */}
+        <View className="mx-1 mb-6 p-5 rounded-2xl border bg-white/5 border-white/10">
+          <Text className="text-white/60 font-nunito text-xs uppercase tracking-widest text-center mb-1">
+            The word was
+          </Text>
+          <Text className="text-white font-fredoka text-2xl text-center">
+            {state.secretWord}
+          </Text>
+        </View>
+
+        {/* Vote Breakdown */}
+        {result.eliminatedId === null && state.votes.length > 0 && (
+          <View className="mx-1 mb-4 p-4 rounded-2xl bg-[#FBBF24]/10 border border-[#FBBF24]/30">
+            <Text className="text-[#FBBF24] font-nunito font-bold text-sm text-center">
+              It's a tie! No one was eliminated.
             </Text>
+          </View>
+        )}
 
-            {isRevealed && (
-                item.role === "imposter" ? (
-                    <View className="bg-[#FF2D55]/10 px-3 py-1 rounded-full border border-[#FF2D55]/60">
-                        <Text className="text-[#FF2D55] text-xs font-nunito font-bold tracking-[0.18em]">
-                            IMPOSTER
-                        </Text>
-                    </View>
-                ) : (
-                    <View className="bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/40">
-                        <Text className="text-emerald-400 text-xs font-nunito font-bold tracking-[0.18em]">
-                            CIVILIAN
-                        </Text>
-                    </View>
-                )
-            )}
+        <View className="mx-1 mb-6">
+          <Text className="text-white/60 font-nunito font-bold text-xs uppercase tracking-widest mb-3">
+            Vote Breakdown
+          </Text>
+          {state.votes.map((vote, i) => {
+            const voter = state.players.find((p) => p.id === vote.voterId);
+            const target = state.players.find((p) => p.id === vote.targetId);
+            return (
+              <View
+                key={i}
+                className="flex-row items-center py-2 border-b border-white/5"
+              >
+                <Text className="text-white font-nunito font-bold flex-1">
+                  {voter?.name}
+                </Text>
+                <Ionicons name="arrow-forward" size={14} color="rgba(255,255,255,0.4)" />
+                <Text className="text-white/70 font-nunito flex-1 text-right">
+                  {target?.name}
+                </Text>
+              </View>
+            );
+          })}
+          {state.votes.length === 0 && (
+            <Text className="text-white/40 font-nunito text-sm text-center">
+              No votes were cast.
+            </Text>
+          )}
+        </View>
 
-            {!isRevealed && selectedPlayerId === item.id && (
-                <Ionicons name="finger-print" size={24} color="#7C5CFF" />
-            )}
-        </TouchableOpacity>
-    );
-
-    return (
-        <GridBackground variant={isRevealed ? "cool" : "danger"}>
-            <View className="flex-1 px-6 pt-6 pb-8">
-                <View className="items-center mb-6">
-                    <Text className="text-xs font-nunito font-bold text-white/60 uppercase tracking-[0.22em] mb-2">
-                        {isRevealed ? "Mission Report" : "Elimination Protocol"}
-                    </Text>
-                    <Text className="text-3xl font-fredoka text-white tracking-tight">
-                        {isRevealed ? "Game Over" : "Vote to eliminate"}
-                    </Text>
+        {/* Scoreboard */}
+        {state.roundScores.length > 0 && (
+          <View className="mx-1 mb-6">
+            <Text className="text-white/60 font-nunito font-bold text-xs uppercase tracking-widest mb-3">
+              Scoreboard
+            </Text>
+            <View className="bg-white/5 rounded-2xl border border-white/10 overflow-hidden">
+              <View className="flex-row py-2 px-4 border-b border-white/10">
+                <Text className="text-white/40 font-nunito text-xs flex-1">
+                  Round
+                </Text>
+                <Text className="text-white/40 font-nunito text-xs w-20 text-center">
+                  Winner
+                </Text>
+              </View>
+              {state.roundScores.map((score, i) => (
+                <View
+                  key={i}
+                  className="flex-row py-2 px-4 border-b border-white/5"
+                >
+                  <Text className="text-white font-nunito font-bold flex-1">
+                    Round {score.round}
+                  </Text>
+                  <Text
+                    className={`font-nunito font-bold w-20 text-center ${
+                      score.winningSide === "town"
+                        ? "text-[#34D399]"
+                        : "text-[#FF3B5C]"
+                    }`}
+                  >
+                    {score.winningSide === "town" ? "Town" : "Imposter"}
+                  </Text>
                 </View>
-
-                {isRevealed && (
-                    <View
-                        className={`mx-1 mb-8 p-6 rounded-2xl border ${
-                            selectedPlayerId === imposter?.id
-                                ? "bg-emerald-500/10 border-emerald-500/40"
-                                : "bg-[#FF2D55]/10 border-[#FF2D55]/40"
-                        }`}
-                    >
-                        {selectedPlayerId === imposter?.id ? (
-                            <View className="items-center">
-                                <Ionicons
-                                    name="checkmark-circle"
-                                    size={40}
-                                    color="#10b981"
-                                    style={{ marginBottom: 8 }}
-                                />
-                                <Text className="text-emerald-400 text-2xl font-fredoka uppercase tracking-tight">
-                                    Town Victory
-                                </Text>
-                            </View>
-                        ) : (
-                            <View className="items-center">
-                                <Ionicons
-                                    name="warning"
-                                    size={40}
-                                    color="#f43f5e"
-                                    style={{ marginBottom: 8 }}
-                                />
-                                <Text className="text-[#FF2D55] text-2xl font-fredoka uppercase tracking-tight">
-                                    Imposter Wins
-                                </Text>
-                            </View>
-                        )}
-                        <Text className="text-white/70 mt-2 text-center text-sm font-nunito">
-                            The Imposter was {" "}
-                            <Text className="text-white font-nunito font-bold">{imposter?.name}</Text>
-                        </Text>
-                    </View>
-                )}
-
-                <FlatList
-                    data={players}
-                    keyExtractor={(item) => item.id}
-                    renderItem={renderPlayer}
-                    className="flex-1 px-1"
-                    showsVerticalScrollIndicator={false}
-                />
-
-                <View className="pt-6">
-                    {!isRevealed ? (
-                        <Button
-                            title="Confirm vote"
-                            onPress={handleVote}
-                            disabled={!selectedPlayerId}
-                            variant="danger"
-                        />
-                    ) : (
-                        <Button
-                            title="Play again"
-                            onPress={handlePlayAgain}
-                            variant="primary"
-                            className="bg-white"
-                            textClassName="text-black"
-                        />
-                    )}
-                </View>
+              ))}
             </View>
-        </GridBackground>
-    );
+          </View>
+        )}
+
+        {/* Action Buttons */}
+        <View className="gap-3 mt-2">
+          <Animated.View style={playAgainPress.style}>
+            <Pressable
+              onPress={handlePlayAgain}
+              onPressIn={playAgainPress.onPressIn}
+              onPressOut={playAgainPress.onPressOut}
+              className="w-full bg-[#4A9EFF] rounded-[24px] py-5 items-center justify-center"
+            >
+              <Text className="text-white font-fredoka text-xl uppercase tracking-wide">
+                Play Again
+              </Text>
+            </Pressable>
+          </Animated.View>
+
+          <Animated.View style={categoryPress.style}>
+            <Pressable
+              onPress={handleChangeCategory}
+              onPressIn={categoryPress.onPressIn}
+              onPressOut={categoryPress.onPressOut}
+              className="w-full bg-white/10 border border-white/15 rounded-[24px] py-4 items-center justify-center"
+            >
+              <Text className="text-white font-fredoka text-lg">
+                Change Category
+              </Text>
+            </Pressable>
+          </Animated.View>
+
+          <Animated.View style={newGamePress.style}>
+            <Pressable
+              onPress={handleNewGame}
+              onPressIn={newGamePress.onPressIn}
+              onPressOut={newGamePress.onPressOut}
+              className="w-full py-3 items-center justify-center"
+            >
+              <Text className="text-white/60 font-nunito text-base">
+                New Game
+              </Text>
+            </Pressable>
+          </Animated.View>
+        </View>
+      </ScrollView>
+    </GridBackground>
+  );
 }

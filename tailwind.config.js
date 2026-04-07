@@ -1,29 +1,36 @@
-// tailwind.config.js
 module.exports = {
   content: ["./app/**/*.{js,jsx,ts,tsx}", "./src/**/*.{js,jsx,ts,tsx}"],
   presets: [require("nativewind/preset")],
   theme: {
     extend: {
       colors: {
-        // The background gradient colors
-        'game-pink': '#FF4757',
-        'game-red': '#FF0033',
+        "surface-900": "#0F0F1A",
+        "surface-800": "#1A1A2E",
+        "surface-700": "#252540",
+        "surface-600": "#30304D",
 
-        // The Card/Input background (Deep Blue/Purple)
-        'game-dark': '#1E1C2A',
+        "accent-red": "#FF3B5C",
+        "accent-blue": "#4A9EFF",
+        "accent-green": "#34D399",
+        "accent-amber": "#FBBF24",
+        "accent-purple": "#A78BFA",
 
-        // Accents
-        'game-blue': '#2E86DE', // For specific roles
-        'game-gold': '#FFD700', // For stars
-        'game-overlay': 'rgba(0,0,0,0.4)',
+        "text-secondary": "#A1A1B5",
+        "text-muted": "#6B6B80",
+
+        // Keep legacy colors for GridBackground
+        "game-pink": "#FF4757",
+        "game-red": "#FF0033",
+        "game-dark": "#1E1C2A",
+        "game-blue": "#2E86DE",
+        "game-gold": "#FFD700",
       },
       fontFamily: {
-        fredoka: ['Fredoka_700Bold'],
-        nunito: ['Nunito_700Bold'], // Using Bold for body to match game feel
+        fredoka: ["Fredoka_700Bold"],
+        "fredoka-medium": ["Fredoka_500Medium"],
+        nunito: ["Nunito_700Bold"],
+        "nunito-semibold": ["Nunito_600SemiBold"],
       },
-      boxShadow: {
-        'game': '0 4px 0px 0px rgba(0,0,0,0.2)', // The "Hard" shadow seen in games
-      }
     },
   },
   plugins: [],
