@@ -1,0 +1,144 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-page-bg: #0a0a0f;
+  --color-surface-900: #12121c;
+  --color-surface-800: #1a1a2e;
+  --color-surface-700: #252540;
+  --color-surface-600: #30304d;
+  --color-accent-green: #00ff88;
+  --color-accent-red: #ff3366;
+  --color-accent-pink: #ff1f5a;
+  --color-accent-orange: #ff9500;
+  --color-accent-blue: #4da6ff;
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #e0e0ea;
+  --color-text-muted: #a0a0b0;
+  --font-display: "Fredoka", sans-serif;
+  --font-body: "Nunito", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+body {
+  background: var(--color-page-bg);
+  font-family: "Nunito", sans-serif;
+  color: #fff;
+  touch-action: manipulation;
+}
+
+/* ─── Background surfaces ─── */
+.bg-grid-pattern {
+  background: linear-gradient(135deg, #ff2a5f 0%, #ff6b3d 100%);
+  position: relative;
+}
+.bg-grid-pattern::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-size: 40px 40px;
+  background-image:
+    linear-gradient(to right, rgba(255,255,255,0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255,255,255,0.08) 1px, transparent 1px);
+  pointer-events: none;
+}
+
+.bg-solid-blue { background: #4da6ff; }
+.bg-solid-orange { background: #ff9500; }
+.bg-solid-black { background: #000000; }
+.bg-solid-green { background: #00c96a; }
+
+.bg-dark-immersive {
+  background: radial-gradient(ellipse at 50% 0%, #1a1a2e 0%, #0a0a0f 60%);
+}
+
+/* ─── Card surface ─── */
+.card-surface {
+  background: rgba(255,255,255,0.07);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* ─── Keyframes ─── */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+@keyframes slideUpIn {
+  from { opacity: 0; transform: translateY(60px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes bounceIn {
+  0% { opacity: 0; transform: scale(0.5); }
+  60% { opacity: 1; transform: scale(1.04); }
+  80% { transform: scale(0.97); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+@keyframes pulse-ring {
+  0% { transform: scale(1); opacity: 0.6; }
+  100% { transform: scale(1.15); opacity: 0; }
+}
+
+.animate-fadeInUp { animation: fadeInUp 0.5s cubic-bezier(0.16,1,0.3,1) forwards; opacity: 0; }
+.animate-fadeIn { animation: fadeIn 0.4s ease-out forwards; opacity: 0; }
+.animate-slideDown { animation: slideDown 0.5s cubic-bezier(0.16,1,0.3,1) forwards; opacity: 0; }
+.animate-slideUpIn { animation: slideUpIn 0.5s cubic-bezier(0.16,1,0.3,1) forwards; opacity: 0; }
+.animate-float { animation: float 3s ease-in-out infinite; }
+.animate-bounceIn { animation: bounceIn 0.5s cubic-bezier(0.16,1,0.3,1) forwards; opacity: 0; }
+
+.stagger-1 { animation-delay: 0.06s; }
+.stagger-2 { animation-delay: 0.12s; }
+.stagger-3 { animation-delay: 0.18s; }
+.stagger-4 { animation-delay: 0.24s; }
+.stagger-5 { animation-delay: 0.30s; }
+
+/* ─── Utilities ─── */
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+input:focus { outline: none; }
+
+/* Shared big button */
+.btn-big {
+  font-family: "Fredoka", sans-serif;
+  font-weight: 700;
+  border-radius: 32px;
+  height: 72px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.12s ease;
+  cursor: pointer;
+  border: none;
+}
+.btn-big:active { transform: scale(0.96); }
+
+.btn-white { background: #fff; color: #000; box-shadow: 0 8px 30px rgba(0,0,0,0.25); }
+.btn-glass { background: rgba(255,255,255,0.12); color: #fff; backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.15); }
+.btn-red { background: #ff3366; color: #fff; box-shadow: 0 8px 24px rgba(255,51,102,0.3); }
+.btn-ghost { background: transparent; color: rgba(255,255,255,0.5); }
+.btn-ghost:hover { color: #fff; }
