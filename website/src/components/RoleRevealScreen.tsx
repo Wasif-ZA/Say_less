@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, useCallback, useMemo } from "react";
 import { useGame } from "@/hooks/useGame";
-import { getCategoryById, getHintForWord } from "@/lib/wordbanks";
+import { getCategoryById } from "@/lib/wordbanks";
 
 type RevealPhase = "hidden" | "revealing" | "revealed" | "hiding";
 
@@ -156,9 +156,12 @@ export function RoleRevealScreen() {
                 IMPOSTER
               </h2>
               {state.hintsEnabled ? (
-                <div className="mt-3 bg-white/8 border border-white/10 rounded-2xl px-6 py-4">
-                  <p className="font-body text-white/40 text-xs uppercase tracking-widest mb-1">Hint</p>
-                  <p className="font-display text-xl text-white font-bold">{getHintForWord(state.secretWord)}</p>
+                <div className="mt-3 bg-white/8 border border-white/10 rounded-2xl px-6 py-4 flex flex-col items-center gap-1">
+                  <p className="font-body text-white/40 text-xs uppercase tracking-widest">Category</p>
+                  <div className="flex items-center gap-2">
+                    <span className="text-2xl">{category?.emoji}</span>
+                    <p className="font-display text-xl text-white font-bold">{category?.name}</p>
+                  </div>
                 </div>
               ) : (
                 <p className="font-body text-white/40 mt-3 max-w-[260px] leading-relaxed text-base">
