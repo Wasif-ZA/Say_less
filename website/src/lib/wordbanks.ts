@@ -216,6 +216,8 @@ const bangladeshi = [
 ];
 
 export const CATEGORIES: Category[] = [
+  { id: "bangladeshi", name: "Bangladeshi", emoji: "🇧🇩", description: "Deshi through and through — if you know, you know. Imposters won't survive this one.", words: bangladeshi },
+  { id: "spicy", name: "Spicy", emoji: "🌶️", description: "Bold, cheeky, a little risky — perfect for stirring up tension and laughs.", words: spicy },
   { id: "party_time", name: "Party Time", emoji: "🪩", description: "Easygoing fun with laughs and a bit of chaos — perfect for any group.", words: partyTime },
   { id: "celebrities", name: "Celebrities", emoji: "⭐", description: "Famous names from movies, music, and more. Act like you're in the loop!", words: celebrities },
   { id: "christmas", name: "Christmas", emoji: "🎅", description: "Festive vibes and winter magic — cozy up and see who's naughty or nice!", words: christmas },
@@ -223,8 +225,6 @@ export const CATEGORIES: Category[] = [
   { id: "places", name: "Places", emoji: "🗽", description: "Countries, landmarks, cities — just act like you've been there!", words: places },
   { id: "animals", name: "Animals", emoji: "🐶", description: "From pets to wild beasts — can you blend in without giving yourself away?", words: animals },
   { id: "sports", name: "Sports", emoji: "🏀", description: "Whether you're a fan or faking it, you'll need to keep a straight face.", words: sports },
-  { id: "spicy", name: "Spicy", emoji: "🌶️", description: "Bold, cheeky, a little risky — perfect for stirring up tension and laughs.", words: spicy },
-  { id: "bangladeshi", name: "Bangladeshi", emoji: "🇧🇩", description: "Deshi through and through — if you know, you know. Imposters won't survive this one.", words: bangladeshi },
 ];
 
 export function getCategoryById(id: string): Category | undefined {
