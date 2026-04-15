@@ -38,7 +38,7 @@ export function CategorySelectScreen() {
       </div>
 
       {/* Category list */}
-      <div className="flex-1 overflow-y-auto pb-28 flex flex-col gap-3 animate-slideUpIn">
+      <div className="pb-28 flex flex-col gap-3 animate-slideUpIn">
         {CATEGORIES.map((cat) => {
           const isSelected = activeCategoryId === cat.id;
           return (
@@ -62,7 +62,7 @@ export function CategorySelectScreen() {
       </div>
 
       {/* Sticky CTA */}
-      <div className="fixed bottom-0 left-0 right-0 p-5 bg-gradient-to-t from-[#ff1b6b] to-transparent pointer-events-none flex justify-center">
+      <div className="fixed bottom-0 left-0 right-0 p-5 bg-linear-to-t from-[#ff1b6b] to-transparent pointer-events-none flex justify-center">
         <button onClick={handlePlay} className="btn-big btn-white text-2xl max-w-lg pointer-events-auto">
           PLAY
         </button>

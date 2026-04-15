@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, useCallback, useMemo } from "react";
+import { useRef, useState, useCallback } from "react";
 import { useGame } from "@/hooks/useGame";
 import { getCategoryById, getHintForWord } from "@/lib/wordbanks";
 
@@ -14,29 +14,23 @@ export function RoleRevealScreen() {
   const [phase, setPhase] = useState<RevealPhase>("hidden");
   const [dragY, setDragY] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
-  const [showFirstPlayer, setShowFirstPlayer] = useState(false);
+  const showFirstPlayer = state.currentRevealIndex >= state.players.length;
   const startYRef = useRef(0);
   const lockedRef = useRef(false);
 
   const player = state.players[state.currentRevealIndex];
   const category = getCategoryById(state.categoryId || "");
-  const isLast = state.currentRevealIndex >= state.players.length - 1;
 
   const coverColor = COVER_COLORS[state.currentRevealIndex % COVER_COLORS.length];
   const coverIcon = ICONS[state.currentRevealIndex % ICONS.length];
 
   // Randomly pick who goes first (stable for the round)
-  const firstPlayer = useMemo(() => {
+  const [firstPlayer] = useState(() => {
     const idx = Math.floor(Math.random() * state.players.length);
     return state.players[idx];
-  }, [state.players]);
+  });
 
-  // Navigate to discussion when all players have revealed
-  useEffect(() => {
-    if (state.currentRevealIndex >= state.players.length && !showFirstPlayer) {
-      setShowFirstPlayer(true);
-    }
-  }, [state.currentRevealIndex, state.players.length, showFirstPlayer]);
+
 
   // Advance to next player
   const advance = useCallback(() => {
@@ -105,7 +99,7 @@ export function RoleRevealScreen() {
         </div>
         <button
           onClick={() => dispatch({ type: "SET_PHASE", phase: "discussion" })}
-          className="absolute bottom-0 left-0 right-0 p-5 bg-gradient-to-t from-[#ff1b6b] to-transparent flex justify-center"
+          className="absolute bottom-0 left-0 right-0 p-5 bg-linear-to-t from-[#ff1b6b] to-transparent flex justify-center"
         >
           <span className="btn-big btn-white text-2xl max-w-lg w-full">START DISCUSSION</span>
         </button>
