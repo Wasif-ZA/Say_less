@@ -1,5 +1,5 @@
 export const MIN_PLAYERS = 3;
-export const MAX_PLAYERS = 10;
+export const MAX_PLAYERS = Number.POSITIVE_INFINITY;
 export const MIN_PLAYERS_FOR_TWO_IMPOSTERS = 7;
 export const DEFAULT_TIMER_SECONDS = 120;
 export const REVEAL_AUTO_HIDE_MS = 4000;

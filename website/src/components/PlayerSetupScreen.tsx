@@ -107,7 +107,7 @@ export function PlayerSetupScreen() {
           <div className="flex items-center justify-between mb-4">
             <div>
               <h2 className="font-display text-2xl font-bold">Players</h2>
-              <p className="font-body text-white/40 text-sm">{state.players.length}/{MAX_PLAYERS}</p>
+              <p className="font-body text-white/40 text-sm">{state.players.length} players</p>
             </div>
           </div>
 

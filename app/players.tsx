@@ -194,7 +194,7 @@ export default function PlayerSetup() {
           </View>
           <View className="bg-white/10 px-3 py-1.5 rounded-full">
             <Text className="text-white/80 font-nunito text-xs">
-              {state.players.length}/{MAX_PLAYERS}
+              {state.players.length} Players
             </Text>
           </View>
         </View>
