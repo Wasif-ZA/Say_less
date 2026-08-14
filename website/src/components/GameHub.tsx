@@ -3,7 +3,7 @@
 import { ScreenWrapper } from "./ScreenWrapper";
 
 interface GameHubProps {
-  onSelectGame: (game: "imposter") => void;
+  onSelectGame: (game: "imposter" | "mafia") => void;
 }
 
 export function GameHub({ onSelectGame }: GameHubProps) {
@@ -33,6 +33,24 @@ export function GameHub({ onSelectGame }: GameHubProps) {
               Find the imposter.<br />
               Trust no one.<br />
               <span className="opacity-60 text-xs mt-1 block">3-10 players</span>
+            </p>
+          </button>
+
+          {/* Mafia Card */}
+          <button
+            onClick={() => onSelectGame("mafia")}
+            className="relative flex flex-col items-start p-6 w-full rounded-[16px] overflow-hidden shadow-xl transition-all duration-200 active:scale-95 hover:scale-[1.02]"
+            style={{ backgroundColor: "#2E1E28", minHeight: "140px" }}
+          >
+            <div className="text-4xl mb-2">🌃</div>
+            <div className="flex items-center gap-2 mb-1">
+              <h2 className="font-display text-2xl font-bold text-white">MAFIA</h2>
+              <span className="bg-white/10 text-white/70 text-[10px] uppercase font-bold px-2 py-0.5 rounded-full mt-1">Pass & Play</span>
+            </div>
+            <p className="text-white/70 text-left text-sm mt-auto w-full">
+              The town sleeps.<br />
+              The Mafia doesn&apos;t.<br />
+              <span className="opacity-60 text-xs mt-1 block">4+ players</span>
             </p>
           </button>
 

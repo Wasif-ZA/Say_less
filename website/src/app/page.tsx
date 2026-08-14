@@ -3,8 +3,9 @@
 import { useState } from "react";
 import { GameHub } from "@/components/GameHub";
 import { ImposterPartyGame } from "@/components/ImposterPartyGame";
+import { MafiaGame } from "@/components/mafia/MafiaGame";
 
-type GameType = "hub" | "imposter";
+type GameType = "hub" | "imposter" | "mafia";
 
 export default function Page() {
   const [currentGame, setCurrentGame] = useState<GameType>("hub");
@@ -15,6 +16,10 @@ export default function Page() {
 
   if (currentGame === "imposter") {
     return <ImposterPartyGame key="imposter" onExit={() => setCurrentGame("hub")} />;
+  }
+
+  if (currentGame === "mafia") {
+    return <MafiaGame key="mafia" onExit={() => setCurrentGame("hub")} />;
   }
 
   return null;

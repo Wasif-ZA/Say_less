@@ -20,7 +20,9 @@ const partyTime = [
   "Anniversary", "Graduation", "Retirement", "Baby Shower", "Bridal Shower", "Bachelorette",
   "Bachelor Party", "Engagement", "Reception", "Speech", "Tuxedo", "Gown", "High Heels",
   "Dress Shoes", "Bowtie", "Cufflinks", "Makeup", "Perfume", "Cologne", "Gaye Holud",
-  "Mehendi", "Biye Bari", "Dawat"
+  "Mehendi", "Biye Bari", "Dawat",
+  "Silent Disco", "Open Bar", "Ice Sculpture", "Slow Dance", "Quinceañera",
+  "Sweet Sixteen", "Housewarming", "Potluck", "Game Night", "Movie Night"
 ];
 
 const celebrities = [
@@ -49,7 +51,10 @@ const celebrities = [
   "Jay-Z", "Eminem", "50 Cent", "Kendrick Lamar", "J. Cole", "Future", "Lil Wayne",
   "Adele", "Katy Perry", "Miley Cyrus", "Dua Lipa", "Doja Cat", "Megan Thee Stallion",
   "Lizzo", "Olivia Rodrigo", "Billie Joe Armstrong", "Dave Grohl", "Kurt Cobain",
-  "Freddie Mercury", "Elton John"
+  "Freddie Mercury", "Elton John",
+  "Lionel Messi", "Cristiano Ronaldo", "LeBron James", "Serena Williams",
+  "Michael Jordan", "Usain Bolt", "MrBeast", "Kylie Jenner",
+  "Sabrina Carpenter", "SZA", "Timothée Chalamet", "Pedro Pascal"
 ];
 
 const moviesTv = [
@@ -70,7 +75,9 @@ const moviesTv = [
   "Scream","Halloween","The Exorcist","The Shining","Jaws",
   "Jurassic Park","Harry Potter","Lord of the Rings","Star Wars","Back to the Future",
   "Forrest Gump","The Truman Show","Gladiator","Rocky","Django Unchained",
-  "Wolf of Wall Street","Catch Me If You Can","The Social Network","Whiplash","La La Land"
+  "Wolf of Wall Street","Catch Me If You Can","The Social Network","Whiplash","La La Land",
+  "Avatar","Dune","Deadpool","The Boys","Bridgerton",
+  "Sherlock","Prison Break","Lost","You","Grey's Anatomy"
 ];
 
 const videoGames = [
@@ -91,7 +98,9 @@ const videoGames = [
   "Assassin's Creed","Far Cry","Watch Dogs","Splinter Cell","Hitman",
   "Portal","Half-Life","Left 4 Dead","Garry's Mod","Team Fortress",
   "World of Warcraft","RuneScape","Final Fantasy","Kingdom Hearts","Persona",
-  "Cuphead","Hollow Knight","Celeste","Hades","Undertale"
+  "Cuphead","Hollow Knight","Celeste","Hades","Undertale",
+  "Angry Birds","Fruit Ninja","Crossy Road","Genshin Impact","Palworld",
+  "Helldivers","Balatro","Lethal Company","Baldur's Gate","Geometry Dash"
 ];
 
 const memesInternet = [
@@ -112,7 +121,9 @@ const memesInternet = [
   "Buff","Meta","OP","Clutch","Cracked",
   "Rickroll","Dank Meme","Copypasta","Shitpost","Deep Fried Meme",
   "Wojak","Pepe","Doge","Nyan Cat","Stonks",
-  "This Is Fine","Distracted Boyfriend","Drake Meme","Galaxy Brain","Expanding Brain"
+  "This Is Fine","Distracted Boyfriend","Drake Meme","Galaxy Brain","Expanding Brain",
+  "Mewing","Fanum Tax","Gyatt","Ohio","Aura",
+  "Roman Empire","Girl Dinner","Girl Math","Canon Event","Very Demure"
 ];
 
 const places = [
@@ -139,7 +150,9 @@ const places = [
   "Botanical Garden", "Greenhouse", "Nursery", "Florist", "Landscaper", "Hardware Store",
   "Lumber Yard", "Warehouse", "Factory", "Mill", "Plant", "Refinery", "Mine",
   "Quarry", "Winery", "Brewery", "Distillery", "Vineyard", "Orchard", "Grove",
-  "Cox's Bazar", "Sundarbans", "Tea Garden", "TSC", "Hatirjheel", "Lalbagh Fort"
+  "Cox's Bazar", "Sundarbans", "Tea Garden", "TSC", "Hatirjheel", "Lalbagh Fort",
+  "Eiffel Tower", "Times Square", "Grand Canyon", "Great Wall", "Taj Mahal",
+  "Statue of Liberty", "Big Ben", "Mount Everest", "Niagara Falls", "Las Vegas"
 ];
 
 
@@ -163,7 +176,9 @@ const sports = [
   "Dragon Boat", "Fishing", "Angling", "Fly Fishing", "Ice Fishing", "Equestrian",
   "Dressage", "Show Jumping", "Eventing", "Polo", "Horse Racing", "Rodeo", "Bull Riding",
   "Barrel Racing", "Vaulting", "Cycling", "Road Cycling", "Track Cycling", "Mountain Biking",
-  "BMX", "Cyclo-cross", "Motorcycle Racing", "Motocross", "Supercross", "Speedway"
+  "BMX", "Cyclo-cross", "Motorcycle Racing", "Motocross", "Supercross", "Speedway",
+  "Formula 1", "NASCAR", "Pickleball", "Padel", "Squash", "Handball",
+  "Softball", "Kabaddi", "Sumo", "MMA", "Judo", "Taekwondo"
 ];
 
 const spicy = [
@@ -189,7 +204,9 @@ const spicy = [
   "Fugitive", "Manhunt", "Bounty", "Most Wanted", "Interpol", "Extradition",
   "Asylum", "Refugee", "Deportation", "Para'r Aunty", "Biye Bari Drama", "Secret Prem",
   "Chhaad Date", "Coaching Bunker", "Caught by Abba", "Bhabi Gossip", "Rishta",
-  "Cousin Drama", "Chapa Mara"
+  "Cousin Drama", "Chapa Mara",
+  "Love Triangle", "Soft Launch", "Hard Launch", "Left on Read", "Love Bombing",
+  "Breadcrumbing", "Long Distance", "Office Romance", "Meet the Parents", "Second Chance"
 ];
 
 const techGadgets = [
@@ -204,7 +221,9 @@ const techGadgets = [
   "Disney Plus","Amazon","Google","Microsoft","Apple","Samsung","Sony","Tesla","OpenAI",
   "ChatGPT","Bitcoin","NFT","Metaverse","Virtual Reality","Augmented Reality","AI",
   "Algorithm","Hacker","Phishing","Malware","Ransomware","App Store","Update","Bug Fix",
-  "Open Source","Server","API","JavaScript","Python","GitHub","Discord","Zoom","Slack"
+  "Open Source","Server","API","JavaScript","Python","GitHub","Discord","Zoom","Slack",
+  "Kindle","3D Printer","Mechanical Keyboard","Gaming Chair","Smart Ring",
+  "Dash Cam","Ring Doorbell","Electric Scooter","Smart Fridge","Face ID"
 ];
 
 const disney = [
@@ -219,7 +238,9 @@ const disney = [
   "Maleficent","Ursula","Cruella","Hades","Jafar","Genie","Sebastian","Flounder",
   "Hercules","Megara","Mowgli","Baloo","Bagheera","Tarzan","Jane","Pongo","Perdita",
   "Lady","Tramp","Pinocchio","Jiminy Cricket","Mary Poppins","Bruno","Mirabel",
-  "Miguel","Coco","Encanto","Frozen","Tangled","Brave","Zootopia","Big Hero Six"
+  "Miguel","Coco","Encanto","Frozen","Tangled","Brave","Zootopia","Big Hero Six",
+  "Maui","Baymax","Judy Hopps","Nick Wilde","Kuzco",
+  "Hei Hei","Gaston","Lumiere","Cogsworth","Yzma"
 ];
 
 const anime = [
@@ -235,7 +256,9 @@ const anime = [
   "All Might","Deku","Bakugo","Todoroki","Uraraka","Iida","Endeavor",
   "Asta","Yuno","Denji","Power","Makima","Aki","Pochita",
   "Spike Spiegel","Vash","Inuyasha","Kagome","Ichigo","Rukia","Aizen",
-  "Pikachu","Ash Ketchum","Misty","Brock","Eevee","Charizard","Mewtwo"
+  "Pikachu","Ash Ketchum","Misty","Brock","Eevee","Charizard","Mewtwo",
+  "Gon","Killua","Hisoka","Kurapika","Jotaro","Dio",
+  "Lelouch","Zero Two","Anya","Loid","Yor","Rem"
 ];
 
 const fashionStyle = [
@@ -250,7 +273,9 @@ const fashionStyle = [
   "Supreme","Off-White","Balenciaga","Crop Top","Bikini","Pajamas","Robe",
   "Denim Jacket","Leather Jacket","Trench Coat","Parka","Windbreaker","Bomber Jacket",
   "Cardigan","Vest","Blazer","Polo Shirt","Tank Top","Leggings","Jumpsuit","Romper",
-  "Cape","Poncho","Kimono","Sari","Hijab","Turban","Tiara"
+  "Cape","Poncho","Kimono","Sari","Hijab","Turban","Tiara",
+  "Zara","H&M","Shein","Uniqlo","Lululemon",
+  "Cargo Pants","Sweatpants","Bucket Hat","Fanny Pack","Corset"
 ];
 
 const schoolLife = [
@@ -266,7 +291,9 @@ const schoolLife = [
   "Periodic Table","Microscope","Telescope","Globe","Atlas","Dictionary","Thesaurus",
   "Algebra","Geometry","Calculus","Biology","Chemistry","Physics","History",
   "Geography","Spanish Class","Art Class","Music Class","PE Class","English Class",
-  "Group Project","Study Hall","Tardy Slip","Bake Sale","Lost and Found"
+  "Group Project","Study Hall","Tardy Slip","Bake Sale","Lost and Found",
+  "Valedictorian","Honor Roll","Flash Cards","Whiteboard","Smart Board",
+  "School Bell","Attendance","Gym Uniform","Sticky Notes","Highlighter"
 ];
 
 const bangladeshi = [
@@ -287,7 +314,9 @@ const bangladeshi = [
   "Kazi Nazrul Islam","Rabindranath","Moushumi",
   // Everyday Life & Slang
   "CNG","Tempo","Bhodro Lok","Adda","Hartal","Cha","Mama","Bhai","Taka",
-  "Onek Boro Bappar Pola"
+  "Onek Boro Bappar Pola",
+  "Padma Bridge","Rickshaw","Jamdani","Panjabi","Bhorta",
+  "Shutki","Tehari","Tamim Iqbal","Mustafizur","Sangsad Bhaban"
 ];
 
 export const CATEGORIES: Category[] = [
@@ -346,6 +375,34 @@ const HINTS: Record<string, string> = {
   // School Life
   "Pencil":"Number two writes","Eraser":"Pink mistake remover","Ruler":"Measure straight line","Notebook":"Lined paper bound","Textbook":"Heavy class book","Calculator":"Math problem solver","Locker":"Hallway storage box","Hall Pass":"Bathroom permission slip","Field Trip":"Class outing day","Recess":"Outdoor play break","Cafeteria":"School food hall","Detention":"After school punishment","Homework":"Take home work","Pop Quiz":"Surprise short test","Final Exam":"End semester test","Report Card":"Grade results paper","Diploma":"Graduation paper proof","Class President":"Student elected leader","Yearbook":"Memory photo book","Prom":"Big school dance","Homecoming":"Alumni return weekend","Mascot":"School costume animal","Pep Rally":"Spirit gym event","Cheerleader":"Pom-pom waver","Football Team":"School sport squad","Marching Band":"Field instrument players","Chess Club":"Board game group","Debate Team":"Argument competition club","Drama Club":"School theater group","Science Fair":"Project poster board","Spelling Bee":"Letter contest challenge","Field Day":"Outdoor games day","Substitute Teacher":"Filler day teacher","Principal":"School big boss","Counselor":"Schedule advice giver","Janitor":"Cleans school floors","School Bus":"Yellow ride home","Crossing Guard":"Stop sign holder","Auditorium":"Big stage room","Gymnasium":"Indoor sports court","Computer Lab":"Tech classroom row","Science Lab":"Beaker experiment room","Pizza Day":"Best lunch day","Capture the Flag":"Team strategy game","Show and Tell":"Bring share day","Naptime":"Kindergarten rest break","Crayon":"Wax color stick","Glue Stick":"Twist paper paste","Scissors":"Cutting safety tool","Construction Paper":"Colored craft sheets","Protractor":"Angle measure tool","Compass":"Draw circles point","Lab Goggles":"Eye safety glasses","Bunsen Burner":"Blue flame lab","Periodic Table":"Element grid chart","Microscope":"Tiny thing zoom","Telescope":"Far away zoom","Globe":"Spinning earth ball","Atlas":"Big map book","Dictionary":"Word meaning book","Thesaurus":"Synonym word book","Algebra":"Letters in math","Geometry":"Shapes and angles","Calculus":"Advanced derivative math","Biology":"Living things class","Chemistry":"Mix and react","Physics":"Force motion class","History":"Past events class","Geography":"World places class","Spanish Class":"Hola amigo lesson","Art Class":"Paint draw create","Music Class":"Sing play instrument","PE Class":"Gym sport period","English Class":"Books grammar essays","Group Project":"One person works","Study Hall":"Quiet free period","Tardy Slip":"Late note pass","Bake Sale":"Cookie fundraiser table","Lost and Found":"Forgotten item bin",
   "Tinder":"Dating app swipes","Bumble":"Women message first","Hinge":"Delete after marriage","Raya":"Exclusive dating app","Late Night Text":"Drunk message someone","Sneaking Out":"Leave without permission","Cover Up":"Hide the truth","Alibi":"False presence excuse","White Lie":"Minor untruth told","Betrayal":"Trust broken completely","Double Life":"Two identity living","Affair":"Secret romantic involvement","Temptation":"Forbidden desire pull","Forbidden":"Not allowed attraction","Taboo":"Socially unacceptable topic","Naughty":"Mildly bad behavior","Guilty Pleasure":"Shameful enjoyment secret","Secret Santa":"Anonymous gift giving","Eavesdrop":"Listen without permission","Overheard":"Unintended conversation hearing","Exposed":"Secret revealed publicly","Cancelled":"Publicly shamed boycott","Receipts":"Evidence proof documentation","Screenshot":"Image capture proof","DM Slide":"Direct message approach","Thirst Trap":"Attracting attention intentionally","OnlyFans":"Subscription content platform","Sugar Daddy":"Rich older man","Sugar Baby":"Young money seeker","Trophy Wife":"Young beautiful spouse","Gold Digger":"Money motivated partner","Prenup":"Marriage money agreement","Divorce":"End marriage legally","Alimony":"Post-divorce payment obligation","Child Support":"Dependent parent payment","Custody":"Parental rights determination","Paternity Test":"Father verification DNA","DNA":"Genetic material identification","Lie Detector":"Truth measuring machine","Polygraph":"Deception detection test","Investigation":"Systematic truth seeking","Private Eye":"Hired investigator person","Surveillance":"Covert watching monitoring","Wiretap":"Illegal phone listening","Blackmail":"Coerce through exposure","Extortion":"Money through threats","Bribery":"Pay for favors","Corruption":"Dishonest official conduct","Scam":"Fraudulent money scheme","Fraud":"Deliberate deception crime","Embezzlement":"Steal employer money","Money Laundering":"Illegal funds cleaning","Tax Evasion":"Illegal tax avoidance","Offshore Account":"Hidden foreign money","Shell Company":"Fake business entity","Cayman Islands":"Tax haven location","Swiss Bank":"Confidential banking service","Hush Money":"Silence buying payment","NDA":"Confidentiality legal agreement","Gag Order":"Court silence mandate","Lawsuit":"Legal court action","Settlement":"Legal dispute resolution","Class Action":"Group legal suit","Subpoena":"Court attendance order","Deposition":"Sworn statement testimony","Testimony":"Witness statement evidence","Perjury":"Under oath lying","Contempt":"Disrespect authority crime","Verdict":"Jury decision judgment","Guilty":"Crime proven true","Innocent":"Uncharged crime status","Acquitted":"Court not guilty","Pardon":"Presidential crime forgiveness","Parole":"Prison early release","Probation":"Supervised freedom period","Community Service":"Unpaid work punishment","House Arrest":"Home confined restriction","Ankle Monitor":"Electronic tracking device","Bail":"Court temporary freedom","Bond":"Financial court security","Jail":"Detention facility confinement","Inmate":"Prison resident person","Warden":"Prison authority leader","Guard":"Prison security officer","Smuggle":"Illegal goods transport","Contraband":"Forbidden prison items","Shank":"Prison knife weapon","Solitary":"Isolation punishment cell","Riot":"Prison uprising violence","Escape":"Prison unauthorized departure","Fugitive":"Escaped criminal person","Manhunt":"Large criminal search","Bounty":"Reward for capture","Most Wanted":"Top criminal list","Interpol":"International police organization","Extradition":"Criminal country transfer","Asylum":"Political refuge protection","Refugee":"Displaced person escape","Deportation":"Forced country removal",
+  // Party Time — new additions
+  "Silent Disco":"Headphones dance party","Open Bar":"Free drinks all night","Ice Sculpture":"Frozen art centerpiece","Slow Dance":"Swaying close together","Quinceañera":"Fifteenth birthday celebration","Sweet Sixteen":"Sixteenth birthday bash","Housewarming":"New home celebration","Potluck":"Everyone brings food","Game Night":"Board games with friends","Movie Night":"Films and snacks in",
+  // Celebrities — new additions
+  "Lionel Messi":"Argentine soccer GOAT","Cristiano Ronaldo":"Siuuu soccer star","LeBron James":"King of basketball","Serena Williams":"Tennis grand slam queen","Michael Jordan":"Six rings legend","Usain Bolt":"Fastest man alive","MrBeast":"Giveaway YouTube king","Kylie Jenner":"Lip kit billionaire","Sabrina Carpenter":"Espresso pop singer","SZA":"Kill Bill R&B singer","Timothée Chalamet":"Dune curly heartthrob","Pedro Pascal":"Internet's favorite dad actor",
+  // Movies & TV — new additions
+  "Avatar":"Blue aliens on Pandora","Dune":"Desert spice worms","Deadpool":"Fourth wall mercenary","The Boys":"Corrupt superheroes exposed","Bridgerton":"Regency romance scandal","Sherlock":"Deduction detective genius","Prison Break":"Tattooed escape plan","Lost":"Mysterious island survivors","You":"Charming stalker narrates","Grey's Anatomy":"Endless hospital drama",
+  // Video Games — new additions
+  "Angry Birds":"Slingshot versus pigs","Fruit Ninja":"Swipe slicing produce","Crossy Road":"Endless road hopping","Genshin Impact":"Anime open world gacha","Palworld":"Pokemon with guns","Helldivers":"Spreading democracy co-op","Balatro":"Poker roguelike deckbuilder","Lethal Company":"Scrap collecting horror","Baldur's Gate":"Dungeons and dragons RPG","Geometry Dash":"Rhythm cube jumping",
+  // Memes & Internet — new additions
+  "Mewing":"Jawline tongue exercise","Fanum Tax":"Snack stealing tribute","Gyatt":"Exclamation for curves","Ohio":"Cursed American state","Aura":"Invisible cool points","Roman Empire":"Thing men think about","Girl Dinner":"Snack plate meal","Girl Math":"Justified spending logic","Canon Event":"Unavoidable character moment","Very Demure":"Very mindful very cutesy",
+  // Places — new additions
+  "Eiffel Tower":"Paris iron landmark","Times Square":"NYC billboard chaos","Grand Canyon":"Giant Arizona gorge","Great Wall":"China's long barrier","Taj Mahal":"White marble mausoleum","Statue of Liberty":"Green torch lady","Big Ben":"London clock tower","Mount Everest":"World's highest peak","Niagara Falls":"Massive border waterfall","Las Vegas":"Desert casino city",
+  // Sports — new additions
+  "Formula 1":"Fastest race cars","NASCAR":"Oval stock car racing","Pickleball":"Paddle net craze","Padel":"Walled tennis doubles","Squash":"Indoor wall racket","Handball":"Throw into goal","Softball":"Bigger ball baseball","Kabaddi":"Raiding tag sport","Sumo":"Giant wrestlers ring","MMA":"Cage fighting mixed","Judo":"Throwing martial art","Taekwondo":"Korean kicking art",
+  // Spicy — new additions
+  "Love Triangle":"Three hearts tangled","Soft Launch":"Hinting new partner online","Hard Launch":"Official couple post","Left on Read":"Seen but ignored","Love Bombing":"Overwhelming early affection","Breadcrumbing":"Tiny hope crumbs","Long Distance":"Miles apart couple","Office Romance":"Workplace secret love","Meet the Parents":"Big family introduction","Second Chance":"Trying love again",
+  // Tech & Gadgets — new additions
+  "Kindle":"Amazon e-book reader","3D Printer":"Layer by layer maker","Mechanical Keyboard":"Clicky typing keys","Gaming Chair":"Racing seat for desks","Smart Ring":"Finger health tracker","Dash Cam":"Car incident recorder","Ring Doorbell":"Camera front door","Electric Scooter":"Standing powered ride","Smart Fridge":"Internet connected cooler","Face ID":"Look to unlock",
+  // Disney — new additions
+  "Maui":"Shapeshifting demigod hook","Baymax":"Inflatable healthcare robot","Judy Hopps":"Bunny cop rookie","Nick Wilde":"Sly fox hustler","Kuzco":"Llama emperor groove","Hei Hei":"Dumb chicken stowaway","Gaston":"No one like him","Lumiere":"Singing candlestick host","Cogsworth":"Uptight talking clock","Yzma":"Potion lab villainess",
+  // Anime — new additions
+  "Gon":"Fishing rod hunter kid","Killua":"Lightning assassin friend","Hisoka":"Creepy card clown","Kurapika":"Chain user avenger","Jotaro":"Star platinum delinquent","Dio":"Road roller vampire","Lelouch":"Geass strategist prince","Zero Two":"Pink horned darling","Anya":"Mind reading child","Loid":"Spy fake father","Yor":"Assassin fake mother","Rem":"Blue haired maid",
+  // Fashion & Style — new additions
+  "Zara":"Spanish fast fashion","H&M":"Swedish budget clothing","Shein":"Ultra cheap online hauls","Uniqlo":"Japanese basics brand","Lululemon":"Premium yoga wear","Cargo Pants":"Many pocket pants","Sweatpants":"Cozy lazy day","Bucket Hat":"Round brim fisherman","Fanny Pack":"Waist strap bag","Corset":"Tight waist cincher",
+  // School Life — new additions
+  "Valedictorian":"Top of the class","Honor Roll":"Good grades list","Flash Cards":"Quick memory quizzing","Whiteboard":"Dry erase board","Smart Board":"Touchscreen classroom display","School Bell":"Class change ring","Attendance":"Present or absent","Gym Uniform":"PE dress code","Sticky Notes":"Small paper reminders","Highlighter":"Neon marking pen",
+  // Bangladeshi — new additions
+  "Padma Bridge":"Pride over the river","Rickshaw":"Three wheeled pedal ride","Jamdani":"Fine woven sari","Panjabi":"Men's festive tunic","Bhorta":"Mashed spicy sides","Shutki":"Dried fish delicacy","Tehari":"Spicy beef rice","Tamim Iqbal":"Opening batsman legend","Mustafizur":"Cutter master bowler","Sangsad Bhaban":"Parliament building icon",
 };
 
 export function getHintForWord(word: string): string {
