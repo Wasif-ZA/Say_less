@@ -1,5 +1,6 @@
 "use client";
 
+import { initials } from "@/lib/initials";
 import { useEffect, useRef, useState } from "react";
 import { useMafia } from "@/hooks/useMafia";
 import { MIN_MAFIA_PLAYERS, maxMafiaFor, recommendedMafiaFor } from "@/lib/mafia/engine";
@@ -89,7 +90,7 @@ export function MafiaSetupScreen() {
   const canRemove = state.players.length > MIN_MAFIA_PLAYERS;
 
   return (
-    <ScreenWrapper bgClassName="bg-grid-pattern">
+    <ScreenWrapper bgClassName="bg-mafia">
       {/* Header */}
       <div className="flex items-center justify-between mb-6 pt-2">
         <button
@@ -105,7 +106,7 @@ export function MafiaSetupScreen() {
       <div className="flex-1 overflow-y-auto pb-28 scrollbar-hide flex flex-col gap-5 animate-slideUpIn">
 
         {/* Players */}
-        <div className="card-surface rounded-[28px] p-5 border border-white/10">
+        <div className="card-surface rounded-[24px] p-5 border border-white/10">
           <div className="flex items-center justify-between mb-4">
             <div>
               <h2 className="font-display text-2xl font-bold">Players</h2>
@@ -119,7 +120,7 @@ export function MafiaSetupScreen() {
             {state.players.map((player, i) => (
               <div key={player.id} className="flex items-center gap-3 bg-white/5 rounded-2xl px-3 py-2.5">
                 <div className={`w-9 h-9 rounded-full flex items-center justify-center text-sm font-display font-bold shrink-0 ${AVATAR_BG[i % AVATAR_BG.length]}`}>
-                  {player.name.charAt(0).toUpperCase()}
+                  {initials(player.name)}
                 </div>
 
                 {editingId === player.id ? (
@@ -161,7 +162,7 @@ export function MafiaSetupScreen() {
         </div>
 
         {/* Mafia count */}
-        <div className="card-surface rounded-[28px] p-6 border border-white/10">
+        <div className="card-surface rounded-[24px] p-6 border border-white/10">
           <h2 className="font-display text-2xl font-bold mb-1">🔪 Mafia</h2>
           <p className="font-body text-white/40 text-sm mb-5">
             How many? Suggested: {recommended} for {state.players.length} players
@@ -186,7 +187,7 @@ export function MafiaSetupScreen() {
         </div>
 
         {/* Special roles */}
-        <div className="card-surface rounded-[28px] p-6 border border-white/10 flex flex-col gap-5">
+        <div className="card-surface rounded-[24px] p-6 border border-white/10 flex flex-col gap-5">
           <div className="flex items-center justify-between gap-3">
             <div>
               <h2 className="font-display text-xl font-bold">🕵️ Detective</h2>
@@ -205,7 +206,7 @@ export function MafiaSetupScreen() {
       </div>
 
       {/* Sticky CTA */}
-      <div className="fixed bottom-0 left-0 right-0 p-5 bg-gradient-to-t from-[#ff1b6b] to-transparent pointer-events-none flex justify-center">
+      <div className="fixed bottom-0 left-0 right-0 p-5 bg-linear-to-t from-mafia via-mafia to-transparent pointer-events-none flex justify-center">
         <button
           onClick={startGame}
           className={`btn-big btn-white text-2xl max-w-lg pointer-events-auto ${canStart ? "" : "opacity-30 pointer-events-none"}`}

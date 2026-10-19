@@ -46,7 +46,7 @@ export function MafiaVerdictScreen() {
         )}
       </div>
 
-      <div className="absolute bottom-0 left-0 right-0 p-5 bg-linear-to-t from-[#ff1b6b] to-transparent flex justify-center">
+      <div className="absolute bottom-0 left-0 right-0 p-5 bg-linear-to-t from-black to-transparent flex justify-center">
         <button
           onClick={() => dispatch({ type: "CONTINUE_AFTER_VERDICT" })}
           className="btn-big btn-white text-2xl max-w-lg w-full"

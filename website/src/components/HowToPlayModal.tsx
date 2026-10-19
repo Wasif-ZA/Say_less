@@ -1,7 +1,7 @@
 "use client";
 
 const steps = [
-  { emoji: "🎭", title: "Get your roles", text: "Everyone sees a secret word — except the Imposter." },
+  { emoji: "🎭", title: "Get your roles", text: "Everyone sees a secret word, except the Imposter." },
   { emoji: "🗣️", title: "Describe it", text: "Give vague hints about the word. Don't be too obvious!" },
   { emoji: "👀", title: "Spot the fake", text: "The Imposter is making it up. Listen carefully." },
   { emoji: "🗳️", title: "Vote them out", text: "Agree as a group on who to eliminate." },

@@ -27,7 +27,7 @@ export function SummaryScreen() {
   });
   const sortedScores = Object.values(scores).sort((a, b) => b.wins - a.wins);
 
-  const bgClass = townWins ? "bg-solid-green" : "bg-gradient-to-b from-[#ff2a5f] to-[#ff6b3d]";
+  const bgClass = townWins ? "bg-solid-green" : "bg-imposter";
   const resultEmoji = townWins ? "🎉" : "😈";
   const resultText = townWins ? "TOWN WINS" : "IMPOSTER WINS";
 
@@ -69,7 +69,7 @@ export function SummaryScreen() {
         {state.roundScores.length > 1 && (
           <div className="animate-fadeInUp stagger-2">
             <p className="font-display font-bold text-white/50 text-xs uppercase tracking-widest mb-3 text-center">
-              Scoreboard — Round {state.round}
+              Scoreboard, Round {state.round}
             </p>
             <div className="card-surface rounded-[24px] border border-white/15 divide-y divide-white/10">
               {sortedScores.map((s, i) => (

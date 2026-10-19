@@ -19,7 +19,7 @@ interface MafiaGameProps {
 function InnerMafia({ onExit }: MafiaGameProps) {
   const { state } = useMafia();
 
-  // Block browser back during an active game — going back would leak roles
+  // Block browser back during an active game, going back would leak roles
   useEffect(() => {
     const gamePhases = ["reveal", "night", "dawn", "day", "verdict", "summary"];
     if (gamePhases.includes(state.phase)) {

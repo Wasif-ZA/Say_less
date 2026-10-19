@@ -1,5 +1,6 @@
 "use client";
 
+import { initials } from "@/lib/initials";
 import { useMafia } from "@/hooks/useMafia";
 import { ScreenWrapper } from "../ScreenWrapper";
 import { AVATAR_BG, ROLE_META } from "./roleMeta";
@@ -13,7 +14,7 @@ export function MafiaSummaryScreen({ onExit }: MafiaSummaryScreenProps) {
   const townWins = state.winner === "town";
 
   return (
-    <ScreenWrapper bgClassName="bg-dark-immersive">
+    <ScreenWrapper bgClassName="bg-ink">
       {/* Winner banner */}
       <div className="text-center pt-6 pb-5 animate-bounceIn">
         <div className="text-[80px] mb-2">{townWins ? "🎉" : "🔪"}</div>
@@ -31,7 +32,7 @@ export function MafiaSummaryScreen({ onExit }: MafiaSummaryScreenProps) {
 
       {/* Role reveal */}
       <div className="flex-1 overflow-y-auto pb-6 scrollbar-hide animate-fadeInUp stagger-2">
-        <div className="card-surface rounded-[28px] p-5 border border-white/10">
+        <div className="card-surface rounded-[24px] p-5 border border-white/10">
           <h2 className="font-display text-xl font-bold mb-4">The Whole Truth</h2>
           <div className="flex flex-col gap-2">
             {state.players.map((player, i) => {
@@ -44,7 +45,7 @@ export function MafiaSummaryScreen({ onExit }: MafiaSummaryScreenProps) {
                   }`}
                 >
                   <div className={`w-9 h-9 rounded-full flex items-center justify-center text-sm font-display font-bold shrink-0 ${AVATAR_BG[i % AVATAR_BG.length]} ${player.isAlive ? "" : "opacity-40"}`}>
-                    {player.name.charAt(0).toUpperCase()}
+                    {initials(player.name)}
                   </div>
                   <span className={`flex-1 font-body font-semibold text-[15px] truncate ${player.isAlive ? "text-white" : "text-white/40 line-through"}`}>
                     {player.name}

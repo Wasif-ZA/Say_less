@@ -1,5 +1,6 @@
 "use client";
 
+import { initials } from "@/lib/initials";
 import { useState } from "react";
 import { useMafia } from "@/hooks/useMafia";
 import { alivePlayers } from "@/lib/mafia/engine";
@@ -33,12 +34,12 @@ function TargetGrid({
           <button
             key={target.id}
             onClick={() => onSelect(target.id)}
-            className={`card-surface rounded-[20px] p-4 flex flex-col items-center gap-2 active:scale-[0.97] transition-all border ${
+            className={`card-surface rounded-[24px] p-4 flex flex-col items-center gap-2 active:scale-[0.97] transition-all border ${
               isSelected ? accentClasses : "border-white/10"
             }`}
           >
             <div className={`w-11 h-11 rounded-full flex items-center justify-center text-lg font-display font-bold ${AVATAR_BG[i % AVATAR_BG.length]}`}>
-              {target.name.charAt(0).toUpperCase()}
+              {initials(target.name)}
             </div>
             <span className="font-display font-bold text-white text-sm text-center leading-tight">
               {target.name}
@@ -80,13 +81,13 @@ export function MafiaNightScreen() {
     }
   }
 
-  // ——— Cover: pass the phone ———
+  // , , ,  Cover: pass the phone , , , 
   if (stage === "cover") {
     return (
       <div className="fixed inset-0 bg-black text-white flex flex-col items-center justify-center p-6 text-center">
         <div className="animate-fadeIn flex flex-col items-center gap-5">
           <p className="font-display font-bold text-white/40 tracking-widest uppercase text-base">
-            🌙 Night {state.round} — Pass the phone to
+            🌙 Night {state.round}, Pass the phone to
           </p>
           <h1 className="font-display text-[52px] font-bold leading-tight drop-shadow-lg">
             {player.name}
@@ -97,14 +98,14 @@ export function MafiaNightScreen() {
         </div>
         <div className="absolute bottom-0 left-0 right-0 p-5 flex justify-center">
           <button onClick={() => setStage("action")} className="btn-big btn-glass text-xl max-w-lg w-full">
-            I&apos;M {player.name.toUpperCase()} — WAKE UP
+            I&apos;M {player.name.toUpperCase()}, WAKE UP
           </button>
         </div>
       </div>
     );
   }
 
-  // ——— Detective result ———
+  // , , ,  Detective result , , , 
   if (stage === "result" && player.role === "detective") {
     const target = state.players.find((p) => p.id === selectedId);
     const isMafia = target?.role === "mafia";
@@ -121,14 +122,14 @@ export function MafiaNightScreen() {
         </div>
         <div className="absolute bottom-0 left-0 right-0 p-5 flex justify-center">
           <button onClick={finishTurn} className="btn-big btn-white text-xl max-w-lg w-full">
-            DONE — PASS THE PHONE
+            DONE, PASS THE PHONE
           </button>
         </div>
       </div>
     );
   }
 
-  // ——— Night action ———
+  // , , ,  Night action , , , 
   const isMafia = player.role === "mafia";
   const isDoctor = player.role === "doctor";
   const isDetective = player.role === "detective";
@@ -166,7 +167,7 @@ export function MafiaNightScreen() {
           <h1 className="font-display text-[32px] font-bold tracking-wide leading-tight">{heading}</h1>
           {isMafia && partnerPick && (
             <p className="font-body text-accent-red/80 text-sm mt-1">
-              A partner picked {partnerPick.name} — majority decides
+              A partner picked {partnerPick.name}, majority decides
             </p>
           )}
         </div>
@@ -188,7 +189,7 @@ export function MafiaNightScreen() {
         <div className="fixed bottom-0 left-0 right-0 p-5 flex justify-center">
           {player.role === "civilian" ? (
             <button onClick={finishTurn} className="btn-big btn-white text-xl max-w-lg w-full">
-              DONE — PASS THE PHONE
+              DONE, PASS THE PHONE
             </button>
           ) : (
             <button

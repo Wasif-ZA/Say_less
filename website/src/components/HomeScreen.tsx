@@ -14,7 +14,7 @@ export function HomeScreen({ onExit }: HomeScreenProps) {
   const [showHTP, setShowHTP] = useState(false);
 
   return (
-    <ScreenWrapper bgClassName="bg-grid-pattern">
+    <ScreenWrapper bgClassName="bg-imposter">
       {onExit && (
         <button 
           onClick={onExit} 

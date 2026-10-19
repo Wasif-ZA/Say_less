@@ -1,5 +1,6 @@
 "use client";
 
+import { initials } from "@/lib/initials";
 import { useState } from "react";
 import { useMafia } from "@/hooks/useMafia";
 import { alivePlayers } from "@/lib/mafia/engine";
@@ -43,7 +44,7 @@ export function MafiaDayScreen() {
   }
 
   return (
-    <ScreenWrapper bgClassName="bg-grid-pattern">
+    <ScreenWrapper bgClassName="bg-imposter">
       {/* Header */}
       <div className="pt-4 pb-4 text-center animate-slideDown">
         <p className="font-display font-bold text-white/40 tracking-widest uppercase text-sm mb-1">
@@ -66,18 +67,18 @@ export function MafiaDayScreen() {
               <button
                 key={player.id}
                 onClick={() => setSelectedId(isSelected ? null : player.id)}
-                className={`card-surface rounded-[24px] p-5 flex flex-col items-center gap-3 active:scale-[0.97] transition-all min-h-[120px] justify-center border ${
+                className={`card-surface rounded-[24px] p-5 flex flex-col items-center gap-3 active:scale-[0.97] transition-all min-h-[120px] justify-center border-[3px] ${
                   isSelected
-                    ? "border-accent-red bg-accent-red/15 shadow-[0_0_40px_rgba(255,51,102,0.2)]"
-                    : "border-white/10"
+                    ? "bg-acid! text-ink border-ink"
+                    : "border-transparent"
                 }`}
               >
                 <div className={`w-14 h-14 rounded-full flex items-center justify-center text-2xl font-display font-bold shadow-lg transition-colors ${
-                  isSelected ? "bg-accent-red" : AVATAR_BG[i % AVATAR_BG.length]
+                  isSelected ? "bg-ink text-white" : AVATAR_BG[i % AVATAR_BG.length]
                 }`}>
-                  {player.name.charAt(0).toUpperCase()}
+                  {initials(player.name)}
                 </div>
-                <span className="font-display font-bold text-white text-[15px] text-center leading-tight">
+                <span className={`font-display font-bold text-[15px] text-center leading-tight ${isSelected ? "text-ink" : "text-white"}`}>
                   {player.name}
                 </span>
               </button>
@@ -89,12 +90,12 @@ export function MafiaDayScreen() {
           onClick={() => dispatch({ type: "DAY_VOTE", targetId: null })}
           className="w-full mt-4 border border-dashed border-white/15 rounded-2xl py-3.5 text-white/40 hover:text-white/70 hover:border-white/30 transition-colors font-body font-semibold text-sm active:scale-[0.98]"
         >
-          🤷 Skip — nobody gets eliminated
+          🤷 Skip, nobody gets eliminated
         </button>
       </div>
 
       {/* Sticky CTA */}
-      <div className="fixed bottom-0 left-0 right-0 p-5 bg-gradient-to-t from-[#ff1b6b] to-transparent pointer-events-none flex justify-center">
+      <div className="fixed bottom-0 left-0 right-0 p-5 bg-linear-to-t from-imposter via-imposter to-transparent pointer-events-none flex justify-center">
         <button
           onClick={() => selectedId && setConfirming(true)}
           className={`btn-big btn-white text-2xl max-w-lg pointer-events-auto transition-opacity ${selectedId ? "" : "opacity-30 pointer-events-none"}`}

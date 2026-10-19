@@ -81,7 +81,7 @@ export function DiscussionScreen() {
               <circle
                 cx="128" cy="128" r="120"
                 fill="none"
-                stroke={isUrgent ? "#ff3366" : isWarning ? "#ff9500" : "rgba(255,255,255,0.25)"}
+                stroke={isUrgent ? "#ff3366" : isWarning ? "#ff9500" : "#d9ff3d"}
                 strokeWidth="6"
                 strokeLinecap="round"
                 strokeDasharray={circumference}
