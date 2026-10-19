@@ -23,8 +23,12 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
     case "SET_PHASE":
       return { ...state, phase: action.phase };
 
-    case "SET_PLAYERS":
-      return { ...state, players: action.players };
+    case "SET_PLAYERS": {
+      const imposterCount = action.players.length < MIN_PLAYERS_FOR_TWO_IMPOSTERS ? 1 : state.imposterCount;
+      const byName = new Map(state.players.map((p) => [p.name.toLowerCase(), p.id]));
+      const players = action.players.map((p) => ({ ...p, id: byName.get(p.name.toLowerCase()) ?? p.id }));
+      return { ...state, players, imposterCount };
+    }
 
     case "ADD_PLAYER": {
       if (state.players.length >= MAX_PLAYERS) return state;

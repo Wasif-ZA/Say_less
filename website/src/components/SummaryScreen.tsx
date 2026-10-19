@@ -1,10 +1,12 @@
 "use client";
 
+import { line, useMountSeed } from "@/lib/lines";
 import { Art } from "@/components/Art";
 import { useGame } from "@/hooks/useGame";
 
 export function SummaryScreen() {
   const { state, dispatch } = useGame();
+  const seed = useMountSeed();
 
   const latestRound = state.roundScores[state.roundScores.length - 1];
   if (!latestRound) return null;
@@ -26,7 +28,14 @@ export function SummaryScreen() {
       });
     }
   });
-  const sortedScores = Object.values(scores).sort((a, b) => b.wins - a.wins);
+  const roundWinners = new Set(
+    state.players.filter((p) => latestRound.imposterIds.includes(p.id) !== townWins).map((p) => p.id)
+  );
+  const sortedScores = Object.entries(scores)
+    .map(([id, s]) => ({ id, ...s }))
+    .sort((a, b) => b.wins - a.wins || a.name.localeCompare(b.name));
+  const ranks = sortedScores.map((s) => 1 + sortedScores.filter((o) => o.wins > s.wins).length);
+  const MEDALS = ["🥇", "🥈", "🥉"];
 
   const bgClass = townWins ? "bg-hub" : "bg-imposter";
   const resultText = townWins ? "TOWN WINS" : "IMPOSTER WINS";
@@ -44,6 +53,7 @@ export function SummaryScreen() {
           <h1 className="font-poster text-[60px] leading-[0.9] uppercase pr-28 text-balance">
             {resultText.split(" ").map((w) => <span key={w} className="block">{w}</span>)}
           </h1>
+          <p className="text-[18px] font-semibold mt-3">{line(townWins ? "townWins" : "imposterWins", seed)}</p>
         </div>
 
         {/* Reveal cards */}
@@ -69,24 +79,28 @@ export function SummaryScreen() {
         </div>
 
         {/* Scoreboard */}
-        {state.roundScores.length > 1 && (
-          <div className="animate-fadeInUp stagger-2">
-            <p className="font-display font-bold text-white/75 text-xs uppercase tracking-widest mb-3 text-center">
-              Scoreboard, Round {state.round}
-            </p>
-            <div className="card-surface rounded-[24px] border border-white/15 divide-y divide-white/10">
-              {sortedScores.map((s, i) => (
-                <div key={i} className="flex items-center justify-between py-3.5 px-5">
-                  <div className="flex items-center gap-3">
-                    <span className="font-display font-bold text-white/75 text-sm w-5">{i + 1}</span>
-                    <span className="font-display font-bold text-[15px]">{s.name}</span>
-                  </div>
-                  <span className="font-display font-bold text-lg">{s.wins} <span className="text-white/75 text-xs font-body">win{s.wins !== 1 ? "s" : ""}</span></span>
-                </div>
-              ))}
-            </div>
+        <div className="animate-fadeInUp stagger-1">
+          <div className="flex items-baseline justify-between mb-3">
+            <h2 className="font-poster text-[34px] leading-none uppercase">Leaderboard</h2>
+            <span className="text-[14px] font-bold">
+              {state.roundScores.length} round{state.roundScores.length !== 1 ? "s" : ""}
+            </span>
           </div>
-        )}
+          <div className="card-surface rounded-[20px] overflow-hidden ruled">
+            {sortedScores.map((s, i) => (
+              <div key={s.id} className={`grid grid-cols-[40px_1fr_auto] items-center gap-3 px-4 py-3 ${ranks[i] === 1 && s.wins > 0 ? "bg-go" : ""}`}>
+                <span className="text-[22px] text-center font-bold tabular-nums">
+                  {s.wins > 0 && ranks[i] <= 3 ? MEDALS[ranks[i] - 1] : ranks[i]}
+                </span>
+                <span className="text-[17px] font-bold truncate">
+                  {s.name}
+                  {roundWinners.has(s.id) && <span className="ml-2 badge text-[12px]! px-2!">+1</span>}
+                </span>
+                <span className="text-[22px] font-bold tabular-nums">{s.wins}</span>
+              </div>
+            ))}
+          </div>
+        </div>
 
         {/* Actions */}
         <div className="flex flex-col gap-3 mt-auto pb-6 animate-fadeInUp stagger-3">

@@ -1,5 +1,6 @@
 "use client";
 
+import { line, useLoadSeed } from "@/lib/lines";
 import { Art } from "@/components/Art";
 import { ScreenWrapper } from "./ScreenWrapper";
 
@@ -19,6 +20,7 @@ const STICKERS = [
 ];
 
 export function GameHub({ onSelectGame }: GameHubProps) {
+  const seed = useLoadSeed();
   return (
     <ScreenWrapper bgClassName="bg-hub">
       <div className="flex flex-col flex-1 justify-between gap-8 py-4 w-full">
@@ -31,7 +33,7 @@ export function GameHub({ onSelectGame }: GameHubProps) {
             ))}
           </div>
           <h1 className="font-poster text-[96px] leading-[0.86] uppercase">Say<br />less</h1>
-          <p className="text-[17px] font-semibold mt-4 text-ink-2">One phone. Pass it round. Trust no one.</p>
+          <p className="text-[17px] font-semibold mt-4 text-ink-2">{line("hubTagline", seed)}</p>
         </div>
 
         <div className="flex flex-col gap-4">

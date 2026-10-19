@@ -1,5 +1,6 @@
 "use client";
 
+import { line, useMountSeed } from "@/lib/lines";
 import { useEffect, useRef, useState } from "react";
 import { useGame } from "@/hooks/useGame";
 import { getCategoryById } from "@/lib/wordbanks";
@@ -9,6 +10,7 @@ export function DiscussionScreen() {
   const [timeLeft, setTimeLeft] = useState(state.timerSeconds || 0);
   const [elapsed, setElapsed] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const seed = useMountSeed();
   const intervalRef = useRef<ReturnType<typeof setInterval>>(undefined);
   const noTimer = state.timerSeconds === 0;
   const category = getCategoryById(state.categoryId || "");
@@ -57,7 +59,7 @@ export function DiscussionScreen() {
 
       <div className="flex-1 flex flex-col justify-center animate-bounceIn">
         <p className="text-[15px] font-bold uppercase tracking-[0.08em] text-ink-2">
-          {noTimer ? "Time elapsed" : isPaused ? "Paused" : isUrgent ? "Last seconds" : "Discuss"}
+          {noTimer ? "Time elapsed" : isPaused ? "Paused" : isUrgent ? "Last seconds" : line("discuss", seed)}
         </p>
         <span className={`block text-[88px] font-bold tabular-nums leading-none tracking-tight mt-1 ${isUrgent && !isPaused ? "animate-pulse" : ""}`}>
           {timeStr}

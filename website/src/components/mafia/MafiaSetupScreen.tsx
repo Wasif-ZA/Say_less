@@ -1,5 +1,6 @@
 "use client";
 
+import { SavedCrews } from "@/components/SavedCrews";
 import { useEffect, useRef, useState } from "react";
 import { useMafia } from "@/hooks/useMafia";
 import { MIN_MAFIA_PLAYERS, maxMafiaFor, recommendedMafiaFor } from "@/lib/mafia/engine";
@@ -102,6 +103,8 @@ export function MafiaSetupScreen() {
       </div>
 
       <div className="flex-1 overflow-y-auto pb-28 scrollbar-hide flex flex-col gap-5 animate-slideUpIn">
+
+        <SavedCrews names={state.players.map((p) => p.name)} onLoad={(names) => dispatch({ type: "SET_PLAYERS", names })} />
 
         {/* Players */}
         <div className="card-surface rounded-[24px] p-5 border border-white/10">
