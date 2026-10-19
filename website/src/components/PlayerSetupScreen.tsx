@@ -1,5 +1,6 @@
 "use client";
 
+import { SavedCrews } from "@/components/SavedCrews";
 import { useEffect, useRef, useState } from "react";
 import { useGame } from "@/hooks/useGame";
 import { MIN_PLAYERS, MAX_PLAYERS, MIN_PLAYERS_FOR_TWO_IMPOSTERS, STORAGE_KEYS } from "@/lib/constants";
@@ -98,6 +99,11 @@ export function PlayerSetupScreen() {
       </div>
 
       <div className="flex-1 overflow-y-auto pb-28 scrollbar-hide flex flex-col gap-5 animate-slideUpIn">
+
+        <SavedCrews
+          names={state.players.map((p) => p.name)}
+          onLoad={(names) => dispatch({ type: "SET_PLAYERS", players: names.map((name, i) => ({ id: `p${Date.now()}${i}`, name, role: "unassigned", isEliminated: false })) })}
+        />
 
         {/* Players, name list */}
         <div className="card-surface rounded-[24px] p-5 border border-white/10">

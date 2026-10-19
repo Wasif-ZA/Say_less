@@ -43,6 +43,11 @@ export function mafiaReducer(state: MafiaState, action: MafiaAction): MafiaState
     case "SET_PHASE":
       return { ...state, phase: action.phase };
 
+    case "SET_PLAYERS": {
+      const players = action.names.map((name) => ({ id: makeId(), name, role: "civilian" as const, isAlive: true }));
+      return { ...state, players, mafiaCount: Math.min(state.mafiaCount, maxMafiaFor(players.length)) };
+    }
+
     case "ADD_PLAYER": {
       const name = action.name?.trim() || `Player ${state.players.length + 1}`;
       const player = { id: makeId(), name, role: "civilian" as const, isAlive: true };

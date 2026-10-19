@@ -1,5 +1,6 @@
 "use client";
 
+import { line, useMountSeed } from "@/lib/lines";
 import { useState } from "react";
 import { useGame } from "@/hooks/useGame";
 import { ScreenWrapper } from "./ScreenWrapper";
@@ -9,6 +10,7 @@ export function VotingScreen() {
   const { state, dispatch } = useGame();
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [confirming, setConfirming] = useState(false);
+  const seed = useMountSeed();
 
   const selectedPlayer = state.players.find((p) => p.id === selectedId);
 
@@ -27,7 +29,7 @@ export function VotingScreen() {
             Vote out {selectedPlayer.name}?
           </h2>
           <p className="text-[17px] font-semibold mt-4 text-ink-2 max-w-[300px]">
-            Their role is revealed straight after. No take-backs.
+            {line("confirm", seed)}
           </p>
         </div>
         <div className="flex gap-3 w-full max-w-lg mx-auto">
@@ -50,7 +52,7 @@ export function VotingScreen() {
           Who&apos;s the<br />Imposter?
         </h1>
         <p className="font-body text-white/75 mt-2 text-base">
-          Tap the player everyone agrees on
+          {line("vote", seed)}
         </p>
       </div>
 

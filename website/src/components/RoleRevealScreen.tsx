@@ -1,5 +1,6 @@
 "use client";
 
+import { line, useMountSeed } from "@/lib/lines";
 import { Art } from "@/components/Art";
 import { useRef, useState, useCallback } from "react";
 import { useGame } from "@/hooks/useGame";
@@ -15,6 +16,7 @@ export function RoleRevealScreen() {
   const showFirstPlayer = state.currentRevealIndex >= state.players.length;
   const startYRef = useRef(0);
   const lockedRef = useRef(false);
+  const seed = useMountSeed();
 
   const player = state.players[state.currentRevealIndex];
   const category = getCategoryById(state.categoryId || "");
@@ -77,7 +79,7 @@ export function RoleRevealScreen() {
             <p className="text-[13px] font-bold uppercase tracking-[0.08em] text-ink-2">Goes first</p>
             <h2 className="font-poster text-[56px] leading-none uppercase mt-2 break-words text-balance">{firstPlayer?.name}</h2>
           </div>
-          <p className="text-[16px] font-semibold mt-8 max-w-[280px] text-ink-2">Describe the word without saying it.</p>
+          <p className="text-[16px] font-semibold mt-8 max-w-[280px] text-ink-2">{line("goesFirst", seed)}</p>
         </div>
         <button onClick={() => dispatch({ type: "SET_PHASE", phase: "discussion" })} className="btn-big btn-white text-xl max-w-lg w-full mx-auto">
           Start discussion
@@ -116,6 +118,7 @@ export function RoleRevealScreen() {
                   {category?.emoji} {category?.name} · the word is
                 </p>
                 <h2 className="font-poster text-[52px] leading-[0.95] uppercase mt-3 break-words text-balance">{state.secretWord}</h2>
+                <p className="text-[15px] font-semibold mt-3 text-ink-2">{line("civilianBlurb", seed + state.currentRevealIndex)}</p>
               </>
             ) : (
               <>
@@ -127,7 +130,7 @@ export function RoleRevealScreen() {
                     Hint: {getHintForWord(state.secretWord, state.categoryId)}
                   </p>
                 ) : (
-                  <p className="text-[16px] font-semibold mt-3 text-ink-2">Blend in. Don&apos;t get caught.</p>
+                  <p className="text-[16px] font-semibold mt-3 text-ink-2">{line("imposterBlurb", seed + state.currentRevealIndex)}</p>
                 )}
               </>
             )}
@@ -160,7 +163,7 @@ export function RoleRevealScreen() {
           <div className="card-surface tape rounded-[20px] w-full max-w-sm aspect-[4/5] bg-ink! flex flex-col items-center justify-center gap-5 rotate-1">
             <span className="clip-label bg-paper! text-ink!">Private</span>
             <Art name="sticker-shh" className="w-24 h-24" />
-            <span className="text-[15px] font-semibold text-paper text-center px-8">Only {player.name} looks. Everyone else, eyes away.</span>
+            <span className="text-[15px] font-semibold text-paper text-center px-8">{line("sleeve", seed + state.currentRevealIndex, { name: player.name })}</span>
           </div>
         </div>
 

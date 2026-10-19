@@ -44,6 +44,7 @@ export interface MafiaState {
 export type MafiaAction =
   | { type: "SET_PHASE"; phase: MafiaPhase }
   | { type: "ADD_PLAYER"; name?: string }
+  | { type: "SET_PLAYERS"; names: string[] }
   | { type: "REMOVE_PLAYER"; id: string }
   | { type: "RENAME_PLAYER"; id: string; name: string }
   | { type: "SET_MAFIA_COUNT"; count: number }

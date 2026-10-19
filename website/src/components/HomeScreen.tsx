@@ -1,5 +1,6 @@
 "use client";
 
+import { line, useMountSeed } from "@/lib/lines";
 import { Art } from "@/components/Art";
 import { useState } from "react";
 import { useGame } from "@/hooks/useGame";
@@ -13,6 +14,7 @@ interface HomeScreenProps {
 export function HomeScreen({ onExit }: HomeScreenProps) {
   const { dispatch } = useGame();
   const [showHTP, setShowHTP] = useState(false);
+  const seed = useMountSeed();
 
   return (
     <ScreenWrapper bgClassName="bg-imposter">
@@ -38,7 +40,7 @@ export function HomeScreen({ onExit }: HomeScreenProps) {
             PARTY
           </h1>
           <p className="font-body text-white/75 text-lg mt-4 max-w-[240px] leading-snug animate-fadeInUp stagger-1">
-            Find the imposter. Trust no one.
+            {line("imposterHome", seed)}
           </p>
         </div>
 
