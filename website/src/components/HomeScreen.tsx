@@ -7,25 +7,13 @@ import { useGame } from "@/hooks/useGame";
 import { ScreenWrapper } from "./ScreenWrapper";
 import { HowToPlayModal } from "./HowToPlayModal";
 
-interface HomeScreenProps {
-  onExit?: () => void;
-}
-
-export function HomeScreen({ onExit }: HomeScreenProps) {
+export function HomeScreen() {
   const { dispatch } = useGame();
   const [showHTP, setShowHTP] = useState(false);
   const seed = useMountSeed();
 
   return (
     <ScreenWrapper bgClassName="bg-imposter">
-      {onExit && (
-        <button 
-          onClick={onExit} 
-          className="absolute top-6 left-5 text-white/70 hover:text-white transition-colors flex items-center z-10 font-bold"
-        >
-          ← Back
-        </button>
-      )}
       <div className="flex flex-col items-center justify-between flex-1 py-16">
         {/* Top spacer */}
         <div />

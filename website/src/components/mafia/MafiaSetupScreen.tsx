@@ -92,12 +92,7 @@ export function MafiaSetupScreen() {
     <ScreenWrapper bgClassName="bg-ink">
       {/* Header */}
       <div className="flex items-center justify-between mb-6 pt-2">
-        <button
-          onClick={() => dispatch({ type: "SET_PHASE", phase: "home" })}
-          className="text-white text-3xl font-bold w-10 h-10 flex items-center justify-center active:scale-95 transition-transform"
-        >
-          ‹
-        </button>
+        <div className="w-11 h-11" />
         <h1 className="font-display text-3xl font-bold tracking-wide drop-shadow-md">Mafia Setup</h1>
         <div className="w-10" />
       </div>
