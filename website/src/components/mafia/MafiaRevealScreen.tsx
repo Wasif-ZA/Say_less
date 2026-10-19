@@ -65,7 +65,7 @@ export function MafiaRevealScreen() {
     setDragY(0);
   }
 
-  // All roles dealt — night falls
+  // All roles dealt, night falls
   if (allRevealed) {
     return (
       <div className="fixed inset-0 overflow-hidden bg-black text-white flex flex-col items-center justify-center p-6 text-center">
@@ -75,12 +75,12 @@ export function MafiaRevealScreen() {
             Night Falls
           </h2>
           <p className="font-body text-white/40 text-base max-w-[280px]">
-            Everyone close your eyes. The phone will guide each player through the night — pass it around in order.
+            Everyone close your eyes. The phone will guide each player through the night, pass it around in order.
           </p>
         </div>
         <button
           onClick={() => dispatch({ type: "BEGIN_NIGHT" })}
-          className="absolute bottom-0 left-0 right-0 p-5 bg-linear-to-t from-[#ff1b6b] to-transparent flex justify-center"
+          className="absolute bottom-0 left-0 right-0 p-5 bg-linear-to-t from-black to-transparent flex justify-center"
         >
           <span className="btn-big btn-white text-2xl max-w-lg w-full">BEGIN NIGHT 1</span>
         </button>
@@ -109,7 +109,7 @@ export function MafiaRevealScreen() {
   return (
     <div className="fixed inset-0 overflow-hidden bg-black text-white touch-none select-none">
 
-      {/* BOTTOM LAYER — role content */}
+      {/* BOTTOM LAYER, role content */}
       <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center z-0">
         {showRole && (
           <div className="animate-bounceIn flex flex-col items-center gap-4">
@@ -144,7 +144,7 @@ export function MafiaRevealScreen() {
         )}
       </div>
 
-      {/* TOP LAYER — cover */}
+      {/* TOP LAYER, cover */}
       <div
         className={`absolute inset-0 flex flex-col items-center pt-10 pb-16 z-20 ${coverColor}`}
         style={{ transform: `translateY(${coverTranslateY}px)`, transition: coverTransition }}

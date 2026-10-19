@@ -16,7 +16,7 @@ export function MafiaDawnScreen() {
     <div className="fixed inset-0 bg-black text-white flex flex-col items-center justify-center p-6 text-center">
       <div className="animate-bounceIn flex flex-col items-center gap-5">
         <p className="font-display font-bold text-white/40 tracking-widest uppercase text-base">
-          ☀️ Morning — Night {state.round}
+          ☀️ Morning, Night {state.round}
         </p>
 
         {victim && !result?.saved ? (
@@ -41,7 +41,7 @@ export function MafiaDawnScreen() {
               The Doctor made a save!
             </h2>
             <p className="font-body text-white/40 text-base max-w-[280px]">
-              The Mafia struck — but their target pulled through. No one died tonight.
+              The Mafia struck, but their target pulled through. No one died tonight.
             </p>
           </>
         ) : (
@@ -60,7 +60,7 @@ export function MafiaDawnScreen() {
         )}
       </div>
 
-      <div className="absolute bottom-0 left-0 right-0 p-5 bg-linear-to-t from-[#ff1b6b] to-transparent flex justify-center">
+      <div className="absolute bottom-0 left-0 right-0 p-5 bg-linear-to-t from-black to-transparent flex justify-center">
         <button
           onClick={() => dispatch({ type: "SET_PHASE", phase: gameOver ? "summary" : "day" })}
           className="btn-big btn-white text-2xl max-w-lg w-full"

@@ -1,5 +1,6 @@
 "use client";
 
+import { initials } from "@/lib/initials";
 import { useEffect, useRef, useState } from "react";
 import { useGame } from "@/hooks/useGame";
 import { MIN_PLAYERS, MAX_PLAYERS, MIN_PLAYERS_FOR_TWO_IMPOSTERS, STORAGE_KEYS } from "@/lib/constants";
@@ -89,7 +90,7 @@ export function PlayerSetupScreen() {
   const canRemove = state.players.length > MIN_PLAYERS;
 
   return (
-    <ScreenWrapper bgClassName="bg-grid-pattern">
+    <ScreenWrapper bgClassName="bg-imposter">
       {/* Header */}
       <div className="flex items-center justify-between mb-6 pt-2">
         <button
@@ -104,8 +105,8 @@ export function PlayerSetupScreen() {
 
       <div className="flex-1 overflow-y-auto pb-28 scrollbar-hide flex flex-col gap-5 animate-slideUpIn">
 
-        {/* Players — name list */}
-        <div className="card-surface rounded-[28px] p-5 border border-white/10">
+        {/* Players, name list */}
+        <div className="card-surface rounded-[24px] p-5 border border-white/10">
           <div className="flex items-center justify-between mb-4">
             <div>
               <h2 className="font-display text-2xl font-bold">Players</h2>
@@ -118,10 +119,10 @@ export function PlayerSetupScreen() {
               <div key={player.id} className="flex items-center gap-3 bg-white/5 rounded-2xl px-3 py-2.5">
                 {/* Avatar */}
                 <div className={`w-9 h-9 rounded-full flex items-center justify-center text-sm font-display font-bold shrink-0 ${AVATAR_BG[i % AVATAR_BG.length]}`}>
-                  {player.name.charAt(0).toUpperCase()}
+                  {initials(player.name)}
                 </div>
 
-                {/* Name — tap to edit */}
+                {/* Name, tap to edit */}
                 {editingId === player.id ? (
                   <input
                     ref={inputRef}
@@ -165,7 +166,7 @@ export function PlayerSetupScreen() {
         </div>
 
         {/* Hints toggle */}
-        <div className="card-surface rounded-[28px] p-6 border border-white/10">
+        <div className="card-surface rounded-[24px] p-6 border border-white/10">
           <h2 className="font-display text-2xl font-bold mb-1">Imposter Hints</h2>
           <p className="font-body text-white/40 text-sm mb-4">Give imposters a hint about the word?</p>
           <div className="bg-white/5 rounded-full flex p-1 h-14">
@@ -189,7 +190,7 @@ export function PlayerSetupScreen() {
         </div>
 
         {/* Imposters */}
-        <div className="card-surface rounded-[28px] p-6 border border-white/10">
+        <div className="card-surface rounded-[24px] p-6 border border-white/10">
           <h2 className="font-display text-2xl font-bold mb-1">Imposters</h2>
           <p className="font-body text-white/40 text-sm mb-5">How many secret imposters?</p>
           <div className="flex items-center justify-center gap-8">
@@ -210,7 +211,7 @@ export function PlayerSetupScreen() {
         </div>
 
         {/* Round Duration */}
-        <div className="card-surface rounded-[28px] p-6 border border-white/10">
+        <div className="card-surface rounded-[24px] p-6 border border-white/10">
           <h2 className="font-display text-2xl font-bold mb-1">Round Duration</h2>
           <p className="font-body text-white/40 text-sm mb-5">How long to discuss?</p>
           <div className="flex items-center justify-center gap-8">
@@ -232,7 +233,7 @@ export function PlayerSetupScreen() {
       </div>
 
       {/* Sticky CTA */}
-      <div className="fixed bottom-0 left-0 right-0 p-5 bg-gradient-to-t from-[#ff1b6b] to-transparent pointer-events-none flex justify-center">
+      <div className="fixed bottom-0 left-0 right-0 p-5 bg-linear-to-t from-imposter via-imposter to-transparent pointer-events-none flex justify-center">
         <button onClick={startRound} className="btn-big btn-white text-2xl max-w-lg pointer-events-auto">
           PLAY <span className="text-black/30 mx-2">|</span> <span className="text-lg font-body font-semibold">{state.players.length} Players</span>
         </button>

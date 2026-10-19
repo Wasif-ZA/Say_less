@@ -22,7 +22,7 @@ export function MafiaHomeScreen({ onExit }: MafiaHomeScreenProps) {
 
   if (showRules) {
     return (
-      <ScreenWrapper bgClassName="bg-dark-immersive">
+      <ScreenWrapper bgClassName="bg-mafia">
         <div className="flex items-center justify-between pt-2 mb-6">
           <h1 className="font-display text-3xl font-bold tracking-wide drop-shadow-md">How to Play</h1>
           <button
@@ -34,14 +34,14 @@ export function MafiaHomeScreen({ onExit }: MafiaHomeScreenProps) {
         </div>
         <div className="flex flex-col gap-3 animate-fadeInUp">
           {RULES.map((rule, i) => (
-            <div key={i} className="card-surface border border-white/10 rounded-[20px] p-4 flex items-center gap-4">
+            <div key={i} className="card-surface border border-white/10 rounded-[24px] p-4 flex items-center gap-4">
               <span className="text-3xl">{rule.emoji}</span>
               <p className="font-body text-white/80 text-[15px] leading-snug">{rule.text}</p>
             </div>
           ))}
         </div>
         <p className="font-body text-white/35 text-sm text-center mt-5 leading-relaxed">
-          One phone, passed around. Everyone takes a turn at night — even civilians —
+          One phone, passed around. Everyone takes a turn at night, even civilians , 
           so nobody can tell who&apos;s doing what. 🤫
         </p>
         <div className="mt-auto pt-6">
@@ -49,7 +49,7 @@ export function MafiaHomeScreen({ onExit }: MafiaHomeScreenProps) {
             onClick={() => { setShowRules(false); dispatch({ type: "SET_PHASE", phase: "setup" }); }}
             className="btn-big btn-white text-xl w-full"
           >
-            GOT IT — LET&apos;S PLAY
+            GOT IT, LET&apos;S PLAY
           </button>
         </div>
       </ScreenWrapper>
@@ -57,9 +57,9 @@ export function MafiaHomeScreen({ onExit }: MafiaHomeScreenProps) {
   }
 
   return (
-    <ScreenWrapper bgClassName="bg-dark-immersive">
+    <ScreenWrapper bgClassName="bg-mafia">
       <div className="flex flex-col items-center justify-center flex-1 text-center animate-fadeInUp">
-        <div className="text-[90px] mb-2 drop-shadow-[0_0_40px_rgba(255,51,102,0.35)]">🌃</div>
+        <div className="text-[90px] mb-2 drop-shadow-2xl">🌃</div>
         <h1 className="font-display text-[56px] font-bold tracking-wide drop-shadow-lg leading-none">
           MAFIA
         </h1>

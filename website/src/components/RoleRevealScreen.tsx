@@ -41,7 +41,7 @@ export function RoleRevealScreen() {
     setDragY(0);
   }, [dispatch]);
 
-  // Tap to continue — dismiss the revealed role
+  // Tap to continue, dismiss the revealed role
   const dismiss = useCallback(() => {
     if (phase !== "revealed") return;
     setPhase("hiding");
@@ -94,12 +94,12 @@ export function RoleRevealScreen() {
             {firstPlayer?.name}
           </h2>
           <p className="font-body text-white/40 text-base mt-2 max-w-[280px]">
-            Start describing the word — without saying it!
+            Start describing the word, without saying it!
           </p>
         </div>
         <button
           onClick={() => dispatch({ type: "SET_PHASE", phase: "discussion" })}
-          className="absolute bottom-0 left-0 right-0 p-5 bg-linear-to-t from-[#ff1b6b] to-transparent flex justify-center"
+          className="absolute bottom-0 left-0 right-0 p-5 bg-linear-to-t from-black to-transparent flex justify-center"
         >
           <span className="btn-big btn-white text-2xl max-w-lg w-full">START DISCUSSION</span>
         </button>
@@ -130,7 +130,7 @@ export function RoleRevealScreen() {
   return (
     <div className="fixed inset-0 overflow-hidden bg-black text-white touch-none select-none">
 
-      {/* BOTTOM LAYER — Role content (always mounted, just invisible when covered) */}
+      {/* BOTTOM LAYER, Role content (always mounted, just invisible when covered) */}
       <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center z-0">
         {showRole && (
           isCivilian ? (
@@ -143,8 +143,8 @@ export function RoleRevealScreen() {
             </div>
           ) : (
             <div className="animate-bounceIn flex flex-col items-center gap-4">
-              <div className="text-[80px] drop-shadow-[0_0_30px_rgba(255,51,102,0.5)]">🕵️</div>
-              <h2 className="font-display text-[48px] font-bold text-accent-red tracking-wide drop-shadow-[0_0_20px_rgba(255,51,102,0.3)]">
+              <div className="text-[80px] drop-shadow-2xl">🕵️</div>
+              <h2 className="font-display text-[48px] font-bold text-accent-red tracking-wide drop-shadow-lg">
                 IMPOSTER
               </h2>
               {state.hintsEnabled ? (
@@ -174,7 +174,7 @@ export function RoleRevealScreen() {
         )}
       </div>
 
-      {/* TOP LAYER — Cover screen (slides up on swipe) */}
+      {/* TOP LAYER, Cover screen (slides up on swipe) */}
       <div
         className={`absolute inset-0 flex flex-col items-center pt-10 pb-16 z-20 ${coverColor}`}
         style={{ transform: `translateY(${coverTranslateY}px)`, transition: coverTransition }}

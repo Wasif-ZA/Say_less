@@ -6,54 +6,55 @@ interface GameHubProps {
   onSelectGame: (game: "imposter" | "mafia") => void;
 }
 
+const GAMES = [
+  {
+    id: "imposter",
+    title: "Imposter Party",
+    line: "Everyone gets the word except one.",
+    players: "3+ players",
+    emoji: "🕵️",
+    card: "bg-imposter text-white",
+    tilt: "-rotate-2",
+  },
+  {
+    id: "mafia",
+    title: "Mafia",
+    line: "The town sleeps. The Mafia doesn't.",
+    players: "4+ players",
+    emoji: "🌃",
+    card: "bg-mafia text-acid",
+    tilt: "rotate-2",
+  },
+] as const;
+
 export function GameHub({ onSelectGame }: GameHubProps) {
   return (
-    <ScreenWrapper bgClassName="bg-dark-immersive">
-      <div className="flex flex-col items-center justify-center flex-1 py-10 w-full animate-fadeInUp">
-        <h1 className="font-display text-[56px] font-bold tracking-wide drop-shadow-lg mb-2">
-          SAY LESS
-        </h1>
-        <p className="font-body text-white/50 text-lg mb-10">
-          Pick a game to play
-        </p>
+    <ScreenWrapper bgClassName="bg-ink">
+      <div className="flex flex-col flex-1 justify-center gap-10 py-8 w-full">
+        <div className="animate-slideDown">
+          <h1 className="font-display text-[64px] font-bold leading-[0.9] tracking-tight">
+            Say<br />less.
+          </h1>
+          <p className="font-body text-white/60 text-lg mt-3">One phone. Pass it round. Trust no one.</p>
+        </div>
 
-        <div className="flex flex-col gap-5 w-full">
-          {/* Imposter Party Card */}
-          <button
-            onClick={() => onSelectGame("imposter")}
-            className="relative flex flex-col items-start p-6 w-full rounded-[16px] overflow-hidden shadow-xl transition-all duration-200 active:scale-95 hover:scale-[1.02]"
-            style={{ backgroundColor: "#1E1E2E", minHeight: "140px" }}
-          >
-            <div className="text-4xl mb-2">🕵️</div>
-            <div className="flex items-center gap-2 mb-1">
-              <h2 className="font-display text-2xl font-bold text-white">IMPOSTER PARTY</h2>
-              <span className="bg-white/10 text-white/70 text-[10px] uppercase font-bold px-2 py-0.5 rounded-full mt-1">Pass & Play</span>
-            </div>
-            <p className="text-white/70 text-left text-sm mt-auto w-full">
-              Find the imposter.<br />
-              Trust no one.<br />
-              <span className="opacity-60 text-xs mt-1 block">3+ players</span>
-            </p>
-          </button>
-
-          {/* Mafia Card */}
-          <button
-            onClick={() => onSelectGame("mafia")}
-            className="relative flex flex-col items-start p-6 w-full rounded-[16px] overflow-hidden shadow-xl transition-all duration-200 active:scale-95 hover:scale-[1.02]"
-            style={{ backgroundColor: "#2E1E28", minHeight: "140px" }}
-          >
-            <div className="text-4xl mb-2">🌃</div>
-            <div className="flex items-center gap-2 mb-1">
-              <h2 className="font-display text-2xl font-bold text-white">MAFIA</h2>
-              <span className="bg-white/10 text-white/70 text-[10px] uppercase font-bold px-2 py-0.5 rounded-full mt-1">Pass & Play</span>
-            </div>
-            <p className="text-white/70 text-left text-sm mt-auto w-full">
-              The town sleeps.<br />
-              The Mafia doesn&apos;t.<br />
-              <span className="opacity-60 text-xs mt-1 block">4+ players</span>
-            </p>
-          </button>
-
+        <div className="flex flex-col gap-6">
+          {GAMES.map((g, i) => (
+            <button
+              key={g.id}
+              onClick={() => onSelectGame(g.id)}
+              className={`animate-fadeInUp stagger-${i + 1} relative w-full min-h-[168px] rounded-[24px] border-[3px] border-ink p-6 text-left overflow-hidden shadow-[0_8px_0_#000] transition-transform duration-150 active:translate-y-1 active:shadow-[0_3px_0_#000] ${g.card} ${g.tilt}`}
+            >
+              <span className="absolute -right-3 -bottom-4 text-[110px] leading-none select-none" aria-hidden>
+                {g.emoji}
+              </span>
+              <span className="inline-block rounded-full border-2 border-current px-3 py-0.5 text-xs font-bold uppercase opacity-80">
+                {g.players}
+              </span>
+              <h2 className="font-display text-[38px] font-bold leading-none mt-4 max-w-[70%]">{g.title}</h2>
+              <p className="font-body font-semibold text-[15px] mt-2 max-w-[62%] opacity-80">{g.line}</p>
+            </button>
+          ))}
         </div>
       </div>
     </ScreenWrapper>
