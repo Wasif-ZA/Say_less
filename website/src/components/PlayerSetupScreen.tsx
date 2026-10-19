@@ -1,6 +1,5 @@
 "use client";
 
-import { Avatar } from "@/components/Avatar";
 import { useEffect, useRef, useState } from "react";
 import { useGame } from "@/hooks/useGame";
 import { MIN_PLAYERS, MAX_PLAYERS, MIN_PLAYERS_FOR_TWO_IMPOSTERS, STORAGE_KEYS } from "@/lib/constants";
@@ -85,7 +84,7 @@ export function PlayerSetupScreen() {
   const canRemove = state.players.length > MIN_PLAYERS;
 
   return (
-    <ScreenWrapper bgClassName="scene-imposter-day">
+    <ScreenWrapper bgClassName="bg-imposter">
       {/* Header */}
       <div className="flex items-center justify-between mb-6 pt-2">
         <button
@@ -105,7 +104,7 @@ export function PlayerSetupScreen() {
           <div className="flex items-center justify-between mb-4">
             <div>
               <h2 className="font-display text-2xl font-bold">Players</h2>
-              <p className="font-body text-white/40 text-sm">{state.players.length} players</p>
+              <p className="font-body text-white/75 text-sm">{state.players.length} players</p>
             </div>
           </div>
 
@@ -113,7 +112,9 @@ export function PlayerSetupScreen() {
             {state.players.map((player, i) => (
               <div key={player.id} className="flex items-center gap-3 bg-white/5 rounded-2xl px-3 py-2.5">
                 {/* Avatar */}
-                <Avatar index={i} className="w-9 h-9" />
+                <div className={`w-9 h-9 rounded-full flex items-center justify-center text-sm font-display font-bold shrink-0 bg-paper border-[2.5px] border-ink`}>
+                  {i + 1}
+                </div>
 
                 {/* Name, tap to edit */}
                 {editingId === player.id ? (
@@ -138,7 +139,7 @@ export function PlayerSetupScreen() {
                 {canRemove && (
                   <button
                     onClick={() => dispatch({ type: "REMOVE_PLAYER", id: player.id })}
-                    className="w-8 h-8 flex items-center justify-center rounded-full text-white/25 hover:text-white/60 hover:bg-white/10 transition-colors active:scale-95 text-lg"
+                    className="w-8 h-8 flex items-center justify-center rounded-full text-white/75 hover:text-white/75 hover:bg-white/10 transition-colors active:scale-95 text-lg"
                   >
                     ×
                   </button>
@@ -151,7 +152,7 @@ export function PlayerSetupScreen() {
           {canAdd && (
             <button
               onClick={() => dispatch({ type: "ADD_PLAYER" })}
-              className="w-full mt-3 border border-dashed border-white/15 rounded-2xl py-3 text-white/40 hover:text-white/70 hover:border-white/30 transition-colors font-body font-semibold text-sm active:scale-[0.98]"
+              className="w-full mt-3 border border-dashed border-white/15 rounded-2xl py-3 text-white/75 hover:text-white/70 hover:border-white/30 transition-colors font-body font-semibold text-sm active:scale-[0.98]"
             >
               + Add Player
             </button>
@@ -161,12 +162,12 @@ export function PlayerSetupScreen() {
         {/* Hints toggle */}
         <div className="card-surface rounded-[24px] p-6 border border-white/10">
           <h2 className="font-display text-2xl font-bold mb-1">Imposter Hints</h2>
-          <p className="font-body text-white/40 text-sm mb-4">Give imposters a hint about the word?</p>
+          <p className="font-body text-white/75 text-sm mb-4">Give imposters a hint about the word?</p>
           <div className="bg-white/5 rounded-full flex p-1 h-14">
             <button
               onClick={() => dispatch({ type: "SET_HINTS", enabled: false })}
               className={`flex-1 rounded-full font-display font-bold text-base transition-all ${
-                !state.hintsEnabled ? "bg-clay text-paper shadow-sm" : "text-white/40"
+                !state.hintsEnabled ? "bg-go text-ink shadow-sm" : "text-white/75"
               }`}
             >
               Off
@@ -174,7 +175,7 @@ export function PlayerSetupScreen() {
             <button
               onClick={() => dispatch({ type: "SET_HINTS", enabled: true })}
               className={`flex-1 rounded-full font-display font-bold text-base transition-all ${
-                state.hintsEnabled ? "bg-clay text-paper shadow-sm" : "text-white/40"
+                state.hintsEnabled ? "bg-go text-ink shadow-sm" : "text-white/75"
               }`}
             >
               On
@@ -185,20 +186,20 @@ export function PlayerSetupScreen() {
         {/* Imposters */}
         <div className="card-surface rounded-[24px] p-6 border border-white/10">
           <h2 className="font-display text-2xl font-bold mb-1">Imposters</h2>
-          <p className="font-body text-white/40 text-sm mb-5">How many secret imposters?</p>
+          <p className="font-body text-white/75 text-sm mb-5">How many secret imposters?</p>
           <div className="flex items-center justify-center gap-8">
             <button
               onClick={() => adjustImposter(-1)}
               className="w-14 h-14 rounded-2xl bg-white/10 flex items-center justify-center active:scale-95 transition-transform"
             >
-              <span className="text-2xl font-bold text-white/50">−</span>
+              <span className="text-2xl font-bold text-white/75">−</span>
             </button>
             <span className="font-display text-4xl font-bold w-8 text-center">{state.imposterCount}</span>
             <button
               onClick={() => adjustImposter(1)}
               className="w-14 h-14 rounded-2xl bg-white/10 flex items-center justify-center active:scale-95 transition-transform"
             >
-              <span className="text-2xl font-bold text-white/50">+</span>
+              <span className="text-2xl font-bold text-white/75">+</span>
             </button>
           </div>
         </div>
@@ -206,27 +207,27 @@ export function PlayerSetupScreen() {
         {/* Round Duration */}
         <div className="card-surface rounded-[24px] p-6 border border-white/10">
           <h2 className="font-display text-2xl font-bold mb-1">Round Duration</h2>
-          <p className="font-body text-white/40 text-sm mb-5">How long to discuss?</p>
+          <p className="font-body text-white/75 text-sm mb-5">How long to discuss?</p>
           <div className="flex items-center justify-center gap-8">
             <button
               onClick={() => adjustTimer(-30)}
               className="w-14 h-14 rounded-2xl bg-white/10 flex items-center justify-center active:scale-95 transition-transform"
             >
-              <span className="text-2xl font-bold text-white/50">−</span>
+              <span className="text-2xl font-bold text-white/75">−</span>
             </button>
             <span className="font-display text-3xl font-bold w-16 text-center">{formatTime(state.timerSeconds)}</span>
             <button
               onClick={() => adjustTimer(30)}
               className="w-14 h-14 rounded-2xl bg-white/10 flex items-center justify-center active:scale-95 transition-transform"
             >
-              <span className="text-2xl font-bold text-white/50">+</span>
+              <span className="text-2xl font-bold text-white/75">+</span>
             </button>
           </div>
         </div>
       </div>
 
       {/* Sticky CTA */}
-      <div className="fixed bottom-0 left-0 right-0 p-5 pointer-events-none flex justify-center">
+      <div className="fixed bottom-0 left-0 right-0 p-5 bg-imposter pointer-events-none flex justify-center">
         <button onClick={startRound} className="btn-big btn-white text-2xl max-w-lg pointer-events-auto">
           PLAY <span className="text-black/30 mx-2">|</span> <span className="text-lg font-body font-semibold">{state.players.length} Players</span>
         </button>

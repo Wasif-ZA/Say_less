@@ -1,6 +1,6 @@
 "use client";
 
-import { Avatar } from "@/components/Avatar";
+import { Art } from "@/components/Art";
 import { useMafia } from "@/hooks/useMafia";
 import { ScreenWrapper } from "../ScreenWrapper";
 import { ROLE_META } from "./roleMeta";
@@ -14,16 +14,16 @@ export function MafiaSummaryScreen({ onExit }: MafiaSummaryScreenProps) {
   const townWins = state.winner === "town";
 
   return (
-    <ScreenWrapper bgClassName="scene-mafia-night">
+    <ScreenWrapper bgClassName="bg-ink">
       {/* Winner banner */}
       <div className="text-center pt-6 pb-5 animate-bounceIn">
-        <div className="text-[80px] mb-2">{townWins ? "🎉" : "🔪"}</div>
-        <h1 className={`font-display text-[44px] font-bold tracking-wide leading-tight drop-shadow-lg ${
+        <div className="flex justify-center mb-2"><Art name={townWins ? "role-civilian" : "role-mafia"} className="w-28 h-28" /></div>
+        <h1 className={`font-poster text-[44px] font-normal uppercase tracking-wide leading-tight drop-shadow-lg ${
           townWins ? "text-accent-green" : "text-accent-red"
         }`}>
           {townWins ? "TOWN WINS!" : "MAFIA WINS!"}
         </h1>
-        <p className="font-body text-white/50 mt-2 text-base">
+        <p className="font-body text-white/75 mt-2 text-base">
           {townWins
             ? "Every last Mafia was voted out. Justice served."
             : "The Mafia took over the town. Better luck next time."}
@@ -44,8 +44,10 @@ export function MafiaSummaryScreen({ onExit }: MafiaSummaryScreenProps) {
                     player.role === "mafia" ? "bg-accent-red/10 border border-accent-red/20" : "bg-white/5"
                   }`}
                 >
-                  <Avatar index={i} className={`w-9 h-9 ${player.isAlive ? "" : "opacity-40 grayscale"}`} />
-                  <span className={`flex-1 font-body font-semibold text-[15px] truncate ${player.isAlive ? "text-white" : "text-white/40 line-through"}`}>
+                  <div className={`w-9 h-9 rounded-full flex items-center justify-center text-sm font-display font-bold shrink-0 bg-paper border-[2.5px] border-ink ${player.isAlive ? "" : "opacity-40"}`}>
+                    {i + 1}
+                  </div>
+                  <span className={`flex-1 font-body font-semibold text-[15px] truncate ${player.isAlive ? "text-white" : "text-white/75 line-through"}`}>
                     {player.name}
                   </span>
                   <span className={`font-display font-bold text-sm ${meta.colorClass}`}>

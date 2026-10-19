@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import { Art } from "@/components/Art";
 import { useState } from "react";
 import { useMafia } from "@/hooks/useMafia";
 import { ScreenWrapper } from "../ScreenWrapper";
@@ -23,7 +23,7 @@ export function MafiaHomeScreen({ onExit }: MafiaHomeScreenProps) {
 
   if (showRules) {
     return (
-      <ScreenWrapper bgClassName="scene-mafia-dusk">
+      <ScreenWrapper bgClassName="bg-ink">
         <div className="flex items-center justify-between pt-2 mb-6">
           <h1 className="font-display text-3xl font-bold tracking-wide drop-shadow-md">How to Play</h1>
           <button
@@ -41,7 +41,7 @@ export function MafiaHomeScreen({ onExit }: MafiaHomeScreenProps) {
             </div>
           ))}
         </div>
-        <p className="font-body text-white/35 text-sm text-center mt-5 leading-relaxed">
+        <p className="font-body text-white/75 text-sm text-center mt-5 leading-relaxed">
           One phone, passed around. Everyone takes a turn at night, even civilians , 
           so nobody can tell who&apos;s doing what. 🤫
         </p>
@@ -58,13 +58,13 @@ export function MafiaHomeScreen({ onExit }: MafiaHomeScreenProps) {
   }
 
   return (
-    <ScreenWrapper bgClassName="scene-mafia-dusk">
+    <ScreenWrapper bgClassName="bg-ink">
       <div className="flex flex-col items-center justify-center flex-1 text-center animate-fadeInUp">
-        <Image src="/animals/lynx.webp" alt="" width={256} height={256} className="w-52 h-52 object-contain drop-shadow-2xl mb-2 animate-float" priority />
-        <h1 className="font-display text-[56px] font-bold tracking-wide drop-shadow-lg leading-none">
+        <Art name="role-mafia" className="w-36 h-36 mb-2 animate-float" />
+        <h1 className="animate-maskIn font-poster text-[56px] font-normal uppercase tracking-wide drop-shadow-lg leading-none">
           MAFIA
         </h1>
-        <p className="font-body text-white/85 text-lg mt-3 max-w-[280px]">
+        <p className="font-body text-white/75 text-lg mt-3 max-w-[280px]">
           The town sleeps. The Mafia doesn&apos;t.
         </p>
 

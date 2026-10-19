@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <!-- Round Face -->
+  <circle cx="54" cy="64" r="36" fill="#F2C9A0" stroke="#0B0D12" stroke-width="3" stroke-linejoin="round"/>
+  <!-- Deerstalker Cap Back Visor -->
+  <path d="M 32 46 Q 10 46 12 52 Q 32 52 30 46 Z" fill="#F4EEDF" stroke="#0B0D12" stroke-width="3" stroke-linejoin="round"/>
+  <!-- Cap Crown -->
+  <path d="M 24 46 C 24 20, 42 16, 54 16 C 66 16, 84 20, 84 46 Z" fill="#F4EEDF" stroke="#0B0D12" stroke-width="3" stroke-linejoin="round"/>
+  <!-- Cap Front Visor -->
+  <path d="M 78 46 Q 100 46 98 52 Q 78 52 76 46 Z" fill="#F4EEDF" stroke="#0B0D12" stroke-width="3" stroke-linejoin="round"/>
+  <!-- Ear Flap tied up -->
+  <path d="M 42 44 L 54 22 L 66 44 Z" fill="#F4EEDF" stroke="#0B0D12" stroke-width="3" stroke-linejoin="round"/>
+  <circle cx="54" cy="20" r="3.5" fill="#2B4BDB" stroke="#0B0D12" stroke-width="3"/>
+  <!-- Left Eye & Eyebrow -->
+  <path d="M 32 54 Q 38 50 44 54" stroke="#0B0D12" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+  <circle cx="38" cy="62" r="4.5" fill="#0B0D12"/>
+  <circle cx="39.5" cy="60.5" r="1.5" fill="#FFFFFF"/>
+  <!-- Inquisitive Mouth -->
+  <path d="M 44 78 Q 50 82 56 78" stroke="#0B0D12" stroke-width="3" stroke-linecap="round" fill="none"/>
+  <!-- Magnifying Glass Handle -->
+  <path d="M 88 78 L 102 92" stroke="#0B0D12" stroke-width="12" stroke-linecap="round"/>
+  <path d="M 88 78 L 102 92" stroke="#FF8A3D" stroke-width="6" stroke-linecap="round"/>
+  <!-- Hand -->
+  <circle cx="88" cy="80" r="7" fill="#F2C9A0" stroke="#0B0D12" stroke-width="3"/>
+  <!-- Magnifying Glass Lens -->
+  <circle cx="74" cy="64" r="19" fill="#FFFFFF" stroke="#0B0D12" stroke-width="4"/>
+  <!-- Magnified Eye inside Lens -->
+  <ellipse cx="74" cy="64" rx="12" ry="9" fill="#FFFFFF" stroke="#0B0D12" stroke-width="3"/>
+  <circle cx="75" cy="64" r="6" fill="#2B4BDB" stroke="#0B0D12" stroke-width="3"/>
+  <circle cx="77" cy="62" r="2.5" fill="#FFFFFF"/>
+  <path d="M 66 50 Q 74 44 82 48" stroke="#0B0D12" stroke-width="4" stroke-linecap="round" fill="none"/>
+  <path d="M 64 56 Q 70 52 76 52" stroke="#C6F04A" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+</svg>

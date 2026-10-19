@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import { Art } from "@/components/Art";
 import { ScreenWrapper } from "./ScreenWrapper";
 
 interface GameHubProps {
@@ -8,19 +8,30 @@ interface GameHubProps {
 }
 
 const GAMES = [
-  { id: "imposter", title: "Imposter Party", line: "Everyone gets the word except one.", players: "3+ players", animal: "silver-fox" },
-  { id: "mafia", title: "Mafia", line: "The town sleeps. The Mafia doesn't.", players: "4+ players", animal: "lynx" },
+  { id: "imposter", title: "Imposter Party", line: "Everyone gets the word except one.", players: "3+ players", emoji: "role-imposter", card: "bg-cobalt text-paper" },
+  { id: "mafia", title: "Mafia", line: "The town sleeps. The Mafia doesn't.", players: "4+ players", emoji: "role-mafia", card: "bg-ink text-paper" },
 ] as const;
+
+const STICKERS = [
+  { e: "emote-shock", r: "-rotate-6", p: "left-0 top-2" },
+  { e: "sticker-shh", r: "rotate-3", p: "left-12 top-0" },
+  { e: "sticker-vote", r: "-rotate-2", p: "left-24 top-3" },
+];
 
 export function GameHub({ onSelectGame }: GameHubProps) {
   return (
-    <ScreenWrapper bgClassName="scene-hub">
-      <div className="flex flex-col flex-1 justify-between gap-8 py-6 w-full">
-        <div className="animate-slideDown pt-6">
-          <h1 className="font-display text-[64px] font-bold leading-[0.9] tracking-tight drop-shadow-lg">
-            Say<br />less.
-          </h1>
-          <p className="font-body font-semibold text-white/90 text-lg mt-3 drop-shadow-md">One phone. Pass it round. Trust no one.</p>
+    <ScreenWrapper bgClassName="bg-hub">
+      <div className="flex flex-col flex-1 justify-between gap-8 py-4 w-full">
+        <div className="animate-slideDown pt-4">
+          <div className="relative h-20 w-44 mb-3" aria-hidden>
+            {STICKERS.map((s) => (
+              <span key={s.e} className={`absolute ${s.p} ${s.r} w-16 h-16`}>
+                <Art name={s.e} className="w-16 h-16" />
+              </span>
+            ))}
+          </div>
+          <h1 className="font-poster text-[96px] leading-[0.86] uppercase">Say<br />less</h1>
+          <p className="text-[17px] font-semibold mt-4 text-ink-2">One phone. Pass it round. Trust no one.</p>
         </div>
 
         <div className="flex flex-col gap-4">
@@ -28,19 +39,12 @@ export function GameHub({ onSelectGame }: GameHubProps) {
             <button
               key={g.id}
               onClick={() => onSelectGame(g.id)}
-              className={`animate-fadeInUp stagger-${i + 1} card-surface relative w-full min-h-[150px] rounded-[24px] p-5 pr-36 text-left overflow-hidden transition-transform duration-150 active:scale-[0.98]`}
+              className={`animate-fadeInUp stagger-${i + 1} relative w-full rounded-[20px] border-[2.5px] border-ink p-5 pr-24 text-left shadow-[4px_4px_0_#0b0d12] transition-transform duration-150 active:translate-x-0.5 active:translate-y-0.5 active:shadow-[2px_2px_0_#0b0d12] ${g.card}`}
             >
-              <Image
-                src={`/animals/${g.animal}.webp`}
-                alt=""
-                width={256}
-                height={256}
-                className="absolute -right-4 bottom-0 w-40 h-40 object-contain"
-                priority
-              />
-              <span className="text-xs font-bold uppercase tracking-wide text-clay">{g.players}</span>
-              <h2 className="font-display text-[32px] font-bold leading-none mt-2">{g.title}</h2>
-              <p className="font-body font-semibold text-[15px] mt-2 text-white/70">{g.line}</p>
+              <span className="badge">{g.players}</span>
+              <h2 className="font-poster text-[44px] leading-none uppercase mt-3">{g.title}</h2>
+              <p className="text-[15px] font-semibold mt-2">{g.line}</p>
+              <span className="absolute right-3 top-1/2 -translate-y-1/2" aria-hidden><Art name={g.emoji} className="w-20 h-20" /></span>
             </button>
           ))}
         </div>

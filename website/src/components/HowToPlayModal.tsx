@@ -19,7 +19,7 @@ export function HowToPlayModal({ onClose }: HowToPlayModalProps) {
       onClick={onClose}
     >
       {/* Backdrop */}
-      <div className="absolute inset-0 bg-black/60" />
+      <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" />
 
       {/* Sheet */}
       <div
@@ -41,7 +41,7 @@ export function HowToPlayModal({ onClose }: HowToPlayModalProps) {
               </div>
               <div className="pt-0.5">
                 <p className="font-display font-bold text-white text-[17px]">{s.title}</p>
-                <p className="font-body text-white/50 text-sm mt-0.5 leading-relaxed">{s.text}</p>
+                <p className="font-body text-white/75 text-sm mt-0.5 leading-relaxed">{s.text}</p>
               </div>
             </div>
           ))}

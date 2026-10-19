@@ -1,6 +1,5 @@
 "use client";
 
-import { Avatar } from "@/components/Avatar";
 import { useState } from "react";
 import { useGame } from "@/hooks/useGame";
 import { ScreenWrapper } from "./ScreenWrapper";
@@ -21,21 +20,21 @@ export function VotingScreen() {
   // Confirmation overlay
   if (confirming && selectedPlayer) {
     return (
-      <div className="fixed inset-0 scene-imposter-night text-white flex flex-col items-center justify-center px-6">
-        <div className="flex flex-col items-center gap-5 text-center animate-bounceIn">
-          <div className="text-[80px]">🤔</div>
-          <h2 className="font-display text-[36px] font-bold leading-tight">
-            Eliminate<br />{selectedPlayer.name}?
+      <div className="fixed inset-0 bg-imposter grid grid-rows-[auto_1fr_auto] px-5 pt-14 pb-5">
+        <p className="text-[15px] font-bold uppercase tracking-[0.08em] text-ink-2">Final vote</p>
+        <div className="flex flex-col justify-center animate-maskIn">
+          <h2 className="font-poster text-[64px] leading-[0.92] uppercase break-words text-balance">
+            Vote out {selectedPlayer.name}?
           </h2>
-          <p className="font-body text-white/85 text-base max-w-[260px]">
-            Final answer. No take-backs.
+          <p className="text-[17px] font-semibold mt-4 text-ink-2 max-w-[300px]">
+            Their role is revealed straight after. No take-backs.
           </p>
         </div>
-        <div className="flex gap-3 w-full max-w-sm mt-10 animate-fadeInUp stagger-2">
-          <button onClick={() => setConfirming(false)} className="btn-big btn-glass text-lg flex-1" style={{ height: 60 }}>
-            Back
+        <div className="flex gap-3 w-full max-w-lg mx-auto">
+          <button onClick={() => setConfirming(false)} className="btn-big btn-glass text-lg flex-1">
+            Cancel
           </button>
-          <button onClick={confirmElimination} className="btn-big btn-red text-lg flex-1" style={{ height: 60 }}>
+          <button onClick={confirmElimination} className="btn-big btn-red text-lg flex-1">
             Eliminate
           </button>
         </div>
@@ -44,13 +43,13 @@ export function VotingScreen() {
   }
 
   return (
-    <ScreenWrapper bgClassName="scene-imposter-night">
+    <ScreenWrapper bgClassName="bg-imposter">
       {/* Header */}
       <div className="pt-4 pb-4 text-center animate-slideDown">
-        <h1 className="font-display text-[38px] font-bold tracking-wide drop-shadow-lg leading-tight">
+        <h1 className="font-poster text-[38px] font-normal uppercase tracking-wide drop-shadow-lg leading-tight">
           Who&apos;s the<br />Imposter?
         </h1>
-        <p className="font-body text-white/85 mt-2 text-base">
+        <p className="font-body text-white/75 mt-2 text-base">
           Tap the player everyone agrees on
         </p>
       </div>
@@ -66,12 +65,16 @@ export function VotingScreen() {
                 onClick={() => setSelectedId(isSelected ? null : player.id)}
                 className={`card-surface rounded-[24px] p-5 flex flex-col items-center gap-3 active:scale-[0.97] transition-all min-h-[120px] justify-center border-[3px] ${
                   isSelected
-                    ? "bg-clay! text-paper border-clay"
+                    ? "bg-go! text-ink border-ink"
                     : "border-transparent"
                 }`}
               >
-                <Avatar index={i} className="w-14 h-14" />
-                <span className={`font-display font-bold text-[15px] text-center leading-tight ${isSelected ? "text-paper" : "text-white"}`}>
+                <div className={`w-14 h-14 rounded-full flex items-center justify-center text-2xl font-display font-bold transition-colors ${
+                  isSelected ? "bg-ink text-paper" : "bg-paper border-[2.5px] border-ink"
+                }`}>
+                  {isSelected ? "✓" : i + 1}
+                </div>
+                <span className={`font-display font-bold text-[15px] text-center leading-tight ${isSelected ? "text-ink" : "text-white"}`}>
                   {player.name}
                 </span>
               </button>
@@ -81,7 +84,7 @@ export function VotingScreen() {
       </div>
 
       {/* Sticky CTA */}
-      <div className="fixed bottom-0 left-0 right-0 p-5 pointer-events-none flex justify-center">
+      <div className="fixed bottom-0 left-0 right-0 p-5 bg-imposter pointer-events-none flex justify-center">
         <button
           onClick={() => selectedId && setConfirming(true)}
           className={`btn-big btn-white text-2xl max-w-lg pointer-events-auto transition-opacity ${selectedId ? "" : "opacity-30 pointer-events-none"}`}

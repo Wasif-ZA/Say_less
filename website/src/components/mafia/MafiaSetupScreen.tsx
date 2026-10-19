@@ -1,6 +1,5 @@
 "use client";
 
-import { Avatar } from "@/components/Avatar";
 import { useEffect, useRef, useState } from "react";
 import { useMafia } from "@/hooks/useMafia";
 import { MIN_MAFIA_PLAYERS, maxMafiaFor, recommendedMafiaFor } from "@/lib/mafia/engine";
@@ -15,7 +14,7 @@ function Toggle({ enabled, onChange }: { enabled: boolean; onChange: (v: boolean
       <button
         onClick={() => onChange(false)}
         className={`flex-1 rounded-full font-display font-bold text-sm transition-all ${
-          !enabled ? "bg-clay text-paper shadow-sm" : "text-white/40"
+          !enabled ? "bg-go text-ink shadow-sm" : "text-white/75"
         }`}
       >
         Off
@@ -23,7 +22,7 @@ function Toggle({ enabled, onChange }: { enabled: boolean; onChange: (v: boolean
       <button
         onClick={() => onChange(true)}
         className={`flex-1 rounded-full font-display font-bold text-sm transition-all ${
-          enabled ? "bg-clay text-paper shadow-sm" : "text-white/40"
+          enabled ? "bg-go text-ink shadow-sm" : "text-white/75"
         }`}
       >
         On
@@ -89,7 +88,7 @@ export function MafiaSetupScreen() {
   const canRemove = state.players.length > MIN_MAFIA_PLAYERS;
 
   return (
-    <ScreenWrapper bgClassName="scene-mafia-dusk">
+    <ScreenWrapper bgClassName="bg-ink">
       {/* Header */}
       <div className="flex items-center justify-between mb-6 pt-2">
         <button
@@ -109,7 +108,7 @@ export function MafiaSetupScreen() {
           <div className="flex items-center justify-between mb-4">
             <div>
               <h2 className="font-display text-2xl font-bold">Players</h2>
-              <p className="font-body text-white/40 text-sm">
+              <p className="font-body text-white/75 text-sm">
                 {state.players.length} players · minimum {MIN_MAFIA_PLAYERS}
               </p>
             </div>
@@ -118,7 +117,9 @@ export function MafiaSetupScreen() {
           <div className="flex flex-col gap-2">
             {state.players.map((player, i) => (
               <div key={player.id} className="flex items-center gap-3 bg-white/5 rounded-2xl px-3 py-2.5">
-                <Avatar index={i} className="w-9 h-9" />
+                <div className={`w-9 h-9 rounded-full flex items-center justify-center text-sm font-display font-bold shrink-0 bg-paper border-[2.5px] border-ink`}>
+                  {i + 1}
+                </div>
 
                 {editingId === player.id ? (
                   <input
@@ -141,7 +142,7 @@ export function MafiaSetupScreen() {
                 {canRemove && (
                   <button
                     onClick={() => dispatch({ type: "REMOVE_PLAYER", id: player.id })}
-                    className="w-8 h-8 flex items-center justify-center rounded-full text-white/25 hover:text-white/60 hover:bg-white/10 transition-colors active:scale-95 text-lg"
+                    className="w-8 h-8 flex items-center justify-center rounded-full text-white/75 hover:text-white/75 hover:bg-white/10 transition-colors active:scale-95 text-lg"
                   >
                     ×
                   </button>
@@ -152,7 +153,7 @@ export function MafiaSetupScreen() {
 
           <button
             onClick={() => dispatch({ type: "ADD_PLAYER" })}
-            className="w-full mt-3 border border-dashed border-white/15 rounded-2xl py-3 text-white/40 hover:text-white/70 hover:border-white/30 transition-colors font-body font-semibold text-sm active:scale-[0.98]"
+            className="w-full mt-3 border border-dashed border-white/15 rounded-2xl py-3 text-white/75 hover:text-white/70 hover:border-white/30 transition-colors font-body font-semibold text-sm active:scale-[0.98]"
           >
             + Add Player
           </button>
@@ -161,7 +162,7 @@ export function MafiaSetupScreen() {
         {/* Mafia count */}
         <div className="card-surface rounded-[24px] p-6 border border-white/10">
           <h2 className="font-display text-2xl font-bold mb-1">🔪 Mafia</h2>
-          <p className="font-body text-white/40 text-sm mb-5">
+          <p className="font-body text-white/75 text-sm mb-5">
             How many? Suggested: {recommended} for {state.players.length} players
           </p>
           <div className="flex items-center justify-center gap-8">
@@ -169,7 +170,7 @@ export function MafiaSetupScreen() {
               onClick={() => dispatch({ type: "SET_MAFIA_COUNT", count: state.mafiaCount - 1 })}
               className="w-14 h-14 rounded-2xl bg-white/10 flex items-center justify-center active:scale-95 transition-transform"
             >
-              <span className="text-2xl font-bold text-white/50">−</span>
+              <span className="text-2xl font-bold text-white/75">−</span>
             </button>
             <span className="font-display text-4xl font-bold w-8 text-center">{state.mafiaCount}</span>
             <button
@@ -178,7 +179,7 @@ export function MafiaSetupScreen() {
                 state.mafiaCount >= maxMafia ? "opacity-30" : ""
               }`}
             >
-              <span className="text-2xl font-bold text-white/50">+</span>
+              <span className="text-2xl font-bold text-white/75">+</span>
             </button>
           </div>
         </div>
@@ -188,14 +189,14 @@ export function MafiaSetupScreen() {
           <div className="flex items-center justify-between gap-3">
             <div>
               <h2 className="font-display text-xl font-bold">🕵️ Detective</h2>
-              <p className="font-body text-white/40 text-sm">Investigates one player each night</p>
+              <p className="font-body text-white/75 text-sm">Investigates one player each night</p>
             </div>
             <Toggle enabled={state.detectiveEnabled} onChange={(v) => dispatch({ type: "SET_DETECTIVE", enabled: v })} />
           </div>
           <div className="flex items-center justify-between gap-3">
             <div>
               <h2 className="font-display text-xl font-bold">🩺 Doctor</h2>
-              <p className="font-body text-white/40 text-sm">Can save a life each night</p>
+              <p className="font-body text-white/75 text-sm">Can save a life each night</p>
             </div>
             <Toggle enabled={state.doctorEnabled} onChange={(v) => dispatch({ type: "SET_DOCTOR", enabled: v })} />
           </div>
@@ -203,7 +204,7 @@ export function MafiaSetupScreen() {
       </div>
 
       {/* Sticky CTA */}
-      <div className="fixed bottom-0 left-0 right-0 p-5 pointer-events-none flex justify-center">
+      <div className="fixed bottom-0 left-0 right-0 p-5 bg-ink pointer-events-none flex justify-center">
         <button
           onClick={startGame}
           className={`btn-big btn-white text-2xl max-w-lg pointer-events-auto ${canStart ? "" : "opacity-30 pointer-events-none"}`}

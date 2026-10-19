@@ -1,6 +1,5 @@
 "use client";
 
-import { Avatar } from "@/components/Avatar";
 import { useState } from "react";
 import { useMafia } from "@/hooks/useMafia";
 import { alivePlayers } from "@/lib/mafia/engine";
@@ -16,13 +15,13 @@ export function MafiaDayScreen() {
 
   if (confirming && selectedPlayer) {
     return (
-      <div className="fixed inset-0 scene-mafia-day text-white flex flex-col items-center justify-center px-6">
+      <div className="fixed inset-0 bg-day text-white flex flex-col items-center justify-center px-6">
         <div className="flex flex-col items-center gap-5 text-center animate-bounceIn">
           <div className="text-[80px]">⚖️</div>
-          <h2 className="font-display text-[36px] font-bold leading-tight">
+          <h2 className="font-poster text-[36px] font-normal uppercase leading-tight">
             Eliminate<br />{selectedPlayer.name}?
           </h2>
-          <p className="font-body text-white/40 text-base max-w-[260px]">
+          <p className="font-body text-white/75 text-base max-w-[260px]">
             The town has spoken. No take-backs.
           </p>
         </div>
@@ -43,16 +42,16 @@ export function MafiaDayScreen() {
   }
 
   return (
-    <ScreenWrapper bgClassName="scene-mafia-day">
+    <ScreenWrapper bgClassName="bg-day">
       {/* Header */}
       <div className="pt-4 pb-4 text-center animate-slideDown">
-        <p className="font-display font-bold text-white/40 tracking-widest uppercase text-sm mb-1">
+        <p className="font-display font-bold text-white/75 tracking-widest uppercase text-sm mb-1">
           ☀️ Day {state.round}
         </p>
-        <h1 className="font-display text-[38px] font-bold tracking-wide drop-shadow-lg leading-tight">
+        <h1 className="font-poster text-[38px] font-normal uppercase tracking-wide drop-shadow-lg leading-tight">
           Who&apos;s the<br />Mafia?
         </h1>
-        <p className="font-body text-white/50 mt-2 text-base">
+        <p className="font-body text-white/75 mt-2 text-base">
           Debate, then tap the player everyone agrees on
         </p>
       </div>
@@ -68,12 +67,16 @@ export function MafiaDayScreen() {
                 onClick={() => setSelectedId(isSelected ? null : player.id)}
                 className={`card-surface rounded-[24px] p-5 flex flex-col items-center gap-3 active:scale-[0.97] transition-all min-h-[120px] justify-center border-[3px] ${
                   isSelected
-                    ? "bg-clay! text-paper border-clay"
+                    ? "bg-go! text-ink border-ink"
                     : "border-transparent"
                 }`}
               >
-                <Avatar index={state.players.indexOf(player)} className="w-14 h-14" />
-                <span className={`font-display font-bold text-[15px] text-center leading-tight ${isSelected ? "text-paper" : "text-white"}`}>
+                <div className={`w-14 h-14 rounded-full flex items-center justify-center text-2xl font-display font-bold transition-colors ${
+                  isSelected ? "bg-ink text-paper" : "bg-paper border-[2.5px] border-ink"
+                }`}>
+                  {isSelected ? "✓" : state.players.indexOf(player) + 1}
+                </div>
+                <span className={`font-display font-bold text-[15px] text-center leading-tight ${isSelected ? "text-ink" : "text-white"}`}>
                   {player.name}
                 </span>
               </button>
@@ -83,14 +86,14 @@ export function MafiaDayScreen() {
 
         <button
           onClick={() => dispatch({ type: "DAY_VOTE", targetId: null })}
-          className="w-full mt-4 border border-dashed border-white/15 rounded-2xl py-3.5 text-white/40 hover:text-white/70 hover:border-white/30 transition-colors font-body font-semibold text-sm active:scale-[0.98]"
+          className="w-full mt-4 border border-dashed border-white/15 rounded-2xl py-3.5 text-white/75 hover:text-white/70 hover:border-white/30 transition-colors font-body font-semibold text-sm active:scale-[0.98]"
         >
           🤷 Skip, nobody gets eliminated
         </button>
       </div>
 
       {/* Sticky CTA */}
-      <div className="fixed bottom-0 left-0 right-0 p-5 pointer-events-none flex justify-center">
+      <div className="fixed bottom-0 left-0 right-0 p-5 bg-day pointer-events-none flex justify-center">
         <button
           onClick={() => selectedId && setConfirming(true)}
           className={`btn-big btn-white text-2xl max-w-lg pointer-events-auto transition-opacity ${selectedId ? "" : "opacity-30 pointer-events-none"}`}

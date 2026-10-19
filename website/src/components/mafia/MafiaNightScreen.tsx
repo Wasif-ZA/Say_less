@@ -1,6 +1,6 @@
 "use client";
 
-import { Avatar } from "@/components/Avatar";
+import { Art } from "@/components/Art";
 import { useState } from "react";
 import { useMafia } from "@/hooks/useMafia";
 import { alivePlayers } from "@/lib/mafia/engine";
@@ -22,9 +22,9 @@ function TargetGrid({
 }) {
   const { state } = useMafia();
   const accentClasses = {
-    red: "border-accent-red bg-accent-red/15",
-    blue: "border-accent-blue bg-accent-blue/15",
-    green: "border-accent-green bg-accent-green/15",
+    red: "bg-go! border-ink",
+    blue: "bg-go! border-ink",
+    green: "bg-go! border-ink",
   }[accent];
 
   return (
@@ -39,7 +39,9 @@ function TargetGrid({
               isSelected ? accentClasses : "border-white/10"
             }`}
           >
-            <Avatar index={state.players.indexOf(target)} className="w-11 h-11" />
+            <div className={`w-11 h-11 rounded-full flex items-center justify-center text-lg font-display font-bold bg-paper border-[2.5px] border-ink`}>
+              {state.players.indexOf(target) + 1}
+            </div>
             <span className="font-display font-bold text-white text-sm text-center leading-tight">
               {target.name}
             </span>
@@ -83,15 +85,15 @@ export function MafiaNightScreen() {
   // , , ,  Cover: pass the phone , , , 
   if (stage === "cover") {
     return (
-      <div className="fixed inset-0 scene-mafia-night text-white flex flex-col items-center justify-center p-6 text-center">
+      <div className="fixed inset-0 bg-black text-white flex flex-col items-center justify-center p-6 text-center">
         <div className="animate-fadeIn flex flex-col items-center gap-5">
-          <p className="font-display font-bold text-white/40 tracking-widest uppercase text-base">
+          <p className="font-display font-bold text-white/75 tracking-widest uppercase text-base">
             🌙 Night {state.round}, Pass the phone to
           </p>
-          <h1 className="font-display text-[52px] font-bold leading-tight drop-shadow-lg">
+          <h1 className="animate-maskIn font-poster text-[52px] font-normal uppercase leading-tight drop-shadow-lg">
             {player.name}
           </h1>
-          <p className="font-body text-white/40 text-sm">
+          <p className="font-body text-white/75 text-sm">
             Turn {state.nightTurnIndex + 1} of {alive.length} · no peeking, everyone else!
           </p>
         </div>
@@ -109,13 +111,13 @@ export function MafiaNightScreen() {
     const target = state.players.find((p) => p.id === selectedId);
     const isMafia = target?.role === "mafia";
     return (
-      <div className="fixed inset-0 scene-mafia-night text-white flex flex-col items-center justify-center p-6 text-center">
+      <div className="fixed inset-0 bg-black text-white flex flex-col items-center justify-center p-6 text-center">
         <div className="animate-bounceIn flex flex-col items-center gap-5">
           <div className="text-[80px]">{isMafia ? "🚨" : "😇"}</div>
-          <h2 className={`font-display text-[40px] font-bold leading-tight ${isMafia ? "text-accent-red" : "text-accent-green"}`}>
+          <h2 className={`font-poster text-[40px] font-normal uppercase leading-tight ${isMafia ? "text-accent-red" : "text-accent-green"}`}>
             {target?.name} {isMafia ? "is MAFIA!" : "is innocent"}
           </h2>
-          <p className="font-body text-white/40 text-base max-w-[260px]">
+          <p className="font-body text-white/75 text-base max-w-[260px]">
             Keep it to yourself... for now. 🤫
           </p>
         </div>
@@ -158,11 +160,11 @@ export function MafiaNightScreen() {
   const accent = isMafia ? ("red" as const) : isDoctor ? ("green" as const) : ("blue" as const);
 
   return (
-    <div className="fixed inset-0 scene-mafia-night text-white flex flex-col overflow-hidden">
+    <div className="fixed inset-0 bg-black text-white flex flex-col overflow-hidden">
       <div className="flex flex-col flex-1 px-5 py-6 max-w-lg mx-auto w-full">
         {/* Header */}
         <div className="pt-2 pb-4 text-center animate-slideDown">
-          <div className={`text-5xl mb-2 ${meta.glow}`}>{meta.emoji}</div>
+          <div className="mb-2 flex justify-center"><Art name={meta.art} className="w-20 h-20" /></div>
           <h1 className="font-display text-[32px] font-bold tracking-wide leading-tight">{heading}</h1>
           {isMafia && partnerPick && (
             <p className="font-body text-accent-red/80 text-sm mt-1">
@@ -173,8 +175,8 @@ export function MafiaNightScreen() {
 
         {player.role === "civilian" ? (
           <div className="flex-1 flex flex-col items-center justify-center text-center animate-fadeInUp gap-4">
-            <div className="text-[80px] animate-float">😴</div>
-            <p className="font-body text-white/40 text-base max-w-[260px]">
+            <Art name="role-sleep" className="w-32 h-32 animate-float" />
+            <p className="font-body text-white/75 text-base max-w-[260px]">
               You have no night action. Chill for a moment so nobody can tell roles apart, then pass it on.
             </p>
           </div>
