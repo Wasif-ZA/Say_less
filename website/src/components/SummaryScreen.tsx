@@ -27,7 +27,7 @@ export function SummaryScreen() {
   });
   const sortedScores = Object.values(scores).sort((a, b) => b.wins - a.wins);
 
-  const bgClass = townWins ? "scene-imposter-day" : "scene-imposter-night";
+  const bgClass = townWins ? "bg-solid-green" : "bg-imposter";
   const resultEmoji = townWins ? "🎉" : "😈";
   const resultText = townWins ? "TOWN WINS" : "IMPOSTER WINS";
 

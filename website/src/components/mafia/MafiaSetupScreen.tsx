@@ -1,11 +1,12 @@
 "use client";
 
-import { Avatar } from "@/components/Avatar";
+import { initials } from "@/lib/initials";
 import { useEffect, useRef, useState } from "react";
 import { useMafia } from "@/hooks/useMafia";
 import { MIN_MAFIA_PLAYERS, maxMafiaFor, recommendedMafiaFor } from "@/lib/mafia/engine";
 import { loadFromStorage, saveToStorage } from "@/lib/storage";
 import { ScreenWrapper } from "../ScreenWrapper";
+import { AVATAR_BG } from "./roleMeta";
 
 const MAFIA_LAST_PLAYERS = "mafia_last_players";
 
@@ -15,7 +16,7 @@ function Toggle({ enabled, onChange }: { enabled: boolean; onChange: (v: boolean
       <button
         onClick={() => onChange(false)}
         className={`flex-1 rounded-full font-display font-bold text-sm transition-all ${
-          !enabled ? "bg-clay text-paper shadow-sm" : "text-white/40"
+          !enabled ? "bg-white text-black shadow-sm" : "text-white/40"
         }`}
       >
         Off
@@ -23,7 +24,7 @@ function Toggle({ enabled, onChange }: { enabled: boolean; onChange: (v: boolean
       <button
         onClick={() => onChange(true)}
         className={`flex-1 rounded-full font-display font-bold text-sm transition-all ${
-          enabled ? "bg-clay text-paper shadow-sm" : "text-white/40"
+          enabled ? "bg-white text-black shadow-sm" : "text-white/40"
         }`}
       >
         On
@@ -89,7 +90,7 @@ export function MafiaSetupScreen() {
   const canRemove = state.players.length > MIN_MAFIA_PLAYERS;
 
   return (
-    <ScreenWrapper bgClassName="scene-mafia-dusk">
+    <ScreenWrapper bgClassName="bg-mafia">
       {/* Header */}
       <div className="flex items-center justify-between mb-6 pt-2">
         <button
@@ -118,7 +119,9 @@ export function MafiaSetupScreen() {
           <div className="flex flex-col gap-2">
             {state.players.map((player, i) => (
               <div key={player.id} className="flex items-center gap-3 bg-white/5 rounded-2xl px-3 py-2.5">
-                <Avatar index={i} className="w-9 h-9" />
+                <div className={`w-9 h-9 rounded-full flex items-center justify-center text-sm font-display font-bold shrink-0 ${AVATAR_BG[i % AVATAR_BG.length]}`}>
+                  {initials(player.name)}
+                </div>
 
                 {editingId === player.id ? (
                   <input
@@ -203,7 +206,7 @@ export function MafiaSetupScreen() {
       </div>
 
       {/* Sticky CTA */}
-      <div className="fixed bottom-0 left-0 right-0 p-5 pointer-events-none flex justify-center">
+      <div className="fixed bottom-0 left-0 right-0 p-5 bg-linear-to-t from-mafia via-mafia to-transparent pointer-events-none flex justify-center">
         <button
           onClick={startGame}
           className={`btn-big btn-white text-2xl max-w-lg pointer-events-auto ${canStart ? "" : "opacity-30 pointer-events-none"}`}

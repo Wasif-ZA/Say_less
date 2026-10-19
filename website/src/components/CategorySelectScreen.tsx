@@ -24,7 +24,7 @@ export function CategorySelectScreen() {
   const activeCategoryId = state.categoryId || CATEGORIES[0].id;
 
   return (
-    <ScreenWrapper bgClassName="scene-imposter-day">
+    <ScreenWrapper bgClassName="bg-imposter">
       {/* Header */}
       <div className="flex items-center justify-between mb-6 pt-2">
         <button
@@ -46,12 +46,12 @@ export function CategorySelectScreen() {
               key={cat.id}
               onClick={() => selectCategory(cat.id)}
               className={`card-surface rounded-[24px] p-5 flex items-center gap-4 text-left active:scale-[0.98] transition-all border-[3px] ${
-                isSelected ? "bg-clay! text-paper border-clay" : "border-transparent"
+                isSelected ? "bg-acid! text-ink border-ink" : "border-transparent"
               }`}
             >
               <div className="flex-1 min-w-0">
                 <h2 className="font-display text-[22px] font-bold leading-tight">{cat.name}</h2>
-                <p className={`font-body text-[14px] leading-snug mt-1 line-clamp-2 ${isSelected ? "text-paper/80" : "text-white/50"}`}>
+                <p className={`font-body text-[14px] leading-snug mt-1 line-clamp-2 ${isSelected ? "text-ink/70" : "text-white/50"}`}>
                   {cat.description || `${cat.words.length} words`}
                 </p>
               </div>
@@ -62,7 +62,7 @@ export function CategorySelectScreen() {
       </div>
 
       {/* Sticky CTA */}
-      <div className="fixed bottom-0 left-0 right-0 p-5 pointer-events-none flex justify-center">
+      <div className="fixed bottom-0 left-0 right-0 p-5 bg-linear-to-t from-imposter via-imposter to-transparent pointer-events-none flex justify-center">
         <button onClick={handlePlay} className="btn-big btn-white text-2xl max-w-lg pointer-events-auto">
           PLAY
         </button>

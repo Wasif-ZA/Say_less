@@ -13,7 +13,7 @@ export function MafiaVerdictScreen() {
   const caughtMafia = eliminated?.role === "mafia";
 
   return (
-    <div className="fixed inset-0 scene-mafia-day text-white flex flex-col items-center justify-center p-6 text-center">
+    <div className="fixed inset-0 bg-black text-white flex flex-col items-center justify-center p-6 text-center">
       <div className="animate-bounceIn flex flex-col items-center gap-5">
         {state.lastVoteSkipped || !eliminated ? (
           <>
@@ -21,7 +21,7 @@ export function MafiaVerdictScreen() {
             <h2 className="font-display text-[40px] font-bold leading-tight">
               The town couldn&apos;t decide
             </h2>
-            <p className="font-body text-white/85 text-base max-w-[280px]">
+            <p className="font-body text-white/40 text-base max-w-[280px]">
               No one was eliminated. The Mafia lives another night...
             </p>
           </>
@@ -39,14 +39,14 @@ export function MafiaVerdictScreen() {
                 </span>
               </p>
             </div>
-            <p className="font-body text-white/85 text-base max-w-[280px]">
+            <p className="font-body text-white/40 text-base max-w-[280px]">
               {caughtMafia ? "Great catch! One less Mafia in town." : "Oops... they were innocent."}
             </p>
           </>
         )}
       </div>
 
-      <div className="absolute bottom-0 left-0 right-0 p-5 flex justify-center">
+      <div className="absolute bottom-0 left-0 right-0 p-5 bg-linear-to-t from-black to-transparent flex justify-center">
         <button
           onClick={() => dispatch({ type: "CONTINUE_AFTER_VERDICT" })}
           className="btn-big btn-white text-2xl max-w-lg w-full"

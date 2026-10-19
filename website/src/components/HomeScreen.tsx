@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useState } from "react";
 import { useGame } from "@/hooks/useGame";
 import { ScreenWrapper } from "./ScreenWrapper";
@@ -15,7 +14,7 @@ export function HomeScreen({ onExit }: HomeScreenProps) {
   const [showHTP, setShowHTP] = useState(false);
 
   return (
-    <ScreenWrapper bgClassName="scene-imposter-day">
+    <ScreenWrapper bgClassName="bg-imposter">
       {onExit && (
         <button 
           onClick={onExit} 
@@ -30,14 +29,14 @@ export function HomeScreen({ onExit }: HomeScreenProps) {
 
         {/* Center: Logo */}
         <div className="flex flex-col items-center text-center animate-slideDown">
-          <Image src="/animals/silver-fox.webp" alt="" width={256} height={256} className="w-52 h-52 object-contain drop-shadow-2xl mb-2 animate-float" priority />
+          <div className="text-[110px] drop-shadow-2xl mb-4 animate-float">🕵️</div>
           <h1 className="font-display text-[56px] font-bold tracking-wide leading-[0.9] drop-shadow-lg">
             IMPOSTER
           </h1>
           <h1 className="font-display text-[56px] font-bold tracking-wide leading-[0.9] drop-shadow-lg">
             PARTY
           </h1>
-          <p className="font-body text-white/85 text-lg mt-4 max-w-[240px] leading-snug animate-fadeInUp stagger-1">
+          <p className="font-body text-white/60 text-lg mt-4 max-w-[240px] leading-snug animate-fadeInUp stagger-1">
             Find the imposter. Trust no one.
           </p>
         </div>

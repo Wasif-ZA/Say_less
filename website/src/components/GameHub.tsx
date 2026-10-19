@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { ScreenWrapper } from "./ScreenWrapper";
 
 interface GameHubProps {
@@ -8,39 +7,52 @@ interface GameHubProps {
 }
 
 const GAMES = [
-  { id: "imposter", title: "Imposter Party", line: "Everyone gets the word except one.", players: "3+ players", animal: "silver-fox" },
-  { id: "mafia", title: "Mafia", line: "The town sleeps. The Mafia doesn't.", players: "4+ players", animal: "lynx" },
+  {
+    id: "imposter",
+    title: "Imposter Party",
+    line: "Everyone gets the word except one.",
+    players: "3+ players",
+    emoji: "🕵️",
+    card: "bg-imposter text-white",
+    tilt: "-rotate-2",
+  },
+  {
+    id: "mafia",
+    title: "Mafia",
+    line: "The town sleeps. The Mafia doesn't.",
+    players: "4+ players",
+    emoji: "🌃",
+    card: "bg-mafia text-acid",
+    tilt: "rotate-2",
+  },
 ] as const;
 
 export function GameHub({ onSelectGame }: GameHubProps) {
   return (
-    <ScreenWrapper bgClassName="scene-hub">
-      <div className="flex flex-col flex-1 justify-between gap-8 py-6 w-full">
-        <div className="animate-slideDown pt-6">
-          <h1 className="font-display text-[64px] font-bold leading-[0.9] tracking-tight drop-shadow-lg">
+    <ScreenWrapper bgClassName="bg-ink">
+      <div className="flex flex-col flex-1 justify-center gap-10 py-8 w-full">
+        <div className="animate-slideDown">
+          <h1 className="font-display text-[64px] font-bold leading-[0.9] tracking-tight">
             Say<br />less.
           </h1>
-          <p className="font-body font-semibold text-white/90 text-lg mt-3 drop-shadow-md">One phone. Pass it round. Trust no one.</p>
+          <p className="font-body text-white/60 text-lg mt-3">One phone. Pass it round. Trust no one.</p>
         </div>
 
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-6">
           {GAMES.map((g, i) => (
             <button
               key={g.id}
               onClick={() => onSelectGame(g.id)}
-              className={`animate-fadeInUp stagger-${i + 1} card-surface relative w-full min-h-[150px] rounded-[24px] p-5 pr-36 text-left overflow-hidden transition-transform duration-150 active:scale-[0.98]`}
+              className={`animate-fadeInUp stagger-${i + 1} relative w-full min-h-[168px] rounded-[24px] border-[3px] border-ink p-6 text-left overflow-hidden shadow-[0_8px_0_#000] transition-transform duration-150 active:translate-y-1 active:shadow-[0_3px_0_#000] ${g.card} ${g.tilt}`}
             >
-              <Image
-                src={`/animals/${g.animal}.webp`}
-                alt=""
-                width={256}
-                height={256}
-                className="absolute -right-4 bottom-0 w-40 h-40 object-contain"
-                priority
-              />
-              <span className="text-xs font-bold uppercase tracking-wide text-clay">{g.players}</span>
-              <h2 className="font-display text-[32px] font-bold leading-none mt-2">{g.title}</h2>
-              <p className="font-body font-semibold text-[15px] mt-2 text-white/70">{g.line}</p>
+              <span className="absolute -right-3 -bottom-4 text-[110px] leading-none select-none" aria-hidden>
+                {g.emoji}
+              </span>
+              <span className="inline-block rounded-full border-2 border-current px-3 py-0.5 text-xs font-bold uppercase opacity-80">
+                {g.players}
+              </span>
+              <h2 className="font-display text-[38px] font-bold leading-none mt-4 max-w-[70%]">{g.title}</h2>
+              <p className="font-body font-semibold text-[15px] mt-2 max-w-[62%] opacity-80">{g.line}</p>
             </button>
           ))}
         </div>

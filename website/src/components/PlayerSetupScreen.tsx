@@ -1,12 +1,17 @@
 "use client";
 
-import { Avatar } from "@/components/Avatar";
+import { initials } from "@/lib/initials";
 import { useEffect, useRef, useState } from "react";
 import { useGame } from "@/hooks/useGame";
 import { MIN_PLAYERS, MAX_PLAYERS, MIN_PLAYERS_FOR_TWO_IMPOSTERS, STORAGE_KEYS } from "@/lib/constants";
 import { loadFromStorage, saveToStorage } from "@/lib/storage";
 import { ScreenWrapper } from "./ScreenWrapper";
 
+const AVATAR_BG = [
+  "bg-blue-500", "bg-orange-500", "bg-pink-500", "bg-emerald-500",
+  "bg-violet-500", "bg-amber-500", "bg-cyan-500", "bg-rose-500",
+  "bg-indigo-500", "bg-teal-500",
+];
 
 export function PlayerSetupScreen() {
   const { state, dispatch } = useGame();
@@ -85,7 +90,7 @@ export function PlayerSetupScreen() {
   const canRemove = state.players.length > MIN_PLAYERS;
 
   return (
-    <ScreenWrapper bgClassName="scene-imposter-day">
+    <ScreenWrapper bgClassName="bg-imposter">
       {/* Header */}
       <div className="flex items-center justify-between mb-6 pt-2">
         <button
@@ -113,7 +118,9 @@ export function PlayerSetupScreen() {
             {state.players.map((player, i) => (
               <div key={player.id} className="flex items-center gap-3 bg-white/5 rounded-2xl px-3 py-2.5">
                 {/* Avatar */}
-                <Avatar index={i} className="w-9 h-9" />
+                <div className={`w-9 h-9 rounded-full flex items-center justify-center text-sm font-display font-bold shrink-0 ${AVATAR_BG[i % AVATAR_BG.length]}`}>
+                  {initials(player.name)}
+                </div>
 
                 {/* Name, tap to edit */}
                 {editingId === player.id ? (
@@ -166,7 +173,7 @@ export function PlayerSetupScreen() {
             <button
               onClick={() => dispatch({ type: "SET_HINTS", enabled: false })}
               className={`flex-1 rounded-full font-display font-bold text-base transition-all ${
-                !state.hintsEnabled ? "bg-clay text-paper shadow-sm" : "text-white/40"
+                !state.hintsEnabled ? "bg-white text-black shadow-sm" : "text-white/40"
               }`}
             >
               Off
@@ -174,7 +181,7 @@ export function PlayerSetupScreen() {
             <button
               onClick={() => dispatch({ type: "SET_HINTS", enabled: true })}
               className={`flex-1 rounded-full font-display font-bold text-base transition-all ${
-                state.hintsEnabled ? "bg-clay text-paper shadow-sm" : "text-white/40"
+                state.hintsEnabled ? "bg-white text-black shadow-sm" : "text-white/40"
               }`}
             >
               On
@@ -226,7 +233,7 @@ export function PlayerSetupScreen() {
       </div>
 
       {/* Sticky CTA */}
-      <div className="fixed bottom-0 left-0 right-0 p-5 pointer-events-none flex justify-center">
+      <div className="fixed bottom-0 left-0 right-0 p-5 bg-linear-to-t from-imposter via-imposter to-transparent pointer-events-none flex justify-center">
         <button onClick={startRound} className="btn-big btn-white text-2xl max-w-lg pointer-events-auto">
           PLAY <span className="text-black/30 mx-2">|</span> <span className="text-lg font-body font-semibold">{state.players.length} Players</span>
         </button>

@@ -1,14 +1,13 @@
 "use client";
 
-import Image from "next/image";
-import { animalSrc } from "@/components/Avatar";
 import { useRef, useState, useCallback } from "react";
 import { useMafia } from "@/hooks/useMafia";
 import { ROLE_META } from "./roleMeta";
 
 type RevealPhase = "hidden" | "revealing" | "revealed" | "hiding";
 
-const COVER_COLORS = ["scene-mafia-dusk"];
+const COVER_COLORS = ["bg-solid-blue", "bg-solid-orange", "bg-accent-pink", "bg-solid-green"];
+const COVER_ICONS = ["🌃", "🌙", "🏙️", "🌆", "🌉", "⭐"];
 
 export function MafiaRevealScreen() {
   const { state, dispatch } = useMafia();
@@ -22,6 +21,7 @@ export function MafiaRevealScreen() {
   const player = state.players[state.currentRevealIndex];
 
   const coverColor = COVER_COLORS[state.currentRevealIndex % COVER_COLORS.length];
+  const coverIcon = COVER_ICONS[state.currentRevealIndex % COVER_ICONS.length];
 
   const advance = useCallback(() => {
     lockedRef.current = false;
@@ -68,19 +68,19 @@ export function MafiaRevealScreen() {
   // All roles dealt, night falls
   if (allRevealed) {
     return (
-      <div className="fixed inset-0 overflow-hidden scene-mafia-night text-white flex flex-col items-center justify-center p-6 text-center">
+      <div className="fixed inset-0 overflow-hidden bg-black text-white flex flex-col items-center justify-center p-6 text-center">
         <div className="animate-bounceIn flex flex-col items-center gap-6">
           <div className="text-[80px] drop-shadow-2xl">🌙</div>
           <h2 className="font-display text-[44px] font-bold text-white leading-tight drop-shadow-md">
             Night Falls
           </h2>
-          <p className="font-body text-white/85 text-base max-w-[280px]">
+          <p className="font-body text-white/40 text-base max-w-[280px]">
             Everyone close your eyes. The phone will guide each player through the night, pass it around in order.
           </p>
         </div>
         <button
           onClick={() => dispatch({ type: "BEGIN_NIGHT" })}
-          className="absolute bottom-0 left-0 right-0 p-5 flex justify-center"
+          className="absolute bottom-0 left-0 right-0 p-5 bg-linear-to-t from-black to-transparent flex justify-center"
         >
           <span className="btn-big btn-white text-2xl max-w-lg w-full">BEGIN NIGHT 1</span>
         </button>
@@ -107,7 +107,7 @@ export function MafiaRevealScreen() {
   const showRole = phase === "revealing" || phase === "revealed" || phase === "hiding";
 
   return (
-    <div className="fixed inset-0 overflow-hidden scene-mafia-night text-white touch-none select-none">
+    <div className="fixed inset-0 overflow-hidden bg-black text-white touch-none select-none">
 
       {/* BOTTOM LAYER, role content */}
       <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center z-0">
@@ -119,13 +119,13 @@ export function MafiaRevealScreen() {
             </h2>
             {player.role === "mafia" && partners.length > 0 && (
               <div className="bg-white/8 border border-white/10 rounded-2xl px-6 py-4">
-                <p className="font-body text-white/85 text-sm mb-1">Your partners in crime:</p>
+                <p className="font-body text-white/50 text-sm mb-1">Your partners in crime:</p>
                 <p className="font-display text-xl text-white font-bold">
                   {partners.map((p) => p.name).join(" · ")}
                 </p>
               </div>
             )}
-            <p className="font-body text-white/85 max-w-[270px] leading-relaxed text-base">
+            <p className="font-body text-white/40 max-w-[270px] leading-relaxed text-base">
               {meta.blurb}
             </p>
           </div>
@@ -137,7 +137,7 @@ export function MafiaRevealScreen() {
             className="absolute inset-0 w-full h-full z-10"
             aria-label="Tap to continue"
           >
-            <span className="absolute bottom-14 left-0 right-0 animate-pulse text-white/85 font-display font-bold text-sm tracking-widest uppercase">
+            <span className="absolute bottom-14 left-0 right-0 animate-pulse text-white/30 font-display font-bold text-sm tracking-widest uppercase">
               Tap anywhere to continue
             </span>
           </button>
@@ -160,14 +160,14 @@ export function MafiaRevealScreen() {
           <h1 className="font-display text-[44px] font-bold tracking-wide drop-shadow-lg px-6 text-center">
             {player.name}
           </h1>
-          <p className="font-body text-white/85 text-sm text-center mt-1">
+          <p className="font-body text-white/50 text-sm text-center mt-1">
             Player {state.currentRevealIndex + 1} of {state.players.length}
           </p>
         </div>
 
         <div className="flex-1 flex items-center justify-center relative">
-          <div className="absolute w-64 h-64 rounded-full card-surface" />
-          <Image src={animalSrc(state.currentRevealIndex)} alt="" width={256} height={256} className="relative w-60 h-60 object-contain drop-shadow-2xl" priority />
+          <div className="absolute w-56 h-56 bg-black/10 rounded-full" />
+          <div className="text-[110px] drop-shadow-2xl z-10">{coverIcon}</div>
         </div>
 
         <div className="flex flex-col items-center gap-1">
