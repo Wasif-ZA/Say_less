@@ -45,10 +45,10 @@ export function DiscussionScreen() {
 
   // Pick background based on urgency
   const bgColor = isUrgent
-    ? "bg-gradient-to-b from-red-950 to-black"
+    ? "scene-imposter-night"
     : isWarning
-      ? "bg-gradient-to-b from-orange-950 to-black"
-      : "bg-solid-black";
+      ? "scene-imposter-dusk"
+      : "scene-imposter-dusk";
 
   const textColor = isUrgent ? "text-accent-red" : isWarning ? "text-accent-orange" : "text-white";
 
@@ -81,7 +81,7 @@ export function DiscussionScreen() {
               <circle
                 cx="128" cy="128" r="120"
                 fill="none"
-                stroke={isUrgent ? "#ff3366" : isWarning ? "#ff9500" : "#d9ff3d"}
+                stroke={isUrgent ? "#c2452f" : isWarning ? "#e0a030" : "#fffaf0"}
                 strokeWidth="6"
                 strokeLinecap="round"
                 strokeDasharray={circumference}
@@ -97,7 +97,7 @@ export function DiscussionScreen() {
           </span>
         </div>
 
-        <p className="text-white/30 font-body text-sm mt-2">
+        <p className="text-white/85 font-body text-sm mt-2">
           {noTimer ? "Time elapsed" : isPaused ? "Paused" : "Discuss!"}
         </p>
       </div>

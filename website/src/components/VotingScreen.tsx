@@ -1,15 +1,10 @@
 "use client";
 
-import { initials } from "@/lib/initials";
+import { Avatar } from "@/components/Avatar";
 import { useState } from "react";
 import { useGame } from "@/hooks/useGame";
 import { ScreenWrapper } from "./ScreenWrapper";
 
-const AVATAR_BG = [
-  "bg-blue-500", "bg-orange-500", "bg-pink-500", "bg-emerald-500",
-  "bg-violet-500", "bg-amber-500", "bg-cyan-500", "bg-rose-500",
-  "bg-indigo-500", "bg-teal-500",
-];
 
 export function VotingScreen() {
   const { state, dispatch } = useGame();
@@ -26,13 +21,13 @@ export function VotingScreen() {
   // Confirmation overlay
   if (confirming && selectedPlayer) {
     return (
-      <div className="fixed inset-0 bg-black text-white flex flex-col items-center justify-center px-6">
+      <div className="fixed inset-0 scene-imposter-night text-white flex flex-col items-center justify-center px-6">
         <div className="flex flex-col items-center gap-5 text-center animate-bounceIn">
           <div className="text-[80px]">🤔</div>
           <h2 className="font-display text-[36px] font-bold leading-tight">
             Eliminate<br />{selectedPlayer.name}?
           </h2>
-          <p className="font-body text-white/40 text-base max-w-[260px]">
+          <p className="font-body text-white/85 text-base max-w-[260px]">
             Final answer. No take-backs.
           </p>
         </div>
@@ -49,13 +44,13 @@ export function VotingScreen() {
   }
 
   return (
-    <ScreenWrapper bgClassName="bg-imposter">
+    <ScreenWrapper bgClassName="scene-imposter-night">
       {/* Header */}
       <div className="pt-4 pb-4 text-center animate-slideDown">
         <h1 className="font-display text-[38px] font-bold tracking-wide drop-shadow-lg leading-tight">
           Who&apos;s the<br />Imposter?
         </h1>
-        <p className="font-body text-white/50 mt-2 text-base">
+        <p className="font-body text-white/85 mt-2 text-base">
           Tap the player everyone agrees on
         </p>
       </div>
@@ -71,16 +66,12 @@ export function VotingScreen() {
                 onClick={() => setSelectedId(isSelected ? null : player.id)}
                 className={`card-surface rounded-[24px] p-5 flex flex-col items-center gap-3 active:scale-[0.97] transition-all min-h-[120px] justify-center border-[3px] ${
                   isSelected
-                    ? "bg-acid! text-ink border-ink"
+                    ? "bg-clay! text-paper border-clay"
                     : "border-transparent"
                 }`}
               >
-                <div className={`w-14 h-14 rounded-full flex items-center justify-center text-2xl font-display font-bold shadow-lg transition-colors ${
-                  isSelected ? "bg-ink text-white" : AVATAR_BG[i % AVATAR_BG.length]
-                }`}>
-                  {initials(player.name)}
-                </div>
-                <span className={`font-display font-bold text-[15px] text-center leading-tight ${isSelected ? "text-ink" : "text-white"}`}>
+                <Avatar index={i} className="w-14 h-14" />
+                <span className={`font-display font-bold text-[15px] text-center leading-tight ${isSelected ? "text-paper" : "text-white"}`}>
                   {player.name}
                 </span>
               </button>
@@ -90,7 +81,7 @@ export function VotingScreen() {
       </div>
 
       {/* Sticky CTA */}
-      <div className="fixed bottom-0 left-0 right-0 p-5 bg-linear-to-t from-imposter via-imposter to-transparent pointer-events-none flex justify-center">
+      <div className="fixed bottom-0 left-0 right-0 p-5 pointer-events-none flex justify-center">
         <button
           onClick={() => selectedId && setConfirming(true)}
           className={`btn-big btn-white text-2xl max-w-lg pointer-events-auto transition-opacity ${selectedId ? "" : "opacity-30 pointer-events-none"}`}
