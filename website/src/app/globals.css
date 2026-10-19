@@ -14,15 +14,8 @@
   --color-text-primary: #ffffff;
   --color-text-secondary: #e0e0ea;
   --color-text-muted: #a0a0b0;
-  --font-display: "Fredoka", sans-serif;
-  --font-body: "Nunito", sans-serif;
-}
-
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  -webkit-tap-highlight-color: transparent;
+  --font-display: var(--font-fredoka), sans-serif;
+  --font-body: var(--font-nunito), sans-serif;
 }
 
 html, body {
@@ -33,9 +26,10 @@ html, body {
 
 body {
   background: var(--color-page-bg);
-  font-family: "Nunito", sans-serif;
+  font-family: var(--font-nunito), sans-serif;
   color: #fff;
   touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 /* ─── Background surfaces ─── */
@@ -66,8 +60,6 @@ body {
 /* ─── Card surface ─── */
 .card-surface {
   background: rgba(255,255,255,0.07);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
 }
 
 /* ─── Keyframes ─── */
@@ -123,7 +115,7 @@ input:focus { outline: none; }
 
 /* Shared big button */
 .btn-big {
-  font-family: "Fredoka", sans-serif;
+  font-family: var(--font-fredoka), sans-serif;
   font-weight: 700;
   border-radius: 32px;
   height: 72px;

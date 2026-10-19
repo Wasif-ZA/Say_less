@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useGame } from "@/hooks/useGame";
-import { MIN_PLAYERS, MAX_PLAYERS, STORAGE_KEYS } from "@/lib/constants";
+import { MIN_PLAYERS, MAX_PLAYERS, MIN_PLAYERS_FOR_TWO_IMPOSTERS, STORAGE_KEYS } from "@/lib/constants";
 import { loadFromStorage, saveToStorage } from "@/lib/storage";
 import { ScreenWrapper } from "./ScreenWrapper";
 
@@ -25,12 +25,13 @@ export function PlayerSetupScreen() {
     if (state.players.length < MIN_PLAYERS) {
       const saved = loadFromStorage<string[] | null>(STORAGE_KEYS.LAST_PLAYERS, null);
       if (saved && saved.length >= MIN_PLAYERS) {
-        saved.forEach((name) => dispatch({ type: "ADD_PLAYER", name }));
+        dispatch({
+          type: "SET_PLAYERS",
+          players: saved.map((name, i) => ({ id: `p${i + 1}`, name, role: "unassigned", isEliminated: false })),
+        });
       } else {
         const toAdd = MIN_PLAYERS - state.players.length;
-        for (let i = 0; i < toAdd; i++) {
-          dispatch({ type: "ADD_PLAYER", name: `Player ${i + 1}` });
-        }
+        for (let i = 0; i < toAdd; i++) dispatch({ type: "ADD_PLAYER" });
       }
     }
   }, [state.players.length, dispatch]);
@@ -67,7 +68,8 @@ export function PlayerSetupScreen() {
 
   function adjustImposter(amount: number) {
     const next = state.imposterCount + amount;
-    if (next >= 1 && next <= 2) {
+    const max = state.players.length >= MIN_PLAYERS_FOR_TWO_IMPOSTERS ? 2 : 1;
+    if (next >= 1 && next <= max) {
       dispatch({ type: "SET_IMPOSTER_COUNT", count: next as 1 | 2 });
     }
   }
@@ -165,7 +167,7 @@ export function PlayerSetupScreen() {
         {/* Hints toggle */}
         <div className="card-surface rounded-[28px] p-6 border border-white/10">
           <h2 className="font-display text-2xl font-bold mb-1">Imposter Hints</h2>
-          <p className="font-body text-white/40 text-sm mb-4">Should imposters see the category?</p>
+          <p className="font-body text-white/40 text-sm mb-4">Give imposters a hint about the word?</p>
           <div className="bg-white/5 rounded-full flex p-1 h-14">
             <button
               onClick={() => dispatch({ type: "SET_HINTS", enabled: false })}

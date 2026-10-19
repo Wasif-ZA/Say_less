@@ -32,7 +32,7 @@ export function GameHub({ onSelectGame }: GameHubProps) {
             <p className="text-white/70 text-left text-sm mt-auto w-full">
               Find the imposter.<br />
               Trust no one.<br />
-              <span className="opacity-60 text-xs mt-1 block">3-10 players</span>
+              <span className="opacity-60 text-xs mt-1 block">3+ players</span>
             </p>
           </button>
 

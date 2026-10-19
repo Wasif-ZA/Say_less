@@ -24,10 +24,10 @@ export function RoleRevealScreen() {
   const coverColor = COVER_COLORS[state.currentRevealIndex % COVER_COLORS.length];
   const coverIcon = ICONS[state.currentRevealIndex % ICONS.length];
 
-  // Randomly pick who goes first (stable for the round)
+  // Randomly pick a civilian to go first (stable for the round)
   const [firstPlayer] = useState(() => {
-    const idx = Math.floor(Math.random() * state.players.length);
-    return state.players[idx];
+    const civilians = state.players.filter((p) => p.role === "civilian");
+    return civilians[Math.floor(Math.random() * civilians.length)];
   });
 
 

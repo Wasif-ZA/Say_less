@@ -15,8 +15,8 @@ const nunito = Nunito({
 });
 
 export const metadata: Metadata = {
-  title: "Imposter Party",
-  description: "Find the imposter. Trust no one. A local party social deduction game.",
+  title: "Say Less",
+  description: "Pass-and-play party games: Imposter Party and Mafia.",
 };
 
 export default function RootLayout({
