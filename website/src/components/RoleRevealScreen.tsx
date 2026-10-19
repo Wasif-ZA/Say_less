@@ -6,9 +6,6 @@ import { getCategoryById, getHintForWord } from "@/lib/wordbanks";
 
 type RevealPhase = "hidden" | "revealing" | "revealed" | "hiding";
 
-const COVER_COLORS = ["bg-solid-blue", "bg-solid-orange", "bg-accent-pink", "bg-solid-green"];
-const ICONS = ["🤸‍♂️", "🤹", "🏄‍♂️", "🧘", "🧗‍♂️", "🏇"];
-
 export function RoleRevealScreen() {
   const { state, dispatch } = useGame();
   const [phase, setPhase] = useState<RevealPhase>("hidden");
@@ -21,41 +18,32 @@ export function RoleRevealScreen() {
   const player = state.players[state.currentRevealIndex];
   const category = getCategoryById(state.categoryId || "");
 
-  const coverColor = COVER_COLORS[state.currentRevealIndex % COVER_COLORS.length];
-  const coverIcon = ICONS[state.currentRevealIndex % ICONS.length];
-
   // Randomly pick a civilian to go first (stable for the round)
   const [firstPlayer] = useState(() => {
     const civilians = state.players.filter((p) => p.role === "civilian");
     return civilians[Math.floor(Math.random() * civilians.length)];
   });
 
-
-
   // Advance to next player
   const advance = useCallback(() => {
     lockedRef.current = false;
     dispatch({ type: "ADVANCE_REVEAL" });
-    // Reset for next player
     setPhase("hidden");
     setDragY(0);
   }, [dispatch]);
 
-  // Tap to continue, dismiss the revealed role
+  // Hide the secret immediately, then hand over
   const dismiss = useCallback(() => {
     if (phase !== "revealed") return;
     setPhase("hiding");
-    // Brief pause then advance
     setTimeout(advance, 250);
   }, [phase, advance]);
 
-  // Trigger reveal (cover slides off)
   function triggerReveal() {
     if (lockedRef.current) return;
     lockedRef.current = true;
     setPhase("revealing");
-    // After the cover transition completes, mark as fully revealed
-    setTimeout(() => setPhase("revealed"), 400);
+    setTimeout(() => setPhase("revealed"), 300);
   }
 
   function onDown(clientY: number) {
@@ -77,31 +65,21 @@ export function RoleRevealScreen() {
   function onUp() {
     if (!isDragging) return;
     setIsDragging(false);
-    // Snap back if not past threshold
     setDragY(0);
   }
 
-  // "Who goes first" announcement after all reveals
   if (showFirstPlayer) {
     return (
-      <div className="fixed inset-0 overflow-hidden bg-black text-white flex flex-col items-center justify-center p-6 text-center">
-        <div className="animate-bounceIn flex flex-col items-center gap-6">
-          <div className="text-[80px] drop-shadow-2xl">👆</div>
-          <p className="font-display font-bold text-white/40 tracking-widest uppercase text-lg">
-            Goes First
-          </p>
-          <h2 className="font-display text-[48px] font-bold text-white leading-tight drop-shadow-md">
-            {firstPlayer?.name}
-          </h2>
-          <p className="font-body text-white/40 text-base mt-2 max-w-[280px]">
-            Start describing the word, without saying it!
-          </p>
+      <div className="fixed inset-0 overflow-hidden bg-imposter flex flex-col px-5 pt-14 pb-5">
+        <div className="flex-1 flex flex-col items-center justify-center text-center animate-bounceIn">
+          <div className="card-surface tape rounded-[20px] px-8 pt-8 pb-7 w-full max-w-sm -rotate-1">
+            <p className="text-[13px] font-bold uppercase tracking-[0.08em] text-ink-2">Goes first</p>
+            <h2 className="font-poster text-[56px] leading-none uppercase mt-2 break-words text-balance">{firstPlayer?.name}</h2>
+          </div>
+          <p className="text-[16px] font-semibold mt-8 max-w-[280px] text-ink-2">Describe the word without saying it.</p>
         </div>
-        <button
-          onClick={() => dispatch({ type: "SET_PHASE", phase: "discussion" })}
-          className="absolute bottom-0 left-0 right-0 p-5 bg-linear-to-t from-black to-transparent flex justify-center"
-        >
-          <span className="btn-big btn-white text-2xl max-w-lg w-full">START DISCUSSION</span>
+        <button onClick={() => dispatch({ type: "SET_PHASE", phase: "discussion" })} className="btn-big btn-white text-xl max-w-lg w-full mx-auto">
+          Start discussion
         </button>
       </div>
     );
@@ -111,72 +89,59 @@ export function RoleRevealScreen() {
 
   const isCivilian = player.role === "civilian";
 
-  // Cover position: during drag it follows finger, on reveal it flies off screen
   let coverTranslateY = dragY;
-  let coverTransition = isDragging ? "none" : "transform 0.3s cubic-bezier(0.16,1,0.3,1)";
+  let coverTransition = isDragging ? "none" : "transform 0.25s cubic-bezier(0.16,1,0.3,1)";
   if (phase === "revealing" || phase === "revealed") {
     coverTranslateY = -window.innerHeight - 100;
-    coverTransition = "transform 0.4s cubic-bezier(0.4,0,0.2,1)";
+    coverTransition = "transform 0.3s cubic-bezier(0.4,0,0.2,1)";
   }
   if (phase === "hiding") {
-    // Cover stays off screen during hiding
     coverTranslateY = -window.innerHeight - 100;
     coverTransition = "none";
   }
 
-  // Show role content when cover is moving away or gone
-  const showRole = phase === "revealing" || phase === "revealed" || phase === "hiding";
+  const showRole = phase === "revealing" || phase === "revealed";
 
   return (
-    <div className="fixed inset-0 overflow-hidden bg-black text-white touch-none select-none">
+    <div className="fixed inset-0 overflow-hidden bg-imposter touch-none select-none">
 
-      {/* BOTTOM LAYER, Role content (always mounted, just invisible when covered) */}
-      <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center z-0">
+      {/* Secret card, only rendered while the sleeve is off */}
+      <div className="absolute inset-0 flex flex-col items-center justify-center px-5 text-center z-0">
         {showRole && (
-          isCivilian ? (
-            <div className="animate-bounceIn flex flex-col items-center gap-5">
-              <div className="text-[80px] drop-shadow-2xl">{category?.emoji || "🎭"}</div>
-              <p className="font-display font-bold text-white/40 tracking-widest uppercase text-lg">The Word Is</p>
-              <h2 className="font-display text-[48px] font-bold text-white leading-tight drop-shadow-md">
-                {state.secretWord}
-              </h2>
-            </div>
-          ) : (
-            <div className="animate-bounceIn flex flex-col items-center gap-4">
-              <div className="text-[80px] drop-shadow-2xl">🕵️</div>
-              <h2 className="font-display text-[48px] font-bold text-accent-red tracking-wide drop-shadow-lg">
-                IMPOSTER
-              </h2>
-              {state.hintsEnabled ? (
-                <div className="mt-3 bg-white/8 border border-white/10 rounded-2xl px-6 py-4">
-                  <p className="font-display text-xl text-white font-bold">💡 {getHintForWord(state.secretWord, state.categoryId)}</p>
-                </div>
-              ) : (
-                <p className="font-body text-white/40 mt-3 max-w-[260px] leading-relaxed text-base">
-                  Blend in. Don&apos;t let them catch you!
+          <div className="card-surface rounded-[20px] w-full max-w-sm px-6 pt-7 pb-8 animate-bounceIn">
+            {isCivilian ? (
+              <>
+                <p className="text-[13px] font-bold uppercase tracking-[0.08em] text-ink-2">
+                  {category?.emoji} {category?.name} · the word is
                 </p>
-              )}
-            </div>
-          )
+                <h2 className="font-poster text-[52px] leading-[0.95] uppercase mt-3 break-words text-balance">{state.secretWord}</h2>
+              </>
+            ) : (
+              <>
+                <p className="text-[13px] font-bold uppercase tracking-[0.08em] text-ink-2">You are the</p>
+                <h2 className="font-poster text-[60px] leading-none uppercase mt-2">Imposter</h2>
+                {state.hintsEnabled ? (
+                  <p className="mt-4 inline-block rounded-full border-[2.5px] border-ink bg-pink px-4 py-1.5 text-[16px] font-bold">
+                    Hint: {getHintForWord(state.secretWord, state.categoryId)}
+                  </p>
+                ) : (
+                  <p className="text-[16px] font-semibold mt-3 text-ink-2">Blend in. Don&apos;t get caught.</p>
+                )}
+              </>
+            )}
+          </div>
         )}
 
-        {/* Tap to continue prompt */}
         {phase === "revealed" && (
-          <button
-            onClick={dismiss}
-            className="absolute inset-0 w-full h-full z-10"
-            aria-label="Tap to continue"
-          >
-            <span className="absolute bottom-14 left-0 right-0 animate-pulse text-white/30 font-display font-bold text-sm tracking-widest uppercase">
-              Tap anywhere to continue
-            </span>
+          <button onClick={dismiss} className="absolute inset-0 w-full h-full z-10" aria-label="Hide and pass">
+            <span className="absolute bottom-6 left-5 right-5 btn-big btn-glass text-xl w-auto!">Hide and pass</span>
           </button>
         )}
       </div>
 
-      {/* TOP LAYER, Cover screen (slides up on swipe) */}
+      {/* Sleeve: identical for every player, lifts on swipe */}
       <div
-        className={`absolute inset-0 flex flex-col items-center pt-10 pb-16 z-20 ${coverColor}`}
+        className="absolute inset-0 flex flex-col items-center px-5 pt-14 pb-5 z-20 bg-imposter"
         style={{ transform: `translateY(${coverTranslateY}px)`, transition: coverTransition }}
         onMouseDown={phase === "hidden" ? (e) => onDown(e.clientY) : undefined}
         onMouseMove={phase === "hidden" ? (e) => onMove(e.clientY) : undefined}
@@ -186,30 +151,20 @@ export function RoleRevealScreen() {
         onTouchMove={phase === "hidden" ? (e) => onMove(e.touches[0].clientY) : undefined}
         onTouchEnd={phase === "hidden" ? onUp : undefined}
       >
-        {/* Player name */}
-        <div className="mt-8">
-          <h1 className="font-display text-[44px] font-bold tracking-wide drop-shadow-lg px-6 text-center">
-            {player.name}
-          </h1>
-          <p className="font-body text-white/50 text-sm text-center mt-1">
-            Player {state.currentRevealIndex + 1} of {state.players.length}
-          </p>
-        </div>
+        <p className="text-[14px] font-bold text-ink-2">Player {state.currentRevealIndex + 1} of {state.players.length}</p>
+        <h1 className="font-poster text-[56px] leading-none uppercase mt-1 text-center break-words text-balance">{player.name}</h1>
 
-        {/* Center icon */}
-        <div className="flex-1 flex items-center justify-center relative">
-          <div className="absolute w-56 h-56 bg-black/10 rounded-full" />
-          <div className="text-[110px] drop-shadow-2xl z-10">
-            {coverIcon}
+        <div className="flex-1 w-full flex items-center justify-center">
+          <div className="card-surface tape rounded-[20px] w-full max-w-sm aspect-[4/5] bg-ink! flex flex-col items-center justify-center gap-5 rotate-1">
+            <span className="clip-label bg-paper! text-ink!">Private</span>
+            <span className="text-[64px]" aria-hidden>🤫</span>
+            <span className="text-[15px] font-semibold text-paper text-center px-8">Only {player.name} looks. Everyone else, eyes away.</span>
           </div>
         </div>
 
-        {/* Swipe hint */}
-        <div className="flex flex-col items-center gap-1">
-          <p className="font-display font-bold text-xl text-center leading-tight drop-shadow-sm max-w-[200px]">
-            Swipe up to reveal
-          </p>
-          <div className="text-4xl font-bold mt-2 animate-bounce drop-shadow-sm">︿</div>
+        <div className="w-full max-w-lg flex flex-col items-center gap-3">
+          <p className="text-[16px] font-bold">Swipe up to reveal</p>
+          <button onClick={triggerReveal} className="btn-big btn-white text-xl w-full">Reveal</button>
         </div>
       </div>
     </div>

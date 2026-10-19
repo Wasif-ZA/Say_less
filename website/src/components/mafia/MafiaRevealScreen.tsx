@@ -6,7 +6,7 @@ import { ROLE_META } from "./roleMeta";
 
 type RevealPhase = "hidden" | "revealing" | "revealed" | "hiding";
 
-const COVER_COLORS = ["bg-solid-blue", "bg-solid-orange", "bg-accent-pink", "bg-solid-green"];
+const COVER_COLORS = ["bg-ink"];
 const COVER_ICONS = ["🌃", "🌙", "🏙️", "🌆", "🌉", "⭐"];
 
 export function MafiaRevealScreen() {
@@ -71,16 +71,16 @@ export function MafiaRevealScreen() {
       <div className="fixed inset-0 overflow-hidden bg-black text-white flex flex-col items-center justify-center p-6 text-center">
         <div className="animate-bounceIn flex flex-col items-center gap-6">
           <div className="text-[80px] drop-shadow-2xl">🌙</div>
-          <h2 className="font-display text-[44px] font-bold text-white leading-tight drop-shadow-md">
+          <h2 className="font-poster text-[44px] font-normal uppercase text-white leading-tight drop-shadow-md">
             Night Falls
           </h2>
-          <p className="font-body text-white/40 text-base max-w-[280px]">
+          <p className="font-body text-white/75 text-base max-w-[280px]">
             Everyone close your eyes. The phone will guide each player through the night, pass it around in order.
           </p>
         </div>
         <button
           onClick={() => dispatch({ type: "BEGIN_NIGHT" })}
-          className="absolute bottom-0 left-0 right-0 p-5 bg-linear-to-t from-black to-transparent flex justify-center"
+          className="absolute bottom-0 left-0 right-0 p-5 bg-ink flex justify-center"
         >
           <span className="btn-big btn-white text-2xl max-w-lg w-full">BEGIN NIGHT 1</span>
         </button>
@@ -114,18 +114,18 @@ export function MafiaRevealScreen() {
         {showRole && (
           <div className="animate-bounceIn flex flex-col items-center gap-4">
             <div className={`text-[80px] ${meta.glow}`}>{meta.emoji}</div>
-            <h2 className={`font-display text-[48px] font-bold tracking-wide leading-tight ${meta.colorClass}`}>
+            <h2 className={`font-poster text-[48px] font-normal uppercase tracking-wide leading-tight ${meta.colorClass}`}>
               {meta.label}
             </h2>
             {player.role === "mafia" && partners.length > 0 && (
               <div className="bg-white/8 border border-white/10 rounded-2xl px-6 py-4">
-                <p className="font-body text-white/50 text-sm mb-1">Your partners in crime:</p>
+                <p className="font-body text-white/75 text-sm mb-1">Your partners in crime:</p>
                 <p className="font-display text-xl text-white font-bold">
                   {partners.map((p) => p.name).join(" · ")}
                 </p>
               </div>
             )}
-            <p className="font-body text-white/40 max-w-[270px] leading-relaxed text-base">
+            <p className="font-body text-white/75 max-w-[270px] leading-relaxed text-base">
               {meta.blurb}
             </p>
           </div>
@@ -137,7 +137,7 @@ export function MafiaRevealScreen() {
             className="absolute inset-0 w-full h-full z-10"
             aria-label="Tap to continue"
           >
-            <span className="absolute bottom-14 left-0 right-0 animate-pulse text-white/30 font-display font-bold text-sm tracking-widest uppercase">
+            <span className="absolute bottom-14 left-0 right-0 animate-pulse text-white/75 font-display font-bold text-sm tracking-widest uppercase">
               Tap anywhere to continue
             </span>
           </button>
@@ -157,10 +157,10 @@ export function MafiaRevealScreen() {
         onTouchEnd={phase === "hidden" ? onUp : undefined}
       >
         <div className="mt-8">
-          <h1 className="font-display text-[44px] font-bold tracking-wide drop-shadow-lg px-6 text-center">
+          <h1 className="font-poster text-[44px] font-normal uppercase tracking-wide drop-shadow-lg px-6 text-center">
             {player.name}
           </h1>
-          <p className="font-body text-white/50 text-sm text-center mt-1">
+          <p className="font-body text-white/75 text-sm text-center mt-1">
             Player {state.currentRevealIndex + 1} of {state.players.length}
           </p>
         </div>

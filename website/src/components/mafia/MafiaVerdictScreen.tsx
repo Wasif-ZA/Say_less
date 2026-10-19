@@ -13,22 +13,22 @@ export function MafiaVerdictScreen() {
   const caughtMafia = eliminated?.role === "mafia";
 
   return (
-    <div className="fixed inset-0 bg-black text-white flex flex-col items-center justify-center p-6 text-center">
+    <div className="fixed inset-0 bg-day text-white flex flex-col items-center justify-center p-6 text-center">
       <div className="animate-bounceIn flex flex-col items-center gap-5">
         {state.lastVoteSkipped || !eliminated ? (
           <>
             <div className="text-[80px]">🤷</div>
-            <h2 className="font-display text-[40px] font-bold leading-tight">
+            <h2 className="animate-maskIn font-poster text-[40px] font-normal uppercase leading-tight">
               The town couldn&apos;t decide
             </h2>
-            <p className="font-body text-white/40 text-base max-w-[280px]">
+            <p className="font-body text-white/75 text-base max-w-[280px]">
               No one was eliminated. The Mafia lives another night...
             </p>
           </>
         ) : (
           <>
             <div className="text-[80px]">{caughtMafia ? "🎯" : "😱"}</div>
-            <h2 className="font-display text-[40px] font-bold leading-tight">
+            <h2 className="animate-maskIn font-poster text-[40px] font-normal uppercase leading-tight">
               {eliminated.name} was voted out
             </h2>
             <div className="bg-white/8 border border-white/10 rounded-2xl px-6 py-4">
@@ -39,14 +39,14 @@ export function MafiaVerdictScreen() {
                 </span>
               </p>
             </div>
-            <p className="font-body text-white/40 text-base max-w-[280px]">
+            <p className="font-body text-white/75 text-base max-w-[280px]">
               {caughtMafia ? "Great catch! One less Mafia in town." : "Oops... they were innocent."}
             </p>
           </>
         )}
       </div>
 
-      <div className="absolute bottom-0 left-0 right-0 p-5 bg-linear-to-t from-black to-transparent flex justify-center">
+      <div className="absolute bottom-0 left-0 right-0 p-5 bg-day flex justify-center">
         <button
           onClick={() => dispatch({ type: "CONTINUE_AFTER_VERDICT" })}
           className="btn-big btn-white text-2xl max-w-lg w-full"

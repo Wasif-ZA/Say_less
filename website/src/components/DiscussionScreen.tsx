@@ -43,67 +43,34 @@ export function DiscussionScreen() {
   const isUrgent = !noTimer && timeLeft < 10;
   const isWarning = !noTimer && timeLeft < 30 && !isUrgent;
 
-  // Pick background based on urgency
-  const bgColor = isUrgent
-    ? "bg-gradient-to-b from-red-950 to-black"
-    : isWarning
-      ? "bg-gradient-to-b from-orange-950 to-black"
-      : "bg-solid-black";
-
-  const textColor = isUrgent ? "text-accent-red" : isWarning ? "text-accent-orange" : "text-white";
-
-  // Progress ratio
   const total = state.timerSeconds || 1;
   const progress = noTimer ? 1 : timeLeft / total;
-  const circumference = 2 * Math.PI * 120;
+  const barColor = isUrgent ? "bg-hot" : isWarning ? "bg-accent-orange" : "bg-go";
 
   return (
-    <div className={`fixed inset-0 ${bgColor} text-white flex flex-col items-center justify-between transition-colors duration-1000`}
+    <div className="fixed inset-0 bg-imposter flex flex-col px-5"
       style={{ paddingTop: "env(safe-area-inset-top, 0px)", paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
     >
-      {/* Top: Category pill */}
-      <div className="pt-12 animate-slideDown">
-        <div className="flex items-center gap-2 bg-white/10 px-5 py-2 rounded-full">
-          <span className="text-xl">{category?.emoji}</span>
-          <span className="font-display font-bold text-base">{category?.name}</span>
-        </div>
+      <div className="pt-10 animate-slideDown">
+        <span className="badge bg-paper px-4! py-1! text-[15px]!">{category?.emoji} {category?.name}</span>
       </div>
 
-      {/* Center: Timer */}
-      <div className="flex flex-col items-center gap-2 animate-bounceIn">
-        <div className="relative flex items-center justify-center w-64 h-64">
-          {/* SVG ring */}
-          {!noTimer && (
-            <svg className="absolute inset-0 -rotate-90" viewBox="0 0 256 256">
-              {/* Track */}
-              <circle cx="128" cy="128" r="120" fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="6" />
-              {/* Progress */}
-              <circle
-                cx="128" cy="128" r="120"
-                fill="none"
-                stroke={isUrgent ? "#ff3366" : isWarning ? "#ff9500" : "#d9ff3d"}
-                strokeWidth="6"
-                strokeLinecap="round"
-                strokeDasharray={circumference}
-                strokeDashoffset={circumference * (1 - progress)}
-                className="transition-all duration-1000 ease-linear"
-              />
-            </svg>
-          )}
-
-          {/* Time text */}
-          <span className={`font-display text-[80px] font-bold tabular-nums leading-none ${textColor} transition-colors duration-700 ${isUrgent && !isPaused ? "animate-pulse" : ""}`}>
-            {timeStr}
-          </span>
-        </div>
-
-        <p className="text-white/30 font-body text-sm mt-2">
-          {noTimer ? "Time elapsed" : isPaused ? "Paused" : "Discuss!"}
+      <div className="flex-1 flex flex-col justify-center animate-bounceIn">
+        <p className="text-[15px] font-bold uppercase tracking-[0.08em] text-ink-2">
+          {noTimer ? "Time elapsed" : isPaused ? "Paused" : isUrgent ? "Last seconds" : "Discuss"}
         </p>
+        <span className={`block text-[88px] font-bold tabular-nums leading-none tracking-tight mt-1 ${isUrgent && !isPaused ? "animate-pulse" : ""}`}>
+          {timeStr}
+        </span>
+        {!noTimer && (
+          <div className="mt-6 h-6 w-full rounded-full border-[2.5px] border-ink bg-paper overflow-hidden">
+            <div className={`h-full ${barColor} border-r-[2.5px] border-ink transition-[width] duration-1000 ease-linear`} style={{ width: `${progress * 100}%` }} />
+          </div>
+        )}
       </div>
 
       {/* Bottom: Controls */}
-      <div className="w-full px-5 pb-8 flex flex-col gap-3 max-w-lg mx-auto animate-fadeInUp stagger-2">
+      <div className="w-full pb-5 flex flex-col gap-3 max-w-lg mx-auto animate-fadeInUp stagger-2">
         {!noTimer && (
           <button
             onClick={() => setIsPaused((p) => !p)}
@@ -117,7 +84,7 @@ export function DiscussionScreen() {
           onClick={() => dispatch({ type: "SET_PHASE", phase: "voting" })}
           className="btn-big btn-white text-2xl"
         >
-          VOTE
+          Vote
         </button>
       </div>
     </div>

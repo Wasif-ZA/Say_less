@@ -30,13 +30,13 @@ export function HomeScreen({ onExit }: HomeScreenProps) {
         {/* Center: Logo */}
         <div className="flex flex-col items-center text-center animate-slideDown">
           <div className="text-[110px] drop-shadow-2xl mb-4 animate-float">🕵️</div>
-          <h1 className="font-display text-[56px] font-bold tracking-wide leading-[0.9] drop-shadow-lg">
+          <h1 className="font-poster text-[56px] font-normal uppercase tracking-wide leading-[0.9] drop-shadow-lg">
             IMPOSTER
           </h1>
-          <h1 className="font-display text-[56px] font-bold tracking-wide leading-[0.9] drop-shadow-lg">
+          <h1 className="font-poster text-[56px] font-normal uppercase tracking-wide leading-[0.9] drop-shadow-lg">
             PARTY
           </h1>
-          <p className="font-body text-white/60 text-lg mt-4 max-w-[240px] leading-snug animate-fadeInUp stagger-1">
+          <p className="font-body text-white/75 text-lg mt-4 max-w-[240px] leading-snug animate-fadeInUp stagger-1">
             Find the imposter. Trust no one.
           </p>
         </div>
