@@ -1,6 +1,6 @@
 import type { GameState, GameAction } from "./types";
 import { assignRoles, pickWord } from "./engine";
-import { MAX_PLAYERS } from "./constants";
+import { MAX_PLAYERS, MIN_PLAYERS_FOR_TWO_IMPOSTERS } from "./constants";
 
 export const initialState: GameState = {
   phase: "home",
@@ -36,8 +36,11 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
       };
     }
 
-    case "REMOVE_PLAYER":
-      return { ...state, players: state.players.filter((p) => p.id !== action.id) };
+    case "REMOVE_PLAYER": {
+      const players = state.players.filter((p) => p.id !== action.id);
+      const imposterCount = players.length < MIN_PLAYERS_FOR_TWO_IMPOSTERS ? 1 : state.imposterCount;
+      return { ...state, players, imposterCount };
+    }
 
     case "RENAME_PLAYER":
       return {
