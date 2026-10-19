@@ -1,29 +1,32 @@
 @import "tailwindcss";
 
-@theme inline {
-  --color-black: #0e0c12;
-  --color-white: #fffaf2;
-  --color-ink: #17131d;
-  --color-ink-2: #221d2a;
-  --color-acid: #d9ff3d;
-  --color-imposter: #ff3d5a;
-  --color-mafia: #1b2240;
-  --color-page-bg: #0e0c12;
-  --color-accent-green: #2ee59d;
-  --color-accent-red: #ff3d5a;
-  --color-accent-pink: #ff3d5a;
-  --color-accent-orange: #ff9a1f;
-  --color-accent-blue: #4d8dff;
-  --color-text-primary: #fffaf2;
-  --color-text-secondary: #ece6dc;
-  --color-text-muted: #a49dab;
+@theme {
+  --color-black: #14110d;
+  --color-white: #fffaf0;
+  --color-paper: #fffaf0;
+  --color-paper-2: #f1e5d0;
+  --color-hairline: #d9cebb;
+  --color-ink: #2b241c;
+  --color-ink-2: #382f25;
+  --color-clay: #ac553c;
+  --color-imposter: #ac553c;
+  --color-mafia: #1d2436;
+  --color-page-bg: #14110d;
+  --color-accent-green: #3b714b;
+  --color-accent-red: #c2452f;
+  --color-accent-pink: #c2452f;
+  --color-accent-orange: #b37400;
+  --color-accent-blue: #3d5f8f;
+  --color-text-primary: #fffaf0;
+  --color-text-secondary: #f1e5d0;
+  --color-text-muted: #c9bda8;
   --font-display: var(--font-fredoka), sans-serif;
   --font-body: var(--font-nunito), sans-serif;
-  --drop-shadow-sm: 0 2px 0 rgb(23 19 29 / 0.25);
-  --drop-shadow-md: 0 3px 0 rgb(23 19 29 / 0.28);
-  --drop-shadow-lg: 0 4px 0 rgb(23 19 29 / 0.3);
-  --drop-shadow-xl: 0 5px 0 rgb(23 19 29 / 0.3);
-  --drop-shadow-2xl: 0 8px 0 rgb(23 19 29 / 0.22);
+  --drop-shadow-sm: 0 1px 2px rgb(20 17 13 / 0.45);
+  --drop-shadow-md: 0 2px 4px rgb(20 17 13 / 0.5);
+  --drop-shadow-lg: 0 2px 6px rgb(20 17 13 / 0.55);
+  --drop-shadow-xl: 0 3px 8px rgb(20 17 13 / 0.55);
+  --drop-shadow-2xl: 0 6px 14px rgb(20 17 13 / 0.45);
 }
 
 html, body {
@@ -40,19 +43,27 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
-/* ─── Background surfaces ─── */
-.bg-imposter { background: var(--color-imposter); }
-.bg-ink { background: var(--color-black); }
-.bg-mafia { background: var(--color-mafia); }
-.bg-solid-blue { background: #3b6cff; }
-.bg-solid-orange { background: #ff8a00; }
-.bg-solid-black { background: var(--color-black); }
-.bg-solid-green { background: #12b76a; }
+/* ─── Painted scenes (Garden of Eve worlds) ─── */
+[class*="scene-"] { background-color: var(--color-page-bg); background-size: cover; background-position: center bottom; text-shadow: 0 1px 3px rgb(20 17 13 / 0.75); }
+.card-surface, .paper, .btn-big { text-shadow: none; }
+.scene-hub { background-image: url(/scenes/hub.webp); }
+.scene-imposter-day { background-image: url(/scenes/imposter-day.webp); }
+.scene-imposter-dusk { background-image: url(/scenes/imposter-dusk.webp); }
+.scene-imposter-night { background-image: url(/scenes/imposter-night.webp); }
+.scene-mafia-day { background-image: url(/scenes/mafia-day.webp); }
+.scene-mafia-dusk { background-image: url(/scenes/mafia-dusk.webp); }
+.scene-mafia-night { background-image: url(/scenes/mafia-night.webp); }
+.bg-ink { background: var(--color-page-bg); }
+.bg-solid-black { background: var(--color-page-bg); }
 
-/* ─── Card surface ─── */
-.card-surface {
-  background: var(--color-ink);
-  box-shadow: 0 5px 0 rgb(0 0 0 / 0.28);
+/* ─── Paper card: cream stationery; text-white inside it reads as ink ─── */
+.card-surface, .paper {
+  --color-white: var(--color-ink);
+  color: var(--color-ink);
+  background-color: rgb(255 250 240 / 0.94);
+  background-image: url(/paper.svg);
+  border: 1px solid var(--color-hairline);
+  box-shadow: 0 1px 3px #51402c1f, 0 10px 28px rgb(20 17 13 / 0.28);
 }
 
 /* ─── Keyframes ─── */
@@ -69,8 +80,8 @@ body {
   to { opacity: 1; transform: translateY(0); }
 }
 @keyframes float {
-  0%, 100% { transform: translateY(0) rotate(-3deg); }
-  50% { transform: translateY(-8px) rotate(3deg); }
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
 }
 @keyframes slideUpIn {
   from { opacity: 0; transform: translateY(60px); }
@@ -109,9 +120,9 @@ body {
 .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
 
 input:focus { outline: none; }
-button:focus-visible { outline: 3px solid var(--color-acid); outline-offset: 3px; }
+button:focus-visible { outline: 3px solid var(--color-clay); outline-offset: 3px; }
 
-/* Shared big button: pill with a hard drop that presses down */
+/* Shared big button: paper pill that presses down */
 .btn-big {
   font-family: var(--font-fredoka), sans-serif;
   font-weight: 700;
@@ -123,15 +134,13 @@ button:focus-visible { outline: 3px solid var(--color-acid); outline-offset: 3px
   justify-content: center;
   transition: transform 0.1s ease, box-shadow 0.1s ease;
   cursor: pointer;
-  border: 3px solid var(--color-ink);
-  box-shadow: 0 6px 0 var(--color-ink);
+  border: 2px solid var(--color-ink);
+  box-shadow: 0 4px 0 var(--color-ink), 0 10px 24px rgb(20 17 13 / 0.3);
 }
-.btn-big:active { transform: translateY(4px); box-shadow: 0 2px 0 var(--color-ink); }
+.btn-big:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--color-ink), 0 4px 10px rgb(20 17 13 / 0.3); }
 
-.btn-white { background: var(--color-white); color: var(--color-ink); }
-.btn-glass { background: var(--color-ink-2); color: var(--color-white); border-color: rgb(0 0 0 / 0.5); box-shadow: 0 6px 0 rgb(0 0 0 / 0.45); }
-.btn-glass:active { box-shadow: 0 2px 0 rgb(0 0 0 / 0.45); }
-.btn-red { background: var(--color-imposter); color: var(--color-white); }
-.btn-ghost { background: transparent; color: rgb(255 250 242 / 0.6); border-color: transparent; box-shadow: none; }
+.btn-white { background: var(--color-paper); color: var(--color-ink); }
+.btn-glass { background: var(--color-ink); color: var(--color-paper); }
+.btn-red { background: var(--color-clay); color: var(--color-paper); }
+.btn-ghost { background: transparent; color: rgb(255 250 240 / 0.85); border-color: transparent; box-shadow: none; text-shadow: 0 1px 4px rgb(20 17 13 / 0.6); }
 .btn-ghost:active { box-shadow: none; }
-.btn-ghost:hover { color: var(--color-white); }

@@ -1,13 +1,14 @@
 "use client";
 
+import Image from "next/image";
+import { animalSrc } from "@/components/Avatar";
 import { useRef, useState, useCallback } from "react";
 import { useGame } from "@/hooks/useGame";
 import { getCategoryById, getHintForWord } from "@/lib/wordbanks";
 
 type RevealPhase = "hidden" | "revealing" | "revealed" | "hiding";
 
-const COVER_COLORS = ["bg-solid-blue", "bg-solid-orange", "bg-accent-pink", "bg-solid-green"];
-const ICONS = ["🤸‍♂️", "🤹", "🏄‍♂️", "🧘", "🧗‍♂️", "🏇"];
+const COVER_COLORS = ["scene-imposter-dusk"];
 
 export function RoleRevealScreen() {
   const { state, dispatch } = useGame();
@@ -22,7 +23,6 @@ export function RoleRevealScreen() {
   const category = getCategoryById(state.categoryId || "");
 
   const coverColor = COVER_COLORS[state.currentRevealIndex % COVER_COLORS.length];
-  const coverIcon = ICONS[state.currentRevealIndex % ICONS.length];
 
   // Randomly pick a civilian to go first (stable for the round)
   const [firstPlayer] = useState(() => {
@@ -84,22 +84,22 @@ export function RoleRevealScreen() {
   // "Who goes first" announcement after all reveals
   if (showFirstPlayer) {
     return (
-      <div className="fixed inset-0 overflow-hidden bg-black text-white flex flex-col items-center justify-center p-6 text-center">
+      <div className="fixed inset-0 overflow-hidden scene-imposter-night text-white flex flex-col items-center justify-center p-6 text-center">
         <div className="animate-bounceIn flex flex-col items-center gap-6">
           <div className="text-[80px] drop-shadow-2xl">👆</div>
-          <p className="font-display font-bold text-white/40 tracking-widest uppercase text-lg">
+          <p className="font-display font-bold text-white/85 tracking-widest uppercase text-lg">
             Goes First
           </p>
           <h2 className="font-display text-[48px] font-bold text-white leading-tight drop-shadow-md">
             {firstPlayer?.name}
           </h2>
-          <p className="font-body text-white/40 text-base mt-2 max-w-[280px]">
+          <p className="font-body text-white/85 text-base mt-2 max-w-[280px]">
             Start describing the word, without saying it!
           </p>
         </div>
         <button
           onClick={() => dispatch({ type: "SET_PHASE", phase: "discussion" })}
-          className="absolute bottom-0 left-0 right-0 p-5 bg-linear-to-t from-black to-transparent flex justify-center"
+          className="absolute bottom-0 left-0 right-0 p-5 flex justify-center"
         >
           <span className="btn-big btn-white text-2xl max-w-lg w-full">START DISCUSSION</span>
         </button>
@@ -128,7 +128,7 @@ export function RoleRevealScreen() {
   const showRole = phase === "revealing" || phase === "revealed" || phase === "hiding";
 
   return (
-    <div className="fixed inset-0 overflow-hidden bg-black text-white touch-none select-none">
+    <div className="fixed inset-0 overflow-hidden scene-imposter-night text-white touch-none select-none">
 
       {/* BOTTOM LAYER, Role content (always mounted, just invisible when covered) */}
       <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center z-0">
@@ -136,14 +136,14 @@ export function RoleRevealScreen() {
           isCivilian ? (
             <div className="animate-bounceIn flex flex-col items-center gap-5">
               <div className="text-[80px] drop-shadow-2xl">{category?.emoji || "🎭"}</div>
-              <p className="font-display font-bold text-white/40 tracking-widest uppercase text-lg">The Word Is</p>
+              <p className="font-display font-bold text-white/85 tracking-widest uppercase text-lg">The Word Is</p>
               <h2 className="font-display text-[48px] font-bold text-white leading-tight drop-shadow-md">
                 {state.secretWord}
               </h2>
             </div>
           ) : (
             <div className="animate-bounceIn flex flex-col items-center gap-4">
-              <div className="text-[80px] drop-shadow-2xl">🕵️</div>
+              <Image src="/animals/silver-fox.webp" alt="" width={256} height={256} className="w-44 h-44 object-contain drop-shadow-2xl" />
               <h2 className="font-display text-[48px] font-bold text-accent-red tracking-wide drop-shadow-lg">
                 IMPOSTER
               </h2>
@@ -152,7 +152,7 @@ export function RoleRevealScreen() {
                   <p className="font-display text-xl text-white font-bold">💡 {getHintForWord(state.secretWord, state.categoryId)}</p>
                 </div>
               ) : (
-                <p className="font-body text-white/40 mt-3 max-w-[260px] leading-relaxed text-base">
+                <p className="font-body text-white/85 mt-3 max-w-[260px] leading-relaxed text-base">
                   Blend in. Don&apos;t let them catch you!
                 </p>
               )}
@@ -167,7 +167,7 @@ export function RoleRevealScreen() {
             className="absolute inset-0 w-full h-full z-10"
             aria-label="Tap to continue"
           >
-            <span className="absolute bottom-14 left-0 right-0 animate-pulse text-white/30 font-display font-bold text-sm tracking-widest uppercase">
+            <span className="absolute bottom-14 left-0 right-0 animate-pulse text-white/85 font-display font-bold text-sm tracking-widest uppercase">
               Tap anywhere to continue
             </span>
           </button>
@@ -191,17 +191,15 @@ export function RoleRevealScreen() {
           <h1 className="font-display text-[44px] font-bold tracking-wide drop-shadow-lg px-6 text-center">
             {player.name}
           </h1>
-          <p className="font-body text-white/50 text-sm text-center mt-1">
+          <p className="font-body text-white/85 text-sm text-center mt-1">
             Player {state.currentRevealIndex + 1} of {state.players.length}
           </p>
         </div>
 
         {/* Center icon */}
         <div className="flex-1 flex items-center justify-center relative">
-          <div className="absolute w-56 h-56 bg-black/10 rounded-full" />
-          <div className="text-[110px] drop-shadow-2xl z-10">
-            {coverIcon}
-          </div>
+          <div className="absolute w-64 h-64 rounded-full card-surface" />
+          <Image src={animalSrc(state.currentRevealIndex)} alt="" width={256} height={256} className="relative w-60 h-60 object-contain drop-shadow-2xl" priority />
         </div>
 
         {/* Swipe hint */}
