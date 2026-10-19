@@ -42,7 +42,7 @@ export function SummaryScreen() {
 
   return (
     <div className={`fixed inset-0 ${bgClass} text-white overflow-y-auto scrollbar-hide`}>
-      <div className="max-w-lg mx-auto px-5 py-10 flex flex-col gap-8 min-h-full">
+      <div className="max-w-lg mx-auto px-5 pt-16 pb-10 flex flex-col gap-8 min-h-full">
 
         {/* Result */}
         <div className="relative pt-8 animate-maskIn">

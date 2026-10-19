@@ -10,6 +10,8 @@ import { RoleRevealScreen } from "@/components/RoleRevealScreen";
 import { DiscussionScreen } from "@/components/DiscussionScreen";
 import { VotingScreen } from "@/components/VotingScreen";
 import { SummaryScreen } from "@/components/SummaryScreen";
+import { NavBar, type NavTarget } from "@/components/NavBar";
+import type { GamePhase } from "@/lib/types";
 
 const screens = {
   category: CategorySelectScreen,
@@ -25,7 +27,7 @@ interface ImposterPartyProps {
 }
 
 function InnerApp({ onExit }: ImposterPartyProps) {
-  const { state } = useGame();
+  const { state, dispatch } = useGame();
 
   useEffect(() => {
     const gamePhases = ["reveal", "discussion", "voting", "summary"];
@@ -39,12 +41,25 @@ function InnerApp({ onExit }: ImposterPartyProps) {
     }
   }, [state.phase]);
 
-  if (state.phase === "home") {
-    return <HomeScreen onExit={onExit} />;
-  }
+  const go = (phase: GamePhase) => () => dispatch({ type: "SET_PHASE", phase });
+  const home: NavTarget = { label: "Home", onClick: go("home"), confirm: true };
+  const nav: Record<GamePhase, { back?: NavTarget; home?: NavTarget }> = {
+    home: { back: { label: "Games", onClick: onExit } },
+    category: { back: { label: "Back", onClick: go("home") } },
+    players: { back: { label: "Back", onClick: go("category") }, home: { ...home, confirm: false } },
+    reveal: { back: { label: "Redeal", onClick: go("players"), confirm: true }, home },
+    discussion: { home },
+    voting: { back: { label: "Back", onClick: go("discussion") }, home },
+    summary: { home: { ...home, confirm: false } },
+  };
 
-  const Screen = screens[state.phase];
-  return <Screen />;
+  const Screen = state.phase === "home" ? null : screens[state.phase];
+  return (
+    <>
+      <NavBar {...nav[state.phase]} />
+      {Screen ? <Screen /> : <HomeScreen />}
+    </>
+  );
 }
 
 export function ImposterPartyGame({ onExit }: ImposterPartyProps) {

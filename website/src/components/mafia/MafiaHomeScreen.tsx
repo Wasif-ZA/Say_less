@@ -13,11 +13,7 @@ const RULES = [
   { emoji: "🏆", text: "Town wins by voting out all Mafia. Mafia wins by outnumbering the town" },
 ];
 
-interface MafiaHomeScreenProps {
-  onExit: () => void;
-}
-
-export function MafiaHomeScreen({ onExit }: MafiaHomeScreenProps) {
+export function MafiaHomeScreen() {
   const { dispatch } = useMafia();
   const [showRules, setShowRules] = useState(false);
 
@@ -77,9 +73,6 @@ export function MafiaHomeScreen({ onExit }: MafiaHomeScreenProps) {
           </button>
           <button onClick={() => setShowRules(true)} className="btn-big btn-glass text-lg">
             How to Play
-          </button>
-          <button onClick={onExit} className="btn-big btn-ghost text-base">
-            ‹ Back to Games
           </button>
         </div>
       </div>

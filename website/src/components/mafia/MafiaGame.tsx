@@ -11,13 +11,15 @@ import { MafiaDawnScreen } from "./MafiaDawnScreen";
 import { MafiaDayScreen } from "./MafiaDayScreen";
 import { MafiaVerdictScreen } from "./MafiaVerdictScreen";
 import { MafiaSummaryScreen } from "./MafiaSummaryScreen";
+import { NavBar, type NavTarget } from "@/components/NavBar";
+import type { MafiaPhase } from "@/lib/mafia/types";
 
 interface MafiaGameProps {
   onExit: () => void;
 }
 
 function InnerMafia({ onExit }: MafiaGameProps) {
-  const { state } = useMafia();
+  const { state, dispatch } = useMafia();
 
   // Block browser back during an active game, going back would leak roles
   useEffect(() => {
@@ -32,9 +34,30 @@ function InnerMafia({ onExit }: MafiaGameProps) {
     }
   }, [state.phase]);
 
-  switch (state.phase) {
+  const quit: NavTarget = { label: "Home", onClick: () => dispatch({ type: "FULL_RESET" }), confirm: true };
+  const nav: Record<MafiaPhase, { back?: NavTarget; home?: NavTarget }> = {
+    home: { back: { label: "Games", onClick: onExit } },
+    setup: { back: { label: "Back", onClick: () => dispatch({ type: "SET_PHASE", phase: "home" }) } },
+    reveal: { back: { label: "Redeal", onClick: () => dispatch({ type: "SET_PHASE", phase: "setup" }), confirm: true }, home: quit },
+    night: { home: quit },
+    dawn: { home: quit },
+    day: { home: quit },
+    verdict: { home: quit },
+    summary: { home: { ...quit, confirm: false } },
+  };
+
+  return (
+    <>
+      <NavBar {...nav[state.phase]} />
+      {screenFor(state.phase, onExit)}
+    </>
+  );
+}
+
+function screenFor(phase: MafiaPhase, onExit: () => void) {
+  switch (phase) {
     case "home":
-      return <MafiaHomeScreen onExit={onExit} />;
+      return <MafiaHomeScreen />;
     case "setup":
       return <MafiaSetupScreen />;
     case "reveal":
