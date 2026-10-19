@@ -2,21 +2,24 @@
 
 @theme {
   --color-black: #0b0d12;
-  --color-white: #f6f7f4;
+  --color-white: #fbf7ec;
   --color-ink: #0b0d12;
   --color-ink-2: #454b43;
-  --color-paper: #f6f7f4;
+  --color-paper: #fbf7ec;
   --color-paper-2: #c1c5be;
-  --color-mint: #c8f2c2;
-  --color-pink: #ffc9e3;
-  --color-go: #9be08f;
-  --color-hot: #f26ba8;
-  --color-imposter: #ffc9e3;
+  --color-mint: #f4eedf;
+  --color-cream: #f4eedf;
+  --color-cobalt: #2b4bdb;
+  --color-tangerine: #ff8a3d;
+  --color-pink: #2b4bdb;
+  --color-go: #c6f04a;
+  --color-hot: #ff5c5c;
+  --color-imposter: #2b4bdb;
   --color-mafia: #0b0d12;
   --color-page-bg: #0b0d12;
-  --color-accent-green: #9be08f;
-  --color-accent-red: #f26ba8;
-  --color-accent-pink: #f26ba8;
+  --color-accent-green: #c6f04a;
+  --color-accent-red: #ff5c5c;
+  --color-accent-pink: #ff8a3d;
   --color-accent-orange: #ffd27a;
   --color-accent-blue: #9cc7ff;
   --color-text-primary: #f6f7f4;
@@ -48,15 +51,17 @@ body {
 }
 
 /* ─── Grounds: light ones flip text-white to ink ─── */
-.bg-hub, .bg-imposter, .bg-day { --color-white: var(--color-ink); color: var(--color-ink); }
-.bg-hub { background: var(--color-mint); }
-.bg-imposter { background: var(--color-pink); }
-.bg-day { background: var(--color-mint); }
+.bg-hub, .bg-day { --color-white: var(--color-ink); color: var(--color-ink); }
+.bg-imposter { --color-ink-2: #d6ddff; color: var(--color-paper); }
+.bg-hub { background: var(--color-cream); }
+.bg-imposter { background: var(--color-cobalt); }
+.bg-day { background: var(--color-cream); }
 .bg-ink, .bg-solid-black { background: var(--color-page-bg); }
 
 /* ─── Card: paper, ink outline, hard offset shadow ─── */
 .card-surface {
   --color-white: var(--color-ink);
+  --color-ink-2: #454b43;
   color: var(--color-ink);
   background: var(--color-paper);
   border: 2.5px solid var(--color-ink);
@@ -147,7 +152,7 @@ button:focus-visible { outline: 3px solid var(--color-hot); outline-offset: 3px;
 .btn-big:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--color-ink); }
 .bg-black .btn-big, .bg-ink .btn-big { box-shadow: 3px 3px 0 var(--color-paper-2); }
 
-.btn-white { background: var(--color-go); }
+.btn-white { background: var(--color-tangerine); }
 .btn-glass { background: var(--color-paper); }
 .btn-red { background: var(--color-hot); }
 .btn-ghost { background: transparent; border-color: transparent; box-shadow: none !important; color: inherit; text-decoration: underline; text-underline-offset: 4px; }

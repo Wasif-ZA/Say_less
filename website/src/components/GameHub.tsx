@@ -1,5 +1,6 @@
 "use client";
 
+import { Art } from "@/components/Art";
 import { ScreenWrapper } from "./ScreenWrapper";
 
 interface GameHubProps {
@@ -7,14 +8,14 @@ interface GameHubProps {
 }
 
 const GAMES = [
-  { id: "imposter", title: "Imposter Party", line: "Everyone gets the word except one.", players: "3+ players", emoji: "🕵️", card: "bg-pink" },
-  { id: "mafia", title: "Mafia", line: "The town sleeps. The Mafia doesn't.", players: "4+ players", emoji: "🌙", card: "bg-ink text-paper" },
+  { id: "imposter", title: "Imposter Party", line: "Everyone gets the word except one.", players: "3+ players", emoji: "role-imposter", card: "bg-cobalt text-paper" },
+  { id: "mafia", title: "Mafia", line: "The town sleeps. The Mafia doesn't.", players: "4+ players", emoji: "role-mafia", card: "bg-ink text-paper" },
 ] as const;
 
 const STICKERS = [
-  { e: "🤫", r: "-rotate-6", p: "left-0 top-2" },
-  { e: "🕵️", r: "rotate-3", p: "left-10 top-0" },
-  { e: "🗳️", r: "-rotate-2", p: "left-20 top-3" },
+  { e: "emote-shock", r: "-rotate-6", p: "left-0 top-2" },
+  { e: "sticker-shh", r: "rotate-3", p: "left-12 top-0" },
+  { e: "sticker-vote", r: "-rotate-2", p: "left-24 top-3" },
 ];
 
 export function GameHub({ onSelectGame }: GameHubProps) {
@@ -22,10 +23,10 @@ export function GameHub({ onSelectGame }: GameHubProps) {
     <ScreenWrapper bgClassName="bg-hub">
       <div className="flex flex-col flex-1 justify-between gap-8 py-4 w-full">
         <div className="animate-slideDown pt-4">
-          <div className="relative h-16 w-36 mb-3" aria-hidden>
+          <div className="relative h-20 w-44 mb-3" aria-hidden>
             {STICKERS.map((s) => (
-              <span key={s.e} className={`absolute ${s.p} ${s.r} w-14 h-14 rounded-full bg-paper border-[2.5px] border-ink flex items-center justify-center text-3xl`}>
-                {s.e}
+              <span key={s.e} className={`absolute ${s.p} ${s.r} w-16 h-16`}>
+                <Art name={s.e} className="w-16 h-16" />
               </span>
             ))}
           </div>
@@ -43,7 +44,7 @@ export function GameHub({ onSelectGame }: GameHubProps) {
               <span className="badge">{g.players}</span>
               <h2 className="font-poster text-[44px] leading-none uppercase mt-3">{g.title}</h2>
               <p className="text-[15px] font-semibold mt-2">{g.line}</p>
-              <span className="absolute right-5 top-1/2 -translate-y-1/2 text-[52px]" aria-hidden>{g.emoji}</span>
+              <span className="absolute right-3 top-1/2 -translate-y-1/2" aria-hidden><Art name={g.emoji} className="w-20 h-20" /></span>
             </button>
           ))}
         </div>

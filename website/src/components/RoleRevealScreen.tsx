@@ -1,5 +1,6 @@
 "use client";
 
+import { Art } from "@/components/Art";
 import { useRef, useState, useCallback } from "react";
 import { useGame } from "@/hooks/useGame";
 import { getCategoryById, getHintForWord } from "@/lib/wordbanks";
@@ -118,6 +119,7 @@ export function RoleRevealScreen() {
               </>
             ) : (
               <>
+                <Art name="role-imposter" className="w-24 h-24 mx-auto -mt-2 mb-2" />
                 <p className="text-[13px] font-bold uppercase tracking-[0.08em] text-ink-2">You are the</p>
                 <h2 className="font-poster text-[60px] leading-none uppercase mt-2">Imposter</h2>
                 {state.hintsEnabled ? (
@@ -157,7 +159,7 @@ export function RoleRevealScreen() {
         <div className="flex-1 w-full flex items-center justify-center">
           <div className="card-surface tape rounded-[20px] w-full max-w-sm aspect-[4/5] bg-ink! flex flex-col items-center justify-center gap-5 rotate-1">
             <span className="clip-label bg-paper! text-ink!">Private</span>
-            <span className="text-[64px]" aria-hidden>🤫</span>
+            <Art name="sticker-shh" className="w-24 h-24" />
             <span className="text-[15px] font-semibold text-paper text-center px-8">Only {player.name} looks. Everyone else, eyes away.</span>
           </div>
         </div>

@@ -1,5 +1,6 @@
 "use client";
 
+import { Art } from "@/components/Art";
 import { useGame } from "@/hooks/useGame";
 
 export function SummaryScreen() {
@@ -28,7 +29,6 @@ export function SummaryScreen() {
   const sortedScores = Object.values(scores).sort((a, b) => b.wins - a.wins);
 
   const bgClass = townWins ? "bg-hub" : "bg-imposter";
-  const resultEmoji = townWins ? "🎉" : "😈";
   const resultText = townWins ? "TOWN WINS" : "IMPOSTER WINS";
 
   return (
@@ -38,7 +38,7 @@ export function SummaryScreen() {
         {/* Result */}
         <div className="relative pt-8 animate-maskIn">
           <span className={`absolute right-0 top-4 rotate-6 w-24 h-24 rounded-full border-[2.5px] border-ink flex flex-col items-center justify-center text-center font-bold text-[13px] leading-tight uppercase ${townWins ? "bg-go" : "bg-hot"}`}>
-            <span className="text-[30px] leading-none">{resultEmoji}</span>
+            <Art name={townWins ? "role-civilian" : "role-imposter"} className="w-11 h-11" />
             {townWins ? "Caught" : "Escaped"}
           </span>
           <h1 className="font-poster text-[60px] leading-[0.9] uppercase pr-28 text-balance">
@@ -53,7 +53,7 @@ export function SummaryScreen() {
               The Imposter{imposters.length > 1 ? "s" : ""}
             </p>
             <div className="flex items-center justify-center gap-2">
-              <span className="text-3xl">🕵️</span>
+              <Art name="role-imposter" className="w-10 h-10" />
               <span className="font-display text-2xl font-bold">
                 {imposters.map((p) => p.name).join(" & ")}
               </span>

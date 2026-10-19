@@ -1,5 +1,6 @@
 "use client";
 
+import { Art } from "@/components/Art";
 import { useState } from "react";
 import { useMafia } from "@/hooks/useMafia";
 import { ScreenWrapper } from "../ScreenWrapper";
@@ -59,7 +60,7 @@ export function MafiaHomeScreen({ onExit }: MafiaHomeScreenProps) {
   return (
     <ScreenWrapper bgClassName="bg-ink">
       <div className="flex flex-col items-center justify-center flex-1 text-center animate-fadeInUp">
-        <div className="text-[90px] mb-2 drop-shadow-2xl">🌃</div>
+        <Art name="role-mafia" className="w-36 h-36 mb-2 animate-float" />
         <h1 className="animate-maskIn font-poster text-[56px] font-normal uppercase tracking-wide drop-shadow-lg leading-none">
           MAFIA
         </h1>

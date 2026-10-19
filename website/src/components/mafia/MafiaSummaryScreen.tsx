@@ -1,5 +1,6 @@
 "use client";
 
+import { Art } from "@/components/Art";
 import { useMafia } from "@/hooks/useMafia";
 import { ScreenWrapper } from "../ScreenWrapper";
 import { ROLE_META } from "./roleMeta";
@@ -16,7 +17,7 @@ export function MafiaSummaryScreen({ onExit }: MafiaSummaryScreenProps) {
     <ScreenWrapper bgClassName="bg-ink">
       {/* Winner banner */}
       <div className="text-center pt-6 pb-5 animate-bounceIn">
-        <div className="text-[80px] mb-2">{townWins ? "🎉" : "🔪"}</div>
+        <div className="flex justify-center mb-2"><Art name={townWins ? "role-civilian" : "role-mafia"} className="w-28 h-28" /></div>
         <h1 className={`font-poster text-[44px] font-normal uppercase tracking-wide leading-tight drop-shadow-lg ${
           townWins ? "text-accent-green" : "text-accent-red"
         }`}>

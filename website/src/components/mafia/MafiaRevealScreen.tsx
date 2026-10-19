@@ -1,5 +1,6 @@
 "use client";
 
+import { Art } from "@/components/Art";
 import { useRef, useState, useCallback } from "react";
 import { useMafia } from "@/hooks/useMafia";
 import { ROLE_META } from "./roleMeta";
@@ -7,7 +8,6 @@ import { ROLE_META } from "./roleMeta";
 type RevealPhase = "hidden" | "revealing" | "revealed" | "hiding";
 
 const COVER_COLORS = ["bg-ink"];
-const COVER_ICONS = ["🌃", "🌙", "🏙️", "🌆", "🌉", "⭐"];
 
 export function MafiaRevealScreen() {
   const { state, dispatch } = useMafia();
@@ -21,7 +21,6 @@ export function MafiaRevealScreen() {
   const player = state.players[state.currentRevealIndex];
 
   const coverColor = COVER_COLORS[state.currentRevealIndex % COVER_COLORS.length];
-  const coverIcon = COVER_ICONS[state.currentRevealIndex % COVER_ICONS.length];
 
   const advance = useCallback(() => {
     lockedRef.current = false;
@@ -113,7 +112,7 @@ export function MafiaRevealScreen() {
       <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center z-0">
         {showRole && (
           <div className="animate-bounceIn flex flex-col items-center gap-4">
-            <div className={`text-[80px] ${meta.glow}`}>{meta.emoji}</div>
+            <Art name={meta.art} className="w-32 h-32" />
             <h2 className={`font-poster text-[48px] font-normal uppercase tracking-wide leading-tight ${meta.colorClass}`}>
               {meta.label}
             </h2>
@@ -167,7 +166,7 @@ export function MafiaRevealScreen() {
 
         <div className="flex-1 flex items-center justify-center relative">
           <div className="absolute w-56 h-56 bg-black/10 rounded-full" />
-          <div className="text-[110px] drop-shadow-2xl z-10">{coverIcon}</div>
+          <Art name="sticker-shh" className="relative w-36 h-36 z-10" />
         </div>
 
         <div className="flex flex-col items-center gap-1">

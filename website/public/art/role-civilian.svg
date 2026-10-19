@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <!-- Round Face -->
+  <circle cx="60" cy="62" r="42" fill="#F2C9A0" stroke="#0B0D12" stroke-width="3" stroke-linejoin="round"/>
+  <!-- Hair -->
+  <path d="M 52 16 C 50 10, 60 8, 66 16" fill="#2B4BDB" stroke="#0B0D12" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M 22 52 C 22 26, 40 16, 60 16 C 80 16, 98 26, 98 52 C 92 38, 78 32, 60 32 C 42 32, 28 38, 22 52 Z" fill="#2B4BDB" stroke="#0B0D12" stroke-width="3" stroke-linejoin="round"/>
+  <!-- Eyebrows -->
+  <path d="M 38 46 Q 46 41 54 46" stroke="#0B0D12" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+  <path d="M 66 46 Q 74 41 82 46" stroke="#0B0D12" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+  <!-- Friendly Open Eyes -->
+  <circle cx="46" cy="58" r="8" fill="#FFFFFF" stroke="#0B0D12" stroke-width="3"/>
+  <circle cx="47" cy="58" r="4.5" fill="#0B0D12"/>
+  <circle cx="49" cy="56" r="1.8" fill="#FFFFFF"/>
+  <circle cx="74" cy="58" r="8" fill="#FFFFFF" stroke="#0B0D12" stroke-width="3"/>
+  <circle cx="75" cy="58" r="4.5" fill="#0B0D12"/>
+  <circle cx="77" cy="56" r="1.8" fill="#FFFFFF"/>
+  <!-- Rosy Cheeks -->
+  <circle cx="34" cy="68" r="6.5" fill="#FF8A3D" stroke="#0B0D12" stroke-width="3"/>
+  <circle cx="86" cy="68" r="6.5" fill="#FF8A3D" stroke="#0B0D12" stroke-width="3"/>
+  <!-- Open Smile -->
+  <path d="M 46 74 C 46 92, 74 92, 74 74 Z" fill="#0B0D12" stroke="#0B0D12" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M 48 74 H 72 C 72 80, 48 80, 48 74 Z" fill="#FFFFFF"/>
+  <path d="M 52 86 C 54 82, 66 82, 68 86 C 65 91, 55 91, 52 86 Z" fill="#FF8A3D"/>
+</svg>

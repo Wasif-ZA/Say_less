@@ -52,7 +52,7 @@ export function DiscussionScreen() {
       style={{ paddingTop: "env(safe-area-inset-top, 0px)", paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
     >
       <div className="pt-10 animate-slideDown">
-        <span className="badge bg-paper px-4! py-1! text-[15px]!">{category?.emoji} {category?.name}</span>
+        <span className="badge bg-paper text-ink px-4! py-1! text-[15px]!">{category?.emoji} {category?.name}</span>
       </div>
 
       <div className="flex-1 flex flex-col justify-center animate-bounceIn">

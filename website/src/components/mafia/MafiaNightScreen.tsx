@@ -1,5 +1,6 @@
 "use client";
 
+import { Art } from "@/components/Art";
 import { useState } from "react";
 import { useMafia } from "@/hooks/useMafia";
 import { alivePlayers } from "@/lib/mafia/engine";
@@ -163,7 +164,7 @@ export function MafiaNightScreen() {
       <div className="flex flex-col flex-1 px-5 py-6 max-w-lg mx-auto w-full">
         {/* Header */}
         <div className="pt-2 pb-4 text-center animate-slideDown">
-          <div className={`text-5xl mb-2 ${meta.glow}`}>{meta.emoji}</div>
+          <div className="mb-2 flex justify-center"><Art name={meta.art} className="w-20 h-20" /></div>
           <h1 className="font-display text-[32px] font-bold tracking-wide leading-tight">{heading}</h1>
           {isMafia && partnerPick && (
             <p className="font-body text-accent-red/80 text-sm mt-1">
@@ -174,7 +175,7 @@ export function MafiaNightScreen() {
 
         {player.role === "civilian" ? (
           <div className="flex-1 flex flex-col items-center justify-center text-center animate-fadeInUp gap-4">
-            <div className="text-[80px] animate-float">😴</div>
+            <Art name="role-sleep" className="w-32 h-32 animate-float" />
             <p className="font-body text-white/75 text-base max-w-[260px]">
               You have no night action. Chill for a moment so nobody can tell roles apart, then pass it on.
             </p>

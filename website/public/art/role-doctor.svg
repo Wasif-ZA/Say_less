@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <!-- Round Face -->
+  <circle cx="60" cy="65" r="37" fill="#F2C9A0" stroke="#0B0D12" stroke-width="3" stroke-linejoin="round"/>
+  <!-- Doctor Cap -->
+  <path d="M 34 46 C 34 20, 48 14, 60 14 C 72 14, 86 20, 86 46 Z" fill="#FFFFFF" stroke="#0B0D12" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M 30 46 C 45 42, 75 42, 90 46 L 88 52 C 75 48, 45 48, 32 52 Z" fill="#FFFFFF" stroke="#0B0D12" stroke-width="3" stroke-linejoin="round"/>
+  <!-- Cross Badge -->
+  <circle cx="60" cy="30" r="10" fill="#FF8A3D" stroke="#0B0D12" stroke-width="3"/>
+  <rect x="58" y="24" width="4" height="12" rx="1" fill="#FFFFFF"/>
+  <rect x="54" y="28" width="12" height="4" rx="1" fill="#FFFFFF"/>
+  <!-- Eyebrows -->
+  <path d="M 40 54 Q 46 50 52 53" stroke="#0B0D12" stroke-width="3" stroke-linecap="round" fill="none"/>
+  <path d="M 68 53 Q 74 50 80 54" stroke="#0B0D12" stroke-width="3" stroke-linecap="round" fill="none"/>
+  <!-- Caring Eyes -->
+  <circle cx="46" cy="62" r="5" fill="#0B0D12"/>
+  <circle cx="48" cy="60.5" r="1.8" fill="#FFFFFF"/>
+  <circle cx="74" cy="62" r="5" fill="#0B0D12"/>
+  <circle cx="76" cy="60.5" r="1.8" fill="#FFFFFF"/>
+  <!-- Rosy Cheeks -->
+  <circle cx="36" cy="72" r="5" fill="#FF8A3D" stroke="#0B0D12" stroke-width="3"/>
+  <circle cx="84" cy="72" r="5" fill="#FF8A3D" stroke="#0B0D12" stroke-width="3"/>
+  <!-- Warm Smile -->
+  <path d="M 50 78 Q 60 86 70 78" stroke="#0B0D12" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+  <!-- Stethoscope -->
+  <path d="M 40 94 C 40 108, 80 108, 80 94" fill="none" stroke="#0B0D12" stroke-width="5" stroke-linecap="round"/>
+  <circle cx="60" cy="107" r="7" fill="#C6F04A" stroke="#0B0D12" stroke-width="3"/>
+  <circle cx="60" cy="107" r="3" fill="#FFFFFF" stroke="#0B0D12" stroke-width="3"/>
+</svg>
