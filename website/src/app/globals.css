@@ -51,11 +51,13 @@ body {
 }
 
 /* ─── Grounds: light ones flip text-white to ink ─── */
-.bg-hub, .bg-day { --color-white: var(--color-ink); color: var(--color-ink); }
+.bg-hub, .bg-day, .bg-tune { --color-white: var(--color-ink); color: var(--color-ink); }
+.bg-tune { --color-ink-2: #3b2a1c; }
 .bg-imposter { --color-ink-2: #d6ddff; color: var(--color-paper); }
 .bg-hub { background: var(--color-cream); }
 .bg-imposter { background: var(--color-cobalt); }
 .bg-day { background: var(--color-cream); }
+.bg-tune { background: var(--color-tangerine); }
 .bg-ink, .bg-solid-black { background: var(--color-page-bg); }
 
 /* ─── Card: paper, ink outline, hard offset shadow ─── */

@@ -5,12 +5,13 @@ import { Art } from "@/components/Art";
 import { ScreenWrapper } from "./ScreenWrapper";
 
 interface GameHubProps {
-  onSelectGame: (game: "imposter" | "mafia") => void;
+  onSelectGame: (game: "imposter" | "mafia" | "tune") => void;
 }
 
 const GAMES = [
   { id: "imposter", title: "Imposter Party", line: "Everyone gets the word except one.", players: "3+ players", emoji: "role-imposter", card: "bg-cobalt text-paper" },
   { id: "mafia", title: "Mafia", line: "The town sleeps. The Mafia doesn't.", players: "4+ players", emoji: "role-mafia", card: "bg-ink text-paper" },
+  { id: "tune", title: "On the Dial", line: "One clue. Land it on the dial.", players: "3+ players", emoji: "emote-spark", card: "bg-tangerine text-ink" },
 ] as const;
 
 const STICKERS = [
