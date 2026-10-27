@@ -6,8 +6,9 @@ import { ImposterPartyGame } from "@/components/ImposterPartyGame";
 import { MafiaGame } from "@/components/mafia/MafiaGame";
 import { TuneGame } from "@/components/tune/TuneGame";
 import { PotatoGame } from "@/components/potato/PotatoGame";
+import { HeadGame } from "@/components/head/HeadGame";
 
-type GameType = "hub" | "imposter" | "mafia" | "tune" | "potato";
+type GameType = "hub" | "imposter" | "mafia" | "tune" | "potato" | "head";
 
 export default function Page() {
   const [currentGame, setCurrentGame] = useState<GameType>("hub");
@@ -30,6 +31,10 @@ export default function Page() {
 
   if (currentGame === "potato") {
     return <PotatoGame key="potato" onExit={() => setCurrentGame("hub")} />;
+  }
+
+  if (currentGame === "head") {
+    return <HeadGame key="head" onExit={() => setCurrentGame("hub")} />;
   }
 
   return null;

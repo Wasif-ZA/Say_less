@@ -1,0 +1,43 @@
+"use client";
+
+import { Art } from "@/components/Art";
+import { useHead } from "@/hooks/useHead";
+import { ScreenWrapper } from "../ScreenWrapper";
+
+const RULES = [
+  { emoji: "🤳", text: "Hold the phone on your forehead, screen facing out. You can't see the word" },
+  { emoji: "🗣️", text: "Everyone else shouts clues. No saying the word itself" },
+  { emoji: "👉", text: "Got it? Tap the right side. Stuck? Tap the left side to skip" },
+  { emoji: "🏆", text: "Everyone takes a turn. Most words guessed wins" },
+];
+
+export function HeadHomeScreen() {
+  const { dispatch } = useHead();
+
+  return (
+    <ScreenWrapper bgClassName="bg-head">
+      <div className="flex flex-col items-center text-center pt-14 animate-fadeInUp">
+        <Art name="emote-shock" className="w-32 h-32 mb-2 animate-float" />
+        <h1 className="animate-maskIn font-poster text-[60px] uppercase leading-[0.9]">
+          Head<br />Case
+        </h1>
+        <p className="text-lg mt-3 max-w-[280px] font-semibold">Everyone knows the word except you.</p>
+      </div>
+
+      <div className="flex flex-col gap-2 mt-8 animate-fadeInUp stagger-2">
+        {RULES.map((rule) => (
+          <div key={rule.text} className="card-surface rounded-[20px] px-4 py-3 flex items-center gap-3">
+            <span className="text-2xl">{rule.emoji}</span>
+            <p className="text-[15px] leading-snug">{rule.text}</p>
+          </div>
+        ))}
+      </div>
+
+      <div className="mt-auto pt-6">
+        <button onClick={() => dispatch({ type: "SET_PHASE", phase: "setup" })} className="btn-big btn-glass text-2xl">
+          START GAME
+        </button>
+      </div>
+    </ScreenWrapper>
+  );
+}
