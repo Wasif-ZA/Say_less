@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { PassCover } from "@/components/PassCover";
 import { useOdd } from "@/hooks/useOdd";
-import { PROMPTS } from "@/lib/odd/engine";
+import { PROMPTS, isFinalRound } from "@/lib/odd/engine";
 import type { OddChoice } from "@/lib/odd/types";
 import { ScreenWrapper } from "../ScreenWrapper";
 
@@ -17,13 +17,15 @@ function PickTurn() {
   const [shown, setShown] = useState(false);
   const picker = state.players[state.pickTurn];
   const options = PROMPTS[state.promptIndex];
+  const final = isFinalRound(state.round, state.rounds);
+  const twist = [state.contrarian && "Contrarian round", final && "Double points"].filter(Boolean).join(" · ");
 
   if (!shown) {
     return (
       <PassCover
         name={picker.name}
-        role={`Round ${state.round + 1} of ${state.rounds} · Pick ${state.pickTurn + 1} of ${state.players.length}`}
-        hint="Pick in secret. What will everyone else choose?"
+        role={twist || `Round ${state.round + 1} of ${state.rounds} · Pick ${state.pickTurn + 1} of ${state.players.length}`}
+        hint={state.contrarian ? "Twist! This round the smaller side scores. Pick what fewest people will pick." : "Pick in secret. What will everyone else choose?"}
         onReady={() => setShown(true)}
       />
     );
@@ -35,7 +37,10 @@ function PickTurn() {
     <ScreenWrapper bgClassName="bg-odd">
       <div className="pt-14 text-center animate-slideDown">
         <span className="clip-label">{picker.name}</span>
-        <p className="text-lg font-semibold mt-4">Pick the one most people will pick</p>
+        <p className="text-lg font-semibold mt-4">
+          {state.contrarian ? "Contrarian! Pick the one fewest people will pick" : "Pick the one most people will pick"}
+        </p>
+        {twist && <span className="badge mt-2 bg-hot">{twist}</span>}
       </div>
 
       <div className="flex-1 flex flex-col justify-center gap-4 py-6">

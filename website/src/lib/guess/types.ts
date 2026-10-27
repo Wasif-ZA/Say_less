@@ -1,3 +1,5 @@
+import type { Wager } from "./engine";
+
 export type GuessPhase = "home" | "setup" | "guess" | "reveal" | "summary";
 
 export interface GuessPlayer {
@@ -15,6 +17,7 @@ export interface GuessState {
   usedQuestions: number[];
   guessTurn: number;
   guesses: Record<string, number>;
+  wagers: Record<string, Wager>;
   gained: Record<string, number>;
 }
 
@@ -26,6 +29,6 @@ export type GuessAction =
   | { type: "RENAME_PLAYER"; id: string; name: string }
   | { type: "SET_ROUNDS"; rounds: number }
   | { type: "START_GAME"; questionIndex: number }
-  | { type: "GUESS"; playerId: string; value: number }
+  | { type: "GUESS"; playerId: string; value: number; wager: Wager }
   | { type: "NEXT_ROUND"; questionIndex: number }
   | { type: "FULL_RESET" };

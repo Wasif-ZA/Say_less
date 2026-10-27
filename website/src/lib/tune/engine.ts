@@ -2,6 +2,7 @@ import type { RoundDeal, Spectrum, TunePlayer } from "./types";
 
 export const MIN_TUNE_PLAYERS = 2;
 export const LAP_OPTIONS = [1, 2, 3] as const;
+export const MAX_BONUS_ROUNDS = 3;
 
 // Half-widths on a 0-100 dial, checked inside out
 export const BANDS = [
@@ -107,14 +108,24 @@ export function psychicFor(players: TunePlayer[], round: number): TunePlayer {
   return players[round % players.length];
 }
 
-// Guessers start with the player after the Psychic and wrap round
-export function guessersFor(players: TunePlayer[], round: number): TunePlayer[] {
-  const p = round % players.length;
-  return [...players.slice(p + 1), ...players.slice(0, p)];
-}
-
 export function totalRounds(players: TunePlayer[], laps: number): number {
   return players.length * laps;
+}
+
+export function gameRounds(players: TunePlayer[], laps: number, bonusRounds: number): number {
+  return totalRounds(players, laps) + bonusRounds;
+}
+
+export function maxScore(rounds: number): number {
+  return 4 * (rounds + 1);
+}
+
+export function verdictFor(score: number, max: number): string {
+  const pct = score / max;
+  if (pct >= 0.8) return "Mind readers";
+  if (pct >= 0.55) return "On the same wavelength";
+  if (pct >= 0.3) return "Getting warmer";
+  return "Different planets";
 }
 
 export function pointsFor(guess: number, target: number): number {

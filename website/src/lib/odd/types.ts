@@ -18,6 +18,7 @@ export interface OddState {
   pickTurn: number;
   picks: Record<string, OddChoice>;
   majority: OddChoice | null;
+  contrarian: boolean;
 }
 
 export type OddAction =
@@ -29,5 +30,5 @@ export type OddAction =
   | { type: "SET_ROUNDS"; rounds: number }
   | { type: "START_GAME"; promptIndex: number }
   | { type: "PICK"; playerId: string; choice: OddChoice }
-  | { type: "NEXT_ROUND"; promptIndex: number }
+  | { type: "NEXT_ROUND"; promptIndex: number; contrarian: boolean }
   | { type: "FULL_RESET" };

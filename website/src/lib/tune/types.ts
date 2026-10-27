@@ -3,7 +3,6 @@ export type TunePhase = "home" | "setup" | "psychic" | "guess" | "reveal" | "sum
 export interface TunePlayer {
   id: string;
   name: string;
-  score: number;
 }
 
 export interface Spectrum {
@@ -25,9 +24,11 @@ export interface TuneState {
   target: number;
   usedSpectra: number[];
   clue: string;
-  guessTurn: number;
-  guesses: Record<string, number>;
-  roundPoints: Record<string, number>;
+  guess: number;
+  roundPoints: number;
+  roundBonus: boolean;
+  bonusRounds: number;
+  teamScore: number;
 }
 
 export type TuneAction =
@@ -39,6 +40,6 @@ export type TuneAction =
   | { type: "SET_LAPS"; laps: number }
   | { type: "START_GAME"; deal: RoundDeal }
   | { type: "SET_CLUE"; clue: string }
-  | { type: "LOCK_GUESS"; playerId: string; value: number }
+  | { type: "LOCK_GUESS"; value: number }
   | { type: "NEXT_ROUND"; deal: RoundDeal }
   | { type: "FULL_RESET" };

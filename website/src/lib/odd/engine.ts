@@ -102,6 +102,22 @@ export function pickPrompt(used: number[], randomFn: () => number = Math.random)
   return pool[Math.floor(randomFn() * pool.length)];
 }
 
+export function rollContrarian(randomFn: () => number = Math.random): boolean {
+  return randomFn() < 0.25;
+}
+
+export function isFinalRound(round: number, rounds: number): boolean {
+  return round + 1 >= rounds;
+}
+
+// Contrarian rounds pay the smaller side; null means nobody scores
+export function winningSide(picks: OddChoice[], contrarian: boolean): OddChoice | null {
+  const majority = majorityOf(picks);
+  if (majority === null || !contrarian) return majority;
+  const other: OddChoice = majority === 0 ? 1 : 0;
+  return picks.includes(other) ? other : null;
+}
+
 // null when the vote splits evenly
 export function majorityOf(picks: OddChoice[]): OddChoice | null {
   const ones = picks.filter((p) => p === 1).length;

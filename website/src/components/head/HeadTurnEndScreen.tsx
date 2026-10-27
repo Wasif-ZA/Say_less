@@ -1,13 +1,14 @@
 "use client";
 
 import { useHead } from "@/hooks/useHead";
-import { dealDeck } from "@/lib/head/engine";
+import { dealDeck, streakBonus } from "@/lib/head/engine";
 import { ScreenWrapper } from "../ScreenWrapper";
 
 export function HeadTurnEndScreen() {
   const { state, dispatch } = useHead();
   const guesser = state.players[state.turn % state.players.length];
   const got = state.results.filter((r) => r.got).length;
+  const bonus = streakBonus(state.results);
   const isLast = state.turn + 1 >= state.players.length * state.laps;
 
   return (
@@ -16,6 +17,7 @@ export function HeadTurnEndScreen() {
         <span className="clip-label">Time&apos;s up</span>
         <h1 className="font-poster text-[48px] uppercase leading-none mt-4 break-words">{guesser.name}</h1>
         <p className="text-xl font-bold mt-2">{got} {got === 1 ? "word" : "words"} guessed</p>
+        {bonus > 0 && <span className="badge mt-2">🔥 +{bonus} streak bonus</span>}
       </div>
 
       <div className="card-surface rounded-[24px] p-5 animate-fadeInUp stagger-2">

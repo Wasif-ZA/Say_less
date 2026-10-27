@@ -71,6 +71,10 @@ export function tally(votes: Record<string, string>, playerIds: string[]): { cou
   return { counts, top: max === 0 ? [] : playerIds.filter((id) => counts[id] === max) };
 }
 
+export function canAccuse(votes: Record<string, string>, top: string[]): boolean {
+  return top.length === 1 && Object.entries(votes).some(([voter, target]) => target === top[0] && voter !== top[0]);
+}
+
 export function pickPrompt(used: number[], randomFn: () => number = Math.random): number {
   let pool = PROMPTS.map((_, i) => i).filter((i) => !used.includes(i));
   if (pool.length === 0) pool = PROMPTS.map((_, i) => i);

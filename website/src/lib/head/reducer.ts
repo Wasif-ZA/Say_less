@@ -1,5 +1,6 @@
 import { CATEGORIES } from "@/lib/wordbanks";
 import type { HeadAction, HeadState } from "./types";
+import { streakBonus } from "./engine";
 
 export const initialHeadState: HeadState = {
   phase: "home",
@@ -19,7 +20,7 @@ function makeId(): string {
 }
 
 function finishTurn(state: HeadState): HeadState {
-  const points = state.results.filter((r) => r.got).length;
+  const points = state.results.filter((r) => r.got).length + streakBonus(state.results);
   const guesser = state.players[state.turn % state.players.length];
   return {
     ...state,

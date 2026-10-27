@@ -46,6 +46,13 @@ export function PotatoPlayingScreen() {
         </h1>
       </div>
 
+      <button
+        onClick={() => { beep(110, 600, 0.3); navigator.vibrate?.(600); dispatch({ type: "EXPLODE" }); }}
+        className="mx-auto mt-4 h-11 px-4 rounded-full border-[2.5px] border-ink bg-ink text-paper font-bold text-[15px] active:translate-y-0.5"
+      >
+        💥 Repeat or froze? Blow it up
+      </button>
+
       <div className="flex-1 flex items-center justify-center">
         <div
           className="animate-tick text-[120px] leading-none"

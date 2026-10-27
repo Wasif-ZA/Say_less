@@ -1,41 +1,36 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { Art } from "@/components/Art";
 import { useTune } from "@/hooks/useTune";
-import { dealRound } from "@/lib/tune/engine";
+import { dealRound, gameRounds, maxScore, verdictFor } from "@/lib/tune/engine";
+import { loadFromStorage, saveToStorage } from "@/lib/storage";
 import { ScreenWrapper } from "../ScreenWrapper";
+
+const BEST_KEY = "tune_best";
 
 export function TuneSummaryScreen({ onExit }: { onExit: () => void }) {
   const { state, dispatch } = useTune();
-  const ranked = [...state.players].sort((a, b) => b.score - a.score);
-  const top = ranked[0]?.score ?? 0;
-  const winners = ranked.filter((p) => p.score === top);
+  const count = String(state.players.length);
+  const max = maxScore(gameRounds(state.players, state.laps, state.bonusRounds));
+  const [isNewBest] = useState(
+    () => state.teamScore > (loadFromStorage<Record<string, number>>(BEST_KEY, {})[count] ?? 0)
+  );
+
+  useEffect(() => {
+    if (!isNewBest) return;
+    saveToStorage(BEST_KEY, { ...loadFromStorage<Record<string, number>>(BEST_KEY, {}), [count]: state.teamScore });
+  }, [isNewBest, count, state.teamScore]);
 
   return (
     <ScreenWrapper bgClassName="bg-tune">
       <div className="text-center pt-14 pb-5 animate-bounceIn">
         <div className="flex justify-center mb-2"><Art name="emote-spark" className="w-24 h-24" /></div>
-        <h1 className="font-poster text-[44px] uppercase leading-tight break-words">
-          {winners.length === 1 ? `${winners[0].name} wins!` : "It's a tie!"}
-        </h1>
+        <h1 className="font-poster text-[44px] uppercase leading-tight break-words">{verdictFor(state.teamScore, max)}</h1>
         <p className="text-ink-2 font-semibold mt-2">
-          {winners.length === 1
-            ? `${top} points. Totally on the same wavelength.`
-            : `${winners.map((w) => w.name).join(" and ")} share the top spot on ${top}.`}
+          {state.teamScore} out of {max} points
         </p>
-      </div>
-
-      <div className="card-surface rounded-[24px] p-5 animate-fadeInUp stagger-2">
-        <h2 className="font-display text-xl font-bold mb-2">Final scores</h2>
-        <div className="ruled flex flex-col">
-          {ranked.map((p, i) => (
-            <div key={p.id} className="flex items-center gap-3 py-2.5">
-              <span className="w-7 font-bold">{i + 1}.</span>
-              <span className="flex-1 font-semibold truncate">{p.name}</span>
-              <span className="font-bold">{p.score}</span>
-            </div>
-          ))}
-        </div>
+        {isNewBest && <p className="font-poster text-2xl uppercase mt-3">New best!</p>}
       </div>
 
       <div className="flex flex-col gap-3 mt-auto pt-6 animate-fadeInUp stagger-3">

@@ -9,13 +9,14 @@ import { SeatHomeScreen } from "./SeatHomeScreen";
 import { SeatSetupScreen } from "./SeatSetupScreen";
 import { SeatVoteScreen } from "./SeatVoteScreen";
 import { SeatRevealScreen } from "./SeatRevealScreen";
+import { SeatAccuseScreen } from "./SeatAccuseScreen";
 import { SeatSummaryScreen } from "./SeatSummaryScreen";
 
 interface SeatGameProps {
   onExit: () => void;
 }
 
-const IN_GAME: SeatPhase[] = ["vote", "reveal", "summary"];
+const IN_GAME: SeatPhase[] = ["vote", "reveal", "accuse", "summary"];
 
 function InnerSeat({ onExit }: SeatGameProps) {
   const { state, dispatch } = useSeat();
@@ -34,6 +35,7 @@ function InnerSeat({ onExit }: SeatGameProps) {
     setup: { back: { label: "Back", onClick: () => dispatch({ type: "SET_PHASE", phase: "home" }) } },
     vote: { home: quit },
     reveal: { home: quit },
+    accuse: { home: quit },
     summary: { home: { ...quit, confirm: false } },
   };
 
@@ -55,6 +57,8 @@ function screenFor(phase: SeatPhase, onExit: () => void) {
       return <SeatVoteScreen />;
     case "reveal":
       return <SeatRevealScreen />;
+    case "accuse":
+      return <SeatAccuseScreen />;
     case "summary":
       return <SeatSummaryScreen onExit={onExit} />;
   }

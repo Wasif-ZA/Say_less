@@ -15,12 +15,13 @@ function VoteTurn() {
   const { state, dispatch } = useSeat();
   const [shown, setShown] = useState(false);
   const voter = state.players[state.voteTurn];
+  const isLast = state.round + 1 >= state.rounds;
 
   if (!shown) {
     return (
       <PassCover
         name={voter.name}
-        role={`Round ${state.round + 1} of ${state.rounds} · Vote ${state.voteTurn + 1} of ${state.players.length}`}
+        role={`${isLast ? "FINAL ROUND · DOUBLE" : `Round ${state.round + 1} of ${state.rounds}`} · Vote ${state.voteTurn + 1} of ${state.players.length}`}
         hint="Vote in secret. Who will the room pick?"
         onReady={() => setShown(true)}
       />
@@ -31,6 +32,7 @@ function VoteTurn() {
     <ScreenWrapper bgClassName="bg-seat">
       <div className="pt-14 text-center animate-slideDown">
         <span className="clip-label">{voter.name}</span>
+        {isLast && <p className="badge mt-3">FINAL ROUND · DOUBLE</p>}
         <p className="text-lg font-semibold mt-4">Who is most likely to...</p>
         <h1 className="font-poster text-[34px] uppercase leading-tight mt-2 break-words">{PROMPTS[state.promptIndex]}</h1>
       </div>

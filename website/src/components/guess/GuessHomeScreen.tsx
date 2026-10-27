@@ -7,8 +7,9 @@ import { ScreenWrapper } from "../ScreenWrapper";
 const RULES = [
   { emoji: "🔢", text: "Each round is a trivia question with a number for an answer" },
   { emoji: "🤫", text: "Pass the phone round. Everyone locks in a guess in secret" },
-  { emoji: "🎯", text: "Closest guess scores 3, next closest 2, then 1. Ties share" },
-  { emoji: "🏆", text: "Bullseye? Still 3. Most points wins" },
+  { emoji: "🎯", text: "Closest guess wins the round. Ties all win" },
+  { emoji: "🎲", text: "Bet on yourself: All in triples your win but costs you points if someone is closer. Safe never loses" },
+  { emoji: "🏆", text: "The last round counts double. Most points wins" },
 ];
 
 export function GuessHomeScreen() {
