@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { usePotato } from "@/hooks/usePotato";
 import { PROMPTS } from "@/lib/potato/engine";
+import { beep } from "@/lib/sound";
 
 const PASS_LOCK_MS = 350;
 
@@ -14,10 +15,19 @@ export function PotatoPlayingScreen() {
   const next = state.players[(state.holderIndex + 1) % state.players.length];
 
   useEffect(() => {
-    const boom = setTimeout(() => dispatch({ type: "EXPLODE" }), state.fuseMs);
+    const boom = setTimeout(() => {
+      beep(110, 600, 0.3);
+      navigator.vibrate?.(600);
+      dispatch({ type: "EXPLODE" });
+    }, state.fuseMs);
     const fast = setTimeout(() => setHurry(true), state.fuseMs * 0.7);
     return () => { clearTimeout(boom); clearTimeout(fast); };
   }, [state.fuseMs, dispatch]);
+
+  useEffect(() => {
+    const t = setInterval(() => beep(hurry ? 1200 : 700, 40), hurry ? 350 : 1000);
+    return () => clearInterval(t);
+  }, [hurry]);
 
   function pass() {
     const now = Date.now();

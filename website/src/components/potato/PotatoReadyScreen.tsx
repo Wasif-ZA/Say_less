@@ -2,6 +2,7 @@
 
 import { usePotato } from "@/hooks/usePotato";
 import { PROMPTS } from "@/lib/potato/engine";
+import { unlockSound } from "@/lib/sound";
 import { ScreenWrapper } from "../ScreenWrapper";
 
 export function PotatoReadyScreen() {
@@ -20,7 +21,7 @@ export function PotatoReadyScreen() {
           {starter.name} goes first. No repeats. Stall too long and the group can make you pass.
         </p>
       </div>
-      <button onClick={() => dispatch({ type: "LIGHT_FUSE" })} className="btn-big btn-glass text-2xl mt-6">
+      <button onClick={() => { unlockSound(); dispatch({ type: "LIGHT_FUSE" }); }} className="btn-big btn-glass text-2xl mt-6">
         🔥 LIGHT THE FUSE
       </button>
     </ScreenWrapper>

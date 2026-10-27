@@ -1,6 +1,6 @@
 import { CATEGORIES, getCategoryById } from "@/lib/wordbanks";
 
-export const MIN_HEAD_PLAYERS = 3;
+export const MIN_HEAD_PLAYERS = 2;
 export const TURN_OPTIONS = [45, 60, 90] as const;
 export const LAP_OPTIONS = [1, 2] as const;
 export const COUNTDOWN_SECONDS = 3;

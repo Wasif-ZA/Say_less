@@ -1,9 +1,42 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { beep, unlockSound } from "@/lib/sound";
 import { useMafia } from "@/hooks/useMafia";
 import { alivePlayers } from "@/lib/mafia/engine";
 import { ScreenWrapper } from "../ScreenWrapper";
+
+const DEBATE_SECONDS = 120;
+
+function DebateTimer() {
+  const [left, setLeft] = useState(DEBATE_SECONDS);
+  const [running, setRunning] = useState(false);
+
+  useEffect(() => {
+    if (!running) return;
+    const t = setInterval(() => setLeft((s) => Math.max(0, s - 1)), 1000);
+    return () => clearInterval(t);
+  }, [running]);
+
+  useEffect(() => {
+    if (left > 0) return;
+    beep(440, 600);
+    navigator.vibrate?.(400);
+  }, [left]);
+
+  function toggle() {
+    unlockSound();
+    if (left === 0) setLeft(DEBATE_SECONDS);
+    setRunning((r) => left === 0 || !r);
+  }
+
+  const label = `${Math.floor(left / 60)}:${String(left % 60).padStart(2, "0")}`;
+  return (
+    <button onClick={toggle} className={`badge mt-3 px-4! py-1.5! text-[15px]! tabular-nums ${left === 0 ? "bg-hot!" : ""}`}>
+      {left === 0 ? "⏱ Time's up · tap to restart" : running ? `⏸ ${label}` : `⏱ ${label} debate timer`}
+    </button>
+  );
+}
 
 export function MafiaDayScreen() {
   const { state, dispatch } = useMafia();
@@ -54,6 +87,7 @@ export function MafiaDayScreen() {
         <p className="font-body text-white/75 mt-2 text-base">
           Debate, then tap the player everyone agrees on
         </p>
+        <DebateTimer />
       </div>
 
       {/* Grid */}

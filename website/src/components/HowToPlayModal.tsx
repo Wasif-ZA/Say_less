@@ -5,7 +5,7 @@ const steps = [
   { emoji: "🗣️", title: "Describe it", text: "Give vague hints about the word. Don't be too obvious!" },
   { emoji: "👀", title: "Spot the fake", text: "The Imposter is making it up. Listen carefully." },
   { emoji: "🗳️", title: "Vote them out", text: "Agree as a group on who to eliminate." },
-  { emoji: "🏆", title: "Win or lose", text: "Catch the Imposter and the town wins!" },
+  { emoji: "🏆", title: "Win or lose", text: "Catch the Imposter and the town wins, unless they guess the word on their way out." },
 ];
 
 interface HowToPlayModalProps {

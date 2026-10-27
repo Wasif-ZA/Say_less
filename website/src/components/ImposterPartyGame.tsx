@@ -10,6 +10,7 @@ import { RoleRevealScreen } from "@/components/RoleRevealScreen";
 import { DiscussionScreen } from "@/components/DiscussionScreen";
 import { VotingScreen } from "@/components/VotingScreen";
 import { SummaryScreen } from "@/components/SummaryScreen";
+import { LastChanceScreen } from "@/components/LastChanceScreen";
 import { NavBar, type NavTarget } from "@/components/NavBar";
 import type { GamePhase } from "@/lib/types";
 
@@ -19,6 +20,7 @@ const screens = {
   reveal: RoleRevealScreen,
   discussion: DiscussionScreen,
   voting: VotingScreen,
+  lastChance: LastChanceScreen,
   summary: SummaryScreen,
 } as const;
 
@@ -30,7 +32,7 @@ function InnerApp({ onExit }: ImposterPartyProps) {
   const { state, dispatch } = useGame();
 
   useEffect(() => {
-    const gamePhases = ["reveal", "discussion", "voting", "summary"];
+    const gamePhases = ["reveal", "discussion", "voting", "lastChance", "summary"];
     if (gamePhases.includes(state.phase)) {
       const handler = () => {
         window.history.pushState(null, "", window.location.href);
@@ -50,6 +52,7 @@ function InnerApp({ onExit }: ImposterPartyProps) {
     reveal: { back: { label: "Redeal", onClick: go("players"), confirm: true }, home },
     discussion: { home },
     voting: { back: { label: "Back", onClick: go("discussion") }, home },
+    lastChance: { home },
     summary: { home: { ...home, confirm: false } },
   };
 

@@ -8,8 +8,11 @@ import { TuneGame } from "@/components/tune/TuneGame";
 import { PotatoGame } from "@/components/potato/PotatoGame";
 import { HeadGame } from "@/components/head/HeadGame";
 import { OddGame } from "@/components/odd/OddGame";
+import { GuessGame } from "@/components/guess/GuessGame";
+import { SeatGame } from "@/components/seat/SeatGame";
+import { SneakGame } from "@/components/sneak/SneakGame";
 
-type GameType = "hub" | "imposter" | "mafia" | "tune" | "potato" | "head" | "odd";
+type GameType = "hub" | "imposter" | "mafia" | "tune" | "potato" | "head" | "odd" | "guess" | "seat" | "sneak";
 
 export default function Page() {
   const [currentGame, setCurrentGame] = useState<GameType>("hub");
@@ -40,6 +43,18 @@ export default function Page() {
 
   if (currentGame === "odd") {
     return <OddGame key="odd" onExit={() => setCurrentGame("hub")} />;
+  }
+
+  if (currentGame === "guess") {
+    return <GuessGame key="guess" onExit={() => setCurrentGame("hub")} />;
+  }
+
+  if (currentGame === "seat") {
+    return <SeatGame key="seat" onExit={() => setCurrentGame("hub")} />;
+  }
+
+  if (currentGame === "sneak") {
+    return <SneakGame key="sneak" onExit={() => setCurrentGame("hub")} />;
   }
 
   return null;

@@ -5,6 +5,7 @@ export type GamePhase =
   | "reveal"
   | "discussion"
   | "voting"
+  | "lastChance"
   | "summary";
 
 export type Role = "civilian" | "imposter" | "unassigned";
@@ -59,6 +60,7 @@ export type GameAction =
   | { type: "START_ROUND" }
   | { type: "ADVANCE_REVEAL" }
   | { type: "ELIMINATE_PLAYER"; targetId: string }
+  | { type: "IMPOSTER_GUESS"; correct: boolean }
   | { type: "PLAY_AGAIN" }
   | { type: "CHANGE_CATEGORY" }
   | { type: "FULL_RESET" };
