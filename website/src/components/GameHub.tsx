@@ -5,7 +5,7 @@ import { Art } from "@/components/Art";
 import { ScreenWrapper } from "./ScreenWrapper";
 
 interface GameHubProps {
-  onSelectGame: (game: "imposter" | "mafia" | "tune" | "potato" | "head") => void;
+  onSelectGame: (game: "imposter" | "mafia" | "tune" | "potato" | "head" | "odd") => void;
 }
 
 const GAMES = [
@@ -14,6 +14,7 @@ const GAMES = [
   { id: "tune", title: "On the Dial", line: "One clue. Land it on the dial.", players: "3+ players", emoji: "emote-spark", card: "bg-tangerine text-ink" },
   { id: "potato", title: "Hot Potato", line: "Say it fast. Pass it faster.", players: "3+ players", emoji: "sticker-timer", card: "bg-hot text-ink" },
   { id: "head", title: "Head Case", line: "Everyone knows the word except you.", players: "3+ players", emoji: "emote-shock", card: "bg-go text-ink" },
+  { id: "odd", title: "Odd One Out", line: "Pick what the crowd picks.", players: "3+ players", emoji: "sticker-vote", card: "bg-accent-blue text-ink" },
 ] as const;
 
 const STICKERS = [

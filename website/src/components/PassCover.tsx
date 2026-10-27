@@ -1,7 +1,7 @@
 "use client";
 
 import { Art } from "@/components/Art";
-import { ScreenWrapper } from "../ScreenWrapper";
+import { ScreenWrapper } from "./ScreenWrapper";
 
 interface PassCoverProps {
   name: string;

@@ -5,7 +5,7 @@ import { useTune } from "@/hooks/useTune";
 import { SPECTRUMS, guessersFor, psychicFor } from "@/lib/tune/engine";
 import { ScreenWrapper } from "../ScreenWrapper";
 import { Dial } from "./Dial";
-import { PassCover } from "./PassCover";
+import { PassCover } from "@/components/PassCover";
 
 export function TuneGuessScreen() {
   const { state } = useTune();
