@@ -1,6 +1,6 @@
 import type { PotatoDeal } from "./types";
 
-export const MIN_POTATO_PLAYERS = 3;
+export const MIN_POTATO_PLAYERS = 2;
 export const ROUND_OPTIONS = [3, 5, 7] as const;
 export const MIN_FUSE_MS = 15000;
 export const MAX_FUSE_MS = 45000;
@@ -56,6 +56,36 @@ export const PROMPTS: string[] = [
   "Name a shop at the mall",
   "Name a planet or thing in space",
   "Name something that is yellow",
+  "Name a type of pasta",
+  "Name something you find in a garden",
+  "Name an Australian animal",
+  "Name a type of cheese",
+  "Name something you take camping",
+  "Name a Marvel character",
+  "Name something with buttons",
+  "Name a hairstyle",
+  "Name a word that starts with Z",
+  "Name something in a hospital",
+  "Name a famous building",
+  "Name a flavour of chip",
+  "Name something that smells nice",
+  "Name a breakfast cereal",
+  "Name a kind of weather",
+  "Name something on a farm",
+  "Name a font or something you write with",
+  "Name a cartoon dog",
+  "Name a type of tree",
+  "Name a gym exercise",
+  "Name something you lose all the time",
+  "Name a reality TV show",
+  "Name a ball game",
+  "Name a nut",
+  "Name a word that rhymes with day",
+  "Name a river",
+  "Name something sticky",
+  "Name a kind of bread",
+  "Name an ocean or sea",
+  "Name something in a toolbox",
 ];
 
 export function dealPotato(used: number[], randomFn: () => number = Math.random): PotatoDeal {

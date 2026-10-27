@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useHead } from "@/hooks/useHead";
 import { COUNTDOWN_SECONDS } from "@/lib/head/engine";
+import { beep } from "@/lib/sound";
 
 const TAP_LOCK_MS = 300;
 
@@ -29,6 +30,11 @@ export function HeadPlayingScreen() {
   }, [countdown, timeLeft, dispatch]);
 
   useEffect(() => {
+    if (countdown > 0 || timeLeft > 5) return;
+    beep(timeLeft === 0 ? 440 : 990, timeLeft === 0 ? 500 : 90);
+  }, [countdown, timeLeft]);
+
+  useEffect(() => {
     if (!flash) return;
     const t = setTimeout(() => setFlash(null), 250);
     return () => clearTimeout(t);
@@ -40,6 +46,7 @@ export function HeadPlayingScreen() {
     lastTap.current = now;
     setFlash(got ? "got" : "skip");
     navigator.vibrate?.(got ? 60 : [30, 40, 30]);
+    beep(got ? 1320 : 330, 70);
     dispatch({ type: "ANSWER", got });
   }
 

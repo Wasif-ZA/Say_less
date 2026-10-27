@@ -86,7 +86,7 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
       const townWins = imposterIds.includes(action.targetId);
       return {
         ...state,
-        phase: "summary",
+        phase: townWins ? "lastChance" : "summary",
         roundScores: [
           ...state.roundScores,
           {
@@ -98,6 +98,16 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
           },
         ],
       };
+    }
+
+    // A caught imposter who names the word steals the round
+    case "IMPOSTER_GUESS": {
+      if (state.phase !== "lastChance") return state;
+      if (!action.correct) return { ...state, phase: "summary" };
+      const roundScores = state.roundScores.map((r, i) =>
+        i === state.roundScores.length - 1 ? { ...r, townWins: false } : r
+      );
+      return { ...state, phase: "summary", roundScores };
     }
 
     case "PLAY_AGAIN": {

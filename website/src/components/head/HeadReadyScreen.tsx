@@ -2,6 +2,7 @@
 
 import { useHead } from "@/hooks/useHead";
 import { getCategoryById } from "@/lib/wordbanks";
+import { unlockSound } from "@/lib/sound";
 import { ScreenWrapper } from "../ScreenWrapper";
 
 export function HeadReadyScreen() {
@@ -20,7 +21,7 @@ export function HeadReadyScreen() {
           Tap start, then hold the phone on your forehead, screen facing out. You get {state.turnSeconds} seconds.
         </p>
       </div>
-      <button onClick={() => dispatch({ type: "BEGIN_TURN" })} className="btn-big btn-glass text-2xl mt-6">
+      <button onClick={() => { unlockSound(); dispatch({ type: "BEGIN_TURN" }); }} className="btn-big btn-glass text-2xl mt-6">
         START
       </button>
     </ScreenWrapper>

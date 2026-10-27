@@ -51,7 +51,7 @@ body {
 }
 
 /* ─── Grounds: light ones flip text-white to ink ─── */
-.bg-hub, .bg-day, .bg-tune, .bg-potato, .bg-head, .bg-odd { --color-white: var(--color-ink); color: var(--color-ink); }
+.bg-hub, .bg-day, .bg-tune, .bg-potato, .bg-head, .bg-odd, .bg-guess { --color-white: var(--color-ink); color: var(--color-ink); }
 .bg-tune { --color-ink-2: #3b2a1c; }
 .bg-imposter { --color-ink-2: #d6ddff; color: var(--color-paper); }
 .bg-hub { background: var(--color-cream); }
@@ -61,6 +61,9 @@ body {
 .bg-potato { background: var(--color-hot); }
 .bg-head { background: var(--color-go); }
 .bg-odd { background: var(--color-accent-blue); }
+.bg-guess { background: var(--color-accent-orange); }
+.bg-seat { --color-ink-2: #d6ddff; color: var(--color-paper); background: var(--color-cobalt); }
+.bg-sneak { background: var(--color-page-bg); }
 .bg-ink, .bg-solid-black { background: var(--color-page-bg); }
 
 /* ─── Card: paper, ink outline, hard offset shadow ─── */
@@ -72,7 +75,7 @@ body {
   border: 2.5px solid var(--color-ink);
   box-shadow: 4px 4px 0 var(--color-ink);
 }
-.bg-black .card-surface, .bg-ink .card-surface { box-shadow: 4px 4px 0 var(--color-paper-2); }
+.bg-black .card-surface, .bg-ink .card-surface, .bg-sneak .card-surface { box-shadow: 4px 4px 0 var(--color-paper-2); }
 
 /* ruled rows inside a card */
 .ruled > * + * { border-top: 1.5px solid rgb(11 13 18 / 0.18); }
@@ -122,6 +125,10 @@ body {
 .stagger-3 { animation-delay: 0.12s; }
 .stagger-4 { animation-delay: 0.16s; }
 .stagger-5 { animation-delay: 0.20s; }
+.stagger-6 { animation-delay: 0.24s; }
+.stagger-7 { animation-delay: 0.28s; }
+.stagger-8 { animation-delay: 0.32s; }
+.stagger-9 { animation-delay: 0.36s; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
@@ -157,7 +164,7 @@ button:focus-visible { outline: 3px solid var(--color-hot); outline-offset: 3px;
   color: var(--color-ink);
 }
 .btn-big:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--color-ink); }
-.bg-black .btn-big, .bg-ink .btn-big { box-shadow: 3px 3px 0 var(--color-paper-2); }
+.bg-black .btn-big, .bg-ink .btn-big, .bg-sneak .btn-big { box-shadow: 3px 3px 0 var(--color-paper-2); }
 
 .btn-white { background: var(--color-tangerine); }
 .btn-glass { background: var(--color-paper); }

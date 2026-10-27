@@ -48,7 +48,7 @@ export function SummaryScreen() {
         <div className="relative pt-8 animate-maskIn">
           <span className={`absolute right-0 top-4 rotate-6 w-24 h-24 rounded-full border-[2.5px] border-ink flex flex-col items-center justify-center text-center font-bold text-[13px] leading-tight uppercase ${townWins ? "bg-go" : "bg-hot"}`}>
             <Art name={townWins ? "role-civilian" : "role-imposter"} className="w-11 h-11" />
-            {townWins ? "Caught" : "Escaped"}
+            {townWins ? "Caught" : latestRound.imposterIds.includes(latestRound.eliminatedId ?? "") ? "Stole it" : "Escaped"}
           </span>
           <h1 className="font-poster text-[60px] leading-[0.9] uppercase pr-28 text-balance">
             {resultText.split(" ").map((w) => <span key={w} className="block">{w}</span>)}

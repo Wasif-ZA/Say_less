@@ -1,6 +1,6 @@
 import type { RoundDeal, Spectrum, TunePlayer } from "./types";
 
-export const MIN_TUNE_PLAYERS = 3;
+export const MIN_TUNE_PLAYERS = 2;
 export const LAP_OPTIONS = [1, 2, 3] as const;
 
 // Half-widths on a 0-100 dial, checked inside out
@@ -71,6 +71,36 @@ export const SPECTRUMS: Spectrum[] = [
   { left: "Feels short", right: "Feels endless" },
   { left: "Trashy", right: "Classy" },
   { left: "Fine to say at work", right: "Never say at work" },
+  { left: "Bad advice", right: "Good advice" },
+  { left: "Hard to fake", right: "Easy to fake" },
+  { left: "Underdressed", right: "Overdressed" },
+  { left: "Guilty pleasure", right: "Proud of it" },
+  { left: "Mid", right: "Elite" },
+  { left: "Bad name for a pet", right: "Great name for a pet" },
+  { left: "Bad name for a band", right: "Great name for a band" },
+  { left: "Lazy Sunday", right: "Productive Sunday" },
+  { left: "Needs a manual", right: "Anyone can use it" },
+  { left: "Weird food combo", right: "Perfect food combo" },
+  { left: "Annoying sound", right: "Satisfying sound" },
+  { left: "Least fun class", right: "Most fun class" },
+  { left: "Small talk", right: "Deep talk" },
+  { left: "Bad excuse", right: "Good excuse" },
+  { left: "Tourist trap", right: "Hidden gem" },
+  { left: "Comfort food", right: "Fancy food" },
+  { left: "Worst time to sneeze", right: "Best time to sneeze" },
+  { left: "Overpriced", right: "Bargain" },
+  { left: "Scary", right: "Cute" },
+  { left: "Boomer", right: "Gen Z" },
+  { left: "Bad road trip snack", right: "Great road trip snack" },
+  { left: "Ruins a party", right: "Saves a party" },
+  { left: "Clean", right: "Messy" },
+  { left: "Easy to forgive", right: "Hard to forgive" },
+  { left: "Weak flex", right: "Huge flex" },
+  { left: "Bad first job", right: "Dream first job" },
+  { left: "Mild inconvenience", right: "Total disaster" },
+  { left: "Normal at 3am", right: "Weird at 3am" },
+  { left: "Old news", right: "Breaking news" },
+  { left: "Bad karaoke song", right: "Great karaoke song" },
 ];
 
 export function psychicFor(players: TunePlayer[], round: number): TunePlayer {
