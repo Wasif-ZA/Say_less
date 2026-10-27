@@ -7,10 +7,11 @@ import { ScreenWrapper } from "../ScreenWrapper";
 
 const RULES = [
   { emoji: "🎯", text: "Each round one player is the Psychic. Only they see where the target sits on the dial" },
-  { emoji: "🤐", text: "Say less: the Psychic gives one short clue that lands near the target" },
-  { emoji: "🤫", text: "Everyone else takes the phone in turn and secretly sets their own needle" },
-  { emoji: "🏅", text: "Bullseye scores 4, close scores 3 or 2. The Psychic gets the average of everyone's points" },
-  { emoji: "🏆", text: "Everyone is Psychic the same number of times. Most points wins" },
+  { emoji: "🤐", text: "Say less: the Psychic gives one short clue, then hides the target and passes the phone" },
+  { emoji: "🗣️", text: "Everyone else is one team. Argue it out loud, then set one needle together" },
+  { emoji: "🏅", text: "Bullseye scores 4, close scores 3 or 2. All points go to the team" },
+  { emoji: "🎁", text: "A bullseye earns a free bonus round, up to 3 per game. The final round counts double" },
+  { emoji: "🏆", text: "Everyone is Psychic the same number of times. Beat your best team score" },
 ];
 
 export function TuneHomeScreen() {

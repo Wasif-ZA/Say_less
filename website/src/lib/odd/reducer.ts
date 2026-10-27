@@ -1,5 +1,5 @@
 import type { OddAction, OddState } from "./types";
-import { majorityOf } from "./engine";
+import { isFinalRound, winningSide } from "./engine";
 
 export const initialOddState: OddState = {
   phase: "home",
@@ -11,13 +11,14 @@ export const initialOddState: OddState = {
   pickTurn: 0,
   picks: {},
   majority: null,
+  contrarian: false,
 };
 
 function makeId(): string {
   return `o_${Math.random().toString(36).slice(2, 9)}`;
 }
 
-function startRound(state: OddState, promptIndex: number, round: number): OddState {
+function startRound(state: OddState, promptIndex: number, round: number, contrarian = false): OddState {
   return {
     ...state,
     phase: "pick",
@@ -27,6 +28,7 @@ function startRound(state: OddState, promptIndex: number, round: number): OddSta
     pickTurn: 0,
     picks: {},
     majority: null,
+    contrarian,
   };
 }
 
@@ -68,9 +70,10 @@ export function oddReducer(state: OddState, action: OddAction): OddState {
       if (state.pickTurn + 1 < state.players.length) {
         return { ...state, picks, pickTurn: state.pickTurn + 1 };
       }
-      const majority = majorityOf(state.players.map((p) => picks[p.id]));
+      const majority = winningSide(state.players.map((p) => picks[p.id]), state.contrarian);
+      const points = isFinalRound(state.round, state.rounds) ? 2 : 1;
       const players = state.players.map((p) =>
-        majority !== null && picks[p.id] === majority ? { ...p, score: p.score + 1 } : p
+        majority !== null && picks[p.id] === majority ? { ...p, score: p.score + points } : p
       );
       return { ...state, picks, players, majority, phase: "reveal" };
     }
@@ -78,7 +81,7 @@ export function oddReducer(state: OddState, action: OddAction): OddState {
     case "NEXT_ROUND": {
       const next = state.round + 1;
       if (next >= state.rounds) return { ...state, phase: "summary" };
-      return startRound(state, action.promptIndex, next);
+      return startRound(state, action.promptIndex, next, action.contrarian);
     }
 
     case "FULL_RESET":

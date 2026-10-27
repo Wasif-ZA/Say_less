@@ -8,7 +8,8 @@ const RULES = [
   { emoji: "🪑", text: "Each round is a \"Who is most likely to...\" prompt" },
   { emoji: "🤫", text: "Pass the phone round. Vote for anyone, yourself included" },
   { emoji: "🔥", text: "Most votes takes the hot seat and wins the title" },
-  { emoji: "🎯", text: "Voted for the hot seat? You read the room: 1 point" },
+  { emoji: "🎯", text: "Voted for the hot seat? You read the room: 1 point (2 in the final round)" },
+  { emoji: "🕵️", text: "Alone in the hot seat? Guess who voted for you: 2 points (4 in the final round)" },
 ];
 
 export function SeatHomeScreen() {

@@ -1,4 +1,4 @@
-export type SeatPhase = "home" | "setup" | "vote" | "reveal" | "summary";
+export type SeatPhase = "home" | "setup" | "vote" | "reveal" | "accuse" | "summary";
 
 export interface SeatPlayer {
   id: string;
@@ -17,6 +17,7 @@ export interface SeatState {
   voteTurn: number;
   votes: Record<string, string>;
   top: string[];
+  accuse: { guessId: string; hit: boolean } | null;
 }
 
 export type SeatAction =
@@ -28,5 +29,6 @@ export type SeatAction =
   | { type: "SET_ROUNDS"; rounds: number }
   | { type: "START_GAME"; promptIndex: number }
   | { type: "VOTE"; voterId: string; targetId: string }
+  | { type: "ACCUSE"; guessId: string }
   | { type: "NEXT_ROUND"; promptIndex: number }
   | { type: "FULL_RESET" };

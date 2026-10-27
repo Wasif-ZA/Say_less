@@ -1,5 +1,5 @@
 import type { GuessAction, GuessState } from "./types";
-import { QUESTIONS, scoreGuesses } from "./engine";
+import { QUESTIONS, roundMultiplier, scoreRound } from "./engine";
 
 export const initialGuessState: GuessState = {
   phase: "home",
@@ -10,6 +10,7 @@ export const initialGuessState: GuessState = {
   usedQuestions: [],
   guessTurn: 0,
   guesses: {},
+  wagers: {},
   gained: {},
 };
 
@@ -26,6 +27,7 @@ function startRound(state: GuessState, questionIndex: number, round: number): Gu
     usedQuestions: [...state.usedQuestions, questionIndex],
     guessTurn: 0,
     guesses: {},
+    wagers: {},
     gained: {},
   };
 }
@@ -65,12 +67,18 @@ export function guessReducer(state: GuessState, action: GuessAction): GuessState
     case "GUESS": {
       if (state.phase !== "guess") return state;
       const guesses = { ...state.guesses, [action.playerId]: action.value };
+      const wagers = { ...state.wagers, [action.playerId]: action.wager };
       if (state.guessTurn + 1 < state.players.length) {
-        return { ...state, guesses, guessTurn: state.guessTurn + 1 };
+        return { ...state, guesses, wagers, guessTurn: state.guessTurn + 1 };
       }
-      const gained = scoreGuesses(guesses, QUESTIONS[state.questionIndex].answer);
+      const gained = scoreRound(
+        guesses,
+        wagers,
+        QUESTIONS[state.questionIndex].answer,
+        roundMultiplier(state.round, state.rounds)
+      );
       const players = state.players.map((p) => ({ ...p, score: p.score + (gained[p.id] ?? 0) }));
-      return { ...state, guesses, gained, players, phase: "reveal" };
+      return { ...state, guesses, wagers, gained, players, phase: "reveal" };
     }
 
     case "NEXT_ROUND": {

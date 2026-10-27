@@ -70,11 +70,33 @@ export function parseGuess(raw: string): number | null {
   return /^-?(\d+\.?\d*|\.\d+)$/.test(s) ? Number(s) : null;
 }
 
-// dense ranking by distance: 3, 2, 1 points for ranks 1-3; ties share the higher rank
-export function scoreGuesses(guesses: Record<string, number>, answer: number): Record<string, number> {
+export type Wager = 1 | 2 | 3;
+
+export const WAGERS: { value: Wager; label: string }[] = [
+  { value: 1, label: "Safe ×1" },
+  { value: 2, label: "Sure ×2" },
+  { value: 3, label: "All in ×3" },
+];
+
+export function roundMultiplier(round: number, rounds: number): number {
+  return round + 1 >= rounds ? 2 : 1;
+}
+
+// closest guess(es) win 2 * wager * multiplier; the rest lose (wager - 1) * multiplier
+export function scoreRound(
+  guesses: Record<string, number>,
+  wagers: Record<string, Wager>,
+  answer: number,
+  multiplier: number
+): Record<string, number> {
   const dist = Object.entries(guesses).map(([id, g]) => [id, Math.abs(g - answer)] as const);
-  const levels = [...new Set(dist.map(([, d]) => d))].sort((a, b) => a - b);
-  return Object.fromEntries(dist.map(([id, d]) => [id, Math.max(0, 3 - levels.indexOf(d))]));
+  const best = Math.min(...dist.map(([, d]) => d));
+  return Object.fromEntries(
+    dist.map(([id, d]) => {
+      const w = wagers[id] ?? 1;
+      return [id, d === best ? 2 * w * multiplier : (1 - w) * multiplier];
+    })
+  );
 }
 
 export function formatNum(n: number): string {

@@ -9,6 +9,7 @@ const RULES = [
   { emoji: "🤫", text: "Pass the phone round. Everyone picks in secret" },
   { emoji: "👥", text: "Picked what most people picked? You score a point" },
   { emoji: "🙃", text: "The odd one out gets nothing. Most points wins" },
+  { emoji: "🔀", text: "Watch for Contrarian rounds: the smaller side scores. The last round counts double" },
 ];
 
 export function OddHomeScreen() {

@@ -1,5 +1,5 @@
 import type { RoundDeal, TuneAction, TuneState } from "./types";
-import { guessersFor, pointsFor, psychicFor } from "./engine";
+import { MAX_BONUS_ROUNDS, gameRounds, pointsFor } from "./engine";
 
 export const initialTuneState: TuneState = {
   phase: "home",
@@ -10,9 +10,11 @@ export const initialTuneState: TuneState = {
   target: 50,
   usedSpectra: [],
   clue: "",
-  guessTurn: 0,
-  guesses: {},
-  roundPoints: {},
+  guess: 50,
+  roundPoints: 0,
+  roundBonus: false,
+  bonusRounds: 0,
+  teamScore: 0,
 };
 
 function makeId(): string {
@@ -28,9 +30,9 @@ function startRound(state: TuneState, deal: RoundDeal, round: number): TuneState
     target: deal.target,
     usedSpectra: [...state.usedSpectra, deal.spectrumIndex],
     clue: "",
-    guessTurn: 0,
-    guesses: {},
-    roundPoints: {},
+    guess: 50,
+    roundPoints: 0,
+    roundBonus: false,
   };
 }
 
@@ -40,11 +42,11 @@ export function tuneReducer(state: TuneState, action: TuneAction): TuneState {
       return { ...state, phase: action.phase };
 
     case "SET_PLAYERS":
-      return { ...state, players: action.names.map((name) => ({ id: makeId(), name, score: 0 })) };
+      return { ...state, players: action.names.map((name) => ({ id: makeId(), name })) };
 
     case "ADD_PLAYER": {
       const name = action.name?.trim() || `Player ${state.players.length + 1}`;
-      return { ...state, players: [...state.players, { id: makeId(), name, score: 0 }] };
+      return { ...state, players: [...state.players, { id: makeId(), name }] };
     }
 
     case "REMOVE_PLAYER":
@@ -61,39 +63,40 @@ export function tuneReducer(state: TuneState, action: TuneAction): TuneState {
 
     case "START_GAME":
       return startRound(
-        { ...state, players: state.players.map((p) => ({ ...p, score: 0 })), usedSpectra: [] },
+        { ...state, usedSpectra: [], bonusRounds: 0, teamScore: 0 },
         action.deal,
         0
       );
 
     case "SET_CLUE":
-      return { ...state, clue: action.clue.trim(), phase: "guess", guessTurn: 0 };
+      return { ...state, clue: action.clue.trim(), phase: "guess" };
 
     case "LOCK_GUESS": {
-      const guesses = { ...state.guesses, [action.playerId]: action.value };
-      const guessers = guessersFor(state.players, state.round);
-      if (state.guessTurn + 1 < guessers.length) {
-        return { ...state, guesses, guessTurn: state.guessTurn + 1 };
-      }
-      const roundPoints: Record<string, number> = {};
-      for (const g of guessers) roundPoints[g.id] = pointsFor(guesses[g.id], state.target);
-      const guesserTotal = guessers.reduce((sum, g) => sum + roundPoints[g.id], 0);
-      const psychic = psychicFor(state.players, state.round);
-      roundPoints[psychic.id] = Math.round(guesserTotal / guessers.length);
-      const players = state.players.map((p) => ({ ...p, score: p.score + (roundPoints[p.id] ?? 0) }));
-      return { ...state, guesses, players, roundPoints, phase: "reveal" };
+      const last = state.round + 1 >= gameRounds(state.players, state.laps, state.bonusRounds);
+      const base = pointsFor(action.value, state.target);
+      const roundPoints = last ? base * 2 : base;
+      const roundBonus = base === 4 && !last && state.bonusRounds < MAX_BONUS_ROUNDS;
+      return {
+        ...state,
+        phase: "reveal",
+        guess: action.value,
+        roundPoints,
+        roundBonus,
+        bonusRounds: state.bonusRounds + (roundBonus ? 1 : 0),
+        teamScore: state.teamScore + roundPoints,
+      };
     }
 
     case "NEXT_ROUND": {
       const next = state.round + 1;
-      if (next >= state.players.length * state.laps) return { ...state, phase: "summary" };
+      if (next >= gameRounds(state.players, state.laps, state.bonusRounds)) return { ...state, phase: "summary" };
       return startRound(state, action.deal, next);
     }
 
     case "FULL_RESET":
       return {
         ...initialTuneState,
-        players: state.players.map((p) => ({ ...p, score: 0 })),
+        players: state.players,
         laps: state.laps,
       };
 

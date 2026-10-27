@@ -8,6 +8,7 @@ const RULES = [
   { emoji: "🥔", text: "The phone is the potato. A prompt pops up, like \"Name a fruit\"" },
   { emoji: "🗣️", text: "Say an answer, tap Pass, hand the phone on" },
   { emoji: "🔥", text: "A secret fuse goes off any time. Holding the phone? You get burnt" },
+  { emoji: "💥", text: "Repeat an answer or freeze up? Anyone can hit Blow it up and you get burnt on the spot" },
   { emoji: "🏆", text: "Fewest burns at the end wins" },
 ];
 

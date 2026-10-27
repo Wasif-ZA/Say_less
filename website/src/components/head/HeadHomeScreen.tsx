@@ -8,7 +8,8 @@ const RULES = [
   { emoji: "🤳", text: "Hold the phone on your forehead, screen facing out. You can't see the word" },
   { emoji: "🗣️", text: "Everyone else shouts clues. No saying the word itself" },
   { emoji: "👉", text: "Got it? Tap the right side. Stuck? Tap the left side to skip" },
-  { emoji: "🏆", text: "Everyone takes a turn. Most words guessed wins" },
+  { emoji: "🔥", text: "Every 3 in a row without a skip earns a bonus point" },
+  { emoji: "🏆", text: "Everyone takes a turn. Most points wins" },
 ];
 
 export function HeadHomeScreen() {

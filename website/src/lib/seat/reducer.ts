@@ -11,6 +11,7 @@ export const initialSeatState: SeatState = {
   voteTurn: 0,
   votes: {},
   top: [],
+  accuse: null,
 };
 
 function makeId(): string {
@@ -27,6 +28,7 @@ function startRound(state: SeatState, promptIndex: number, round: number): SeatS
     voteTurn: 0,
     votes: {},
     top: [],
+    accuse: null,
   };
 }
 
@@ -69,12 +71,25 @@ export function seatReducer(state: SeatState, action: SeatAction): SeatState {
         return { ...state, votes, voteTurn: state.voteTurn + 1 };
       }
       const { top } = tally(votes, state.players.map((p) => p.id));
+      const gain = state.round + 1 >= state.rounds ? 2 : 1;
       const players = state.players.map((p) => ({
         ...p,
-        score: p.score + (top.includes(votes[p.id]) ? 1 : 0),
+        score: p.score + (top.includes(votes[p.id]) ? gain : 0),
         titles: top.includes(p.id) ? [...p.titles, state.promptIndex] : p.titles,
       }));
       return { ...state, votes, players, top, phase: "reveal" };
+    }
+
+    case "ACCUSE": {
+      const seated = state.top[0];
+      if (state.phase !== "accuse" || state.accuse || !seated || action.guessId === seated) return state;
+      const hit = state.votes[action.guessId] === seated;
+      const bonus = state.round + 1 >= state.rounds ? 4 : 2;
+      return {
+        ...state,
+        accuse: { guessId: action.guessId, hit },
+        players: state.players.map((p) => (hit && p.id === seated ? { ...p, score: p.score + bonus } : p)),
+      };
     }
 
     case "NEXT_ROUND": {

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useTune } from "@/hooks/useTune";
-import { SPECTRUMS, psychicFor } from "@/lib/tune/engine";
+import { SPECTRUMS, gameRounds, psychicFor } from "@/lib/tune/engine";
 import { ScreenWrapper } from "../ScreenWrapper";
 import { Dial } from "./Dial";
 import { PassCover } from "@/components/PassCover";
@@ -13,13 +13,14 @@ export function TunePsychicScreen() {
   const [clue, setClue] = useState("");
   const psychic = psychicFor(state.players, state.round);
   const spectrum = SPECTRUMS[state.spectrumIndex];
-  const total = state.players.length * state.laps;
+  const total = gameRounds(state.players, state.laps, state.bonusRounds);
+  const isFinal = state.round + 1 >= total;
 
   if (!shown) {
     return (
       <PassCover
         name={psychic.name}
-        role={`Round ${state.round + 1} of ${total} · Psychic`}
+        role={`${isFinal ? "FINAL ROUND · DOUBLE" : `Round ${state.round + 1} of ${total}`} · Psychic`}
         hint="Only the Psychic looks. Everyone else, eyes off the screen."
         onReady={() => setShown(true)}
       />

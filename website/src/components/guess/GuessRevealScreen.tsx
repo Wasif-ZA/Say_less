@@ -1,7 +1,7 @@
 "use client";
 
 import { useGuess } from "@/hooks/useGuess";
-import { QUESTIONS, formatNum, pickQuestion } from "@/lib/guess/engine";
+import { QUESTIONS, formatNum, pickQuestion, roundMultiplier } from "@/lib/guess/engine";
 import { ScreenWrapper } from "../ScreenWrapper";
 
 export function GuessRevealScreen() {
@@ -18,6 +18,9 @@ export function GuessRevealScreen() {
     <ScreenWrapper bgClassName="bg-guess">
       <div className="pt-14 text-center animate-slideDown">
         <span className="clip-label">Round {state.round + 1} reveal</span>
+        {roundMultiplier(state.round, state.rounds) > 1 && (
+          <p className="clip-label mt-2">FINAL ROUND · DOUBLE POINTS</p>
+        )}
         <p className="font-semibold mt-4">{q}</p>
         <h1 className="font-poster text-[64px] leading-none mt-2 break-words">{formatNum(answer)}</h1>
         {unit && <p className="font-semibold text-lg">{unit}</p>}
@@ -29,10 +32,11 @@ export function GuessRevealScreen() {
       <div className="flex flex-col gap-3 mt-6">
         {rows.map(({ p, guess, gap }, i) => {
           const pts = state.gained[p.id] ?? 0;
+          const wager = state.wagers[p.id] ?? 1;
           return (
             <div
               key={p.id}
-              className={`animate-bounceIn stagger-${Math.min(i + 1, 6)} card-surface rounded-[24px] px-5 py-4 flex items-center gap-3 ${pts === 3 ? "bg-go!" : ""}`}
+              className={`animate-bounceIn stagger-${Math.min(i + 1, 6)} card-surface rounded-[24px] px-5 py-4 flex items-center gap-3 ${gap === rows[0].gap ? "bg-go!" : ""}`}
             >
               <div className="flex-1 min-w-0">
                 <p className="font-semibold truncate">{p.name}</p>
@@ -40,7 +44,8 @@ export function GuessRevealScreen() {
                   {formatNum(guess)} · {gap === 0 ? "exact" : `off by ${formatNum(gap)}`}
                 </p>
               </div>
-              <span className="badge shrink-0">{pts ? `+${pts}` : "0"}</span>
+              <span className="badge shrink-0">×{wager}</span>
+              <span className="badge shrink-0">{pts > 0 ? `+${pts}` : pts}</span>
             </div>
           );
         })}

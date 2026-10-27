@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useHead } from "@/hooks/useHead";
-import { COUNTDOWN_SECONDS } from "@/lib/head/engine";
+import { COUNTDOWN_SECONDS, currentStreak } from "@/lib/head/engine";
 import { beep } from "@/lib/sound";
 
 const TAP_LOCK_MS = 300;
@@ -52,6 +52,7 @@ export function HeadPlayingScreen() {
 
   const bg = flash === "got" ? "bg-paper" : flash === "skip" ? "bg-hot" : "bg-head";
   const got = state.results.filter((r) => r.got).length;
+  const streak = currentStreak(state.results);
 
   return (
     <div className={`fixed inset-0 select-none text-ink transition-colors duration-150 ${bg}`}>
@@ -68,6 +69,7 @@ export function HeadPlayingScreen() {
               {state.deck[state.deckPos]}
             </h1>
             <p className="font-bold mt-6">{got} guessed</p>
+            {streak >= 2 && <p key={streak} className="font-poster text-3xl uppercase mt-2 animate-bounceIn">🔥 {streak} in a row</p>}
           </>
         )}
       </div>
